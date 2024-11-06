@@ -1,0 +1,410 @@
+% Emerald Publishing - Construction Innovation Submission Template
+% by Oleksandr Melnyk
+% Ver 0.0.4
+% Based on: https://www.emeraldgrouppublishing.com/journal/ci#author-guidelines
+
+
+\documentclass{article}
+
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amssymb}
+\usepackage{siunitx}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage[utf8]{inputenc}
+\usepackage[right]{lineno}
+\usepackage{csquotes}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{adjustbox}
+\usepackage{array}
+\usepackage{url}
+\usepackage{titlesec}
+%\usepackage[compatibility=false]{caption}
+\usepackage{authblk}
+\usepackage{xcolor} % Load the xcolor package for color options
+\renewcommand{\thetable}{\Roman{table}}
+
+% Define a new format for \subsection
+\titleformat{\subsection}
+  {\mdseries\itshape\large} % Medium series, italic shape, and large font size
+  {\thesubsection}{1em}{} % Numbering, spacing, and the section title itself
+
+
+% Emerald Harvard Citation Style
+
+\usepackage[english]{babel}
+\usepackage[style=authoryear,backend=biber,natbib=true,maxcitenames=2,uniquelist=false]{biblatex}
+\addbibresource{Bibliography.bib} % your .bib file
+
+% Customizing biblatex for Harvard style
+% Customizing biblatex for Harvard style
+\DeclareNameAlias{sortname}{family-given}
+\DeclareNameAlias{default}{family-given}
+
+\renewbibmacro{in:}{}
+\DeclareFieldFormat[article]{title}{\mkbibquote{#1}\addcomma}
+\DeclareFieldFormat[book]{title}{\mkbibemph{#1}\addcomma}
+\DeclareFieldFormat[bookinbook]{title}{\mkbibemph{#1}\addcomma}
+\DeclareFieldFormat[inbook]{title}{\mkbibquote{#1}\addcomma}
+\DeclareFieldFormat[incollection]{title}{\mkbibquote{#1}\addcomma}
+\DeclareFieldFormat[inproceedings]{title}{\mkbibquote{#1}\addcomma}
+\DeclareFieldFormat[manual]{title}{\mkbibemph{#1}\addcomma}
+\DeclareFieldFormat[misc]{title}{\mkbibemph{#1}\addcomma}
+\DeclareFieldFormat[thesis]{title}{\mkbibemph{#1}\addcomma}
+\DeclareFieldFormat[unpublished]{title}{\mkbibquote{#1}\addcomma}
+\DeclareFieldFormat[patent]{title}{\mkbibemph{#1}\addcomma}
+\DeclareFieldFormat[report]{title}{\mkbibemph{#1}\addcomma}
+\DeclareFieldFormat[online]{title}{\mkbibquote{#1}\addcomma}
+\DeclareFieldFormat[software]{title}{\mkbibemph{#1}\addcomma}
+\DeclareFieldFormat[booklet]{title}{\mkbibemph{#1}\addcomma}
+\DeclareFieldFormat[periodical]{title}{\mkbibemph{#1}\addcomma}
+\DeclareFieldFormat[standard]{title}{\mkbibemph{#1}\addcomma}
+
+\DeclareFieldFormat[article]{journaltitle}{\iffieldundef{shortjournal}{\mkbibemph{#1}\addcomma}{\mkbibemph{\printfield{shortjournal}}\addcomma}}
+\DeclareFieldFormat{volume}{\bibstring{volume}~#1}
+\DeclareFieldFormat{number}{\bibstring{number}~#1}
+
+% Definitions for "Vol." and "No."
+\DefineBibliographyStrings{english}{
+  volume = {Vol.},
+  number = {No.}
+}
+
+\renewbibmacro*{volume+number+eid}{%
+  \printfield{volume}%
+  \setunit*{\addspace}%
+  \printfield{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}}
+
+\renewbibmacro*{journal+issuetitle}{%
+  \usebibmacro{journal}%
+  \setunit*{\addcomma\space}%
+  \usebibmacro{volume+number+eid}%
+  \setunit{\addcomma\space}%
+  \usebibmacro{issue+date}}
+
+\renewbibmacro*{publisher+location+date}{%
+  \printlist{publisher}%
+  \iflistundef{location}
+    {\setunit*{\addcomma\space}}
+    {\setunit*{\addcolon\space}}%
+  \printlist{location}%
+  \setunit*{\addcomma\space}%
+  \usebibmacro{date}}
+
+\renewcommand*{\bibpagespunct}{\addcomma\space}
+
+% Customizing page field format to prevent duplication
+% \DeclareFieldFormat{pages}{%
+%   \mkfirstpage[{\mkpageprefix[page]{#1}}]{#1}}
+
+% Customizing citations for Harvard style
+\DeclareCiteCommand{\cite}[\mkbibparens]
+  {\usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+\renewbibmacro*{cite:labelyear+extrayear}{%
+  \iffieldundef{labelyear}
+    {}
+    {\printtext[bibhyperref]{%
+       \printfield{labelyear}%
+       \printfield{extrayear}}}}
+
+\renewbibmacro*{cite:labeldate+extradate}{%
+  \iffieldundef{labelyear}
+    {}
+    {\printtext[bibhyperref]{%
+       \printfield{labelyear}%
+       \printfield{extradate}}}}
+
+\AtEveryBibitem{
+  \clearfield{month}
+  \clearfield{day}
+  \ifentrytype{book}{
+    \clearlist{location}
+  }{}
+}
+
+% Formatting "et al." in italics followed by a comma
+\DefineBibliographyStrings{english}{
+  andothers = {\textit{et al.},}
+}
+
+\DeclareFieldFormat[article]{volume}{\bibstring{jourvol}\addnbspace #1}
+\DeclareFieldFormat[article]{number}{\bibstring{number}\addnbspace #1}
+\DeclareFieldFormat[article]{volume}{Vol. #1}
+\DeclareFieldFormat[article]{number}{No. #1}
+% Customizing DOI field format to lowercase "doi"
+%\DeclareFieldFormat{doi}{\bibstring{doi}\addcolon\space\url{#1}}
+
+% Customizing URL field format to "available at:"
+\DeclareFieldFormat{url}{\bibstring{available at}\addcolon\space\url{#1}}
+\DeclareFieldFormat{urldate}{\mkbibparens{accessed \addspace#1}}
+
+% Customizing urldate to match the required format
+\DeclareFieldFormat{urldate}{%
+  \mkbibparens{accessed\space%
+    \thefield{urlday}\addspace%
+    \mkbibmonth{\thefield{urlmonth}}\addspace%
+    \thefield{urlyear}}}
+
+
+% Configure cleveref
+\crefformat{figure}{#2Figure~#1#3}
+\Crefformat{figure}{#2Figure~#1#3}
+\crefformat{table}{#2Table~#1#3}
+\Crefformat{table}{#2Table~#1#3}
+\crefformat{section}{#2Section~#1#3}
+\Crefformat{section}{#2Section~#1#3}
+
+%Front Matter
+\author[1]{Cathal Lawlor}
+\author[2]{Colm O Riordan}
+
+\affil[1]{University of Galway, Computer Science, Galway, Ireland}
+\affil[1]{University of Galway, Computer Science, Galway, Ireland}
+
+\title{Improving Conversational Recommendation Systems with Natural Language Understanding and Large Language Models}
+\title{Improving Conversational Recommendation Systems with Natural Language Understanding and Large Language Models}
+
+
+\begin{document}
+\maketitle
+
+
+\begin{abstract}
+\textbf{Purpose} - This study aims to investigate and improve on existing film recommendation systems by giving users an explanation for how the recommendation was made and to permit the user to provide feedback on recommendations in a conversational manner, employing natural language processing (NLP) and understanding (NLU) to alter and tune the recommendation system to emphasise weightings on certain attributes.
+
+\textbf{Design/Methodology/Approach} - The study employs a mixed-methods approach, utilizing [specific methodologies such as surveys, experiments, case studies, etc.]. Data were collected from [description of the sample or data sources] and analyzed using [specific analytical tools or software].
+
+\textbf{Findings} - The results reveal that [briefly describe key findings], indicating that [specific conclusion or implication]. These findings provide evidence that [mention whether the hypothesis was confirmed or if new patterns emerged], offering significant implications for [specific field, industry, or theoretical framework].
+
+\textbf{Originality/Value} - This research offers a novel perspective on the use of conversational AI to improve on current reccomendation systems, providing valuable insights that extend the current understanding of [subject matter]. The study’s findings contribute to [mention the advancement or practical application], highlighting areas for future research and potential policy or practical applications. 
+\\
+\\
+%add 6 keywords
+% \textbf{Keywords:} keyword 1; keyword 2; keyword 3, keyword 4; keyword 5; keyword 6
+\end{abstract}
+% \linenumbers
+\tableofcontents
+
+% \linenumbers
+\tableofcontents
+
+
+\section*{Template Overview}
+
+
+\textcolor{blue}{This \LaTeX template is designed to incorporate the specific Harvard citation style defined by Emerald Publishing, along with section styles and other adjustments required for submission in Construction Innovation journal.
+Users should adapt the styling to align with the guidelines of the journal to which they are submitting their article. Make sure to remove the authors' names and acknowledgements if you are submitting an anonymous file for double-blind peer review.}
+
+\section{Introduction}
+\label{sec:introduction}
+\input{sections/introduction.tex}
+
+
+% In the \textcolor{teal}{\textit{Introduction}}, 
+
+\section{Literature Review}
+\label{sec:literature_review}
+% Chapter 2 Literature Review A critical review of literature related to your project topic.
+
+
+
+\section{Requirements and Methodology}
+\label{sec:requirements_methodology}
+% Chapter 3 Requirements and Methodology
+% A discussion and justification of your project requirements, positioned with respect to your literature review, where
+% appropriate. A discussion of approaches suitable for addressing your project challenge. This might include a technology review,
+% as well as techniques and methodologies that have been previously used. Your approach should be presented, including
+% how it was influenced by existing approaches.
+
+\section{Literature Review}
+\label{sec:literature_review}
+\input{sections/literatureReview.tex}
+
+
+
+\section{Requirements and Methodology}
+\label{sec:requirements_methodology}
+% Chapter 3 Requirements and Methodology
+% A discussion and justification of your project requirements, positioned with respect to your literature review, where
+% appropriate. A discussion of approaches suitable for addressing your project challenge. This might include a technology review,
+% as well as techniques and methodologies that have been previously used. Your approach should be presented, including
+% how it was influenced by existing approaches.
+
+The \textcolor{teal}{\textit{Methods}} section should provide a comprehensive and detailed description of the research procedures employed in the study. 
+It should explain the data collection and analysis techniques, ensuring that the description is thorough enough to allow others to replicate the study. 
+The section should be written in the past tense and typically employ passive voice to maintain an objective tone. 
+Additionally, it is essential to include all necessary bibliographic information for each source cited, such as in the example \cite{fellows_research_2021}.
+
+Use the Emerald Harvard style defined in this template for references, and adjust the citation style if necessary. Include DOIs where available. 
+
+NotebookLM
+https://notebooklm.google.com/notebook/7bd5769d-8170-4ff1-bc4f-f9c779cac894
+
+\section{Implementation}
+\label{sec:implementation}
+% Chapter 4 Implementation What you did; Description of the technical issues of your project.
+% Depending on your project, this might include several chapters titled, for example, Design, Implementation, and Testing
+
+For evaluation, using the INSPIRE dataset.
+As an objective measure, the authors also propose to use the level of proactivity of the chatbot. 
+
+\section{Results and Analysis}
+\label{sec:results_analysis}
+% Chapter 5 Results and Analysis Results; what happened, evaluation, final deliverables, etc.
+
+\section{Conclusion and Future Work}
+\label{sec:conclusion_future_work}
+% Chapter 6 Conclusion and Future Work
+% Discussion, conclusion, future work, summary of contribution, putting your results in context.
+A strong \textcolor{teal}{\textit{Conclusion}} typically encompasses several essential elements. It begins with a restatement of the thesis or main idea, reinforcing the core message of the paper. This is followed by a summary of the key points discussed throughout the text, which helps to consolidate the main arguments. The conclusion should also include final thoughts or reflections on the topic, providing a thoughtful discussion wrap-up. 
+
+\hfill
+
+\textit{Acknowledgments} \\Mention all external funding sources in the acknowledgements.\\
+
+\textit{Disclosure statement:} \\No potential conflict of interest is reported by the authors
+
+
+% Appendices Including your Standard Operating Procedure (SOP) and Risk
+% Assessment (RA) mentioned below.
+
+\section{Implementation}
+\label{sec:implementation}
+% Chapter 4 Implementation What you did; Description of the technical issues of your project.
+% Depending on your project, this might include several chapters titled, for example, Design, Implementation, and Testing
+
+For evaluation, using the INSPIRE dataset.
+As an objective measure, the authors also propose to use the level of proactivity of the chatbot. 
+
+\section{Results and Analysis}
+\label{sec:results_analysis}
+% Chapter 5 Results and Analysis Results; what happened, evaluation, final deliverables, etc.
+
+\section{Conclusion and Future Work}
+\label{sec:conclusion_future_work}
+% Chapter 6 Conclusion and Future Work
+% Discussion, conclusion, future work, summary of contribution, putting your results in context.
+A strong \textcolor{teal}{\textit{Conclusion}} typically encompasses several essential elements. It begins with a restatement of the thesis or main idea, reinforcing the core message of the paper. This is followed by a summary of the key points discussed throughout the text, which helps to consolidate the main arguments. The conclusion should also include final thoughts or reflections on the topic, providing a thoughtful discussion wrap-up. 
+
+\hfill
+
+\textit{Acknowledgments} \\Mention all external funding sources in the acknowledgements.\\
+
+\textit{Disclosure statement:} \\No potential conflict of interest is reported by the authors
+
+
+% Appendices Including your Standard Operating Procedure (SOP) and Risk
+% Assessment (RA) mentioned below.
+
+
+\section{Interesting Links} % Placeholder
+\label{sec:interestingLinks}
+
+\subsection{Papers}
+Evaluating conversational recommender systems - GOOD
+https://link.springer.com/article/10.1007/s10462-022-10229-x
+Links to
+https://www.microsoft.com/en-us/research/wp-content/uploads/2016/06/rfp0063-christakopoulou.pdf
+
+
+Leveraging Large Language Models in Conversational Recommender Systems
+https://arxiv.org/abs/2305.07961
+PDF of paper: https://arxiv.org/pdf/2305.07961
+
+A Multi-Agent Conversational Recommender System
+https://arxiv.org/abs/2402.01135
+
+Conversational recommender systems techniques, tools, acceptance, and adoption: A state of the art review
+https://www.sciencedirect.com/science/article/pii/S0957417422008612
+
+
+
+Conversational recommendation: A grand AI challenge
+https://onlinelibrary.wiley.com/doi/full/10.1002/aaai.12059
+
+User perception of sentiment-integrated critiquing in recommender systems
+https://www.sciencedirect.com/science/article/pii/S1071581917301313
+
+Searching for experts in a context-aware recommendation network
+https://www.sciencedirect.com/science/article/pii/S0747563215002186
+
+\subsection{Data sets}
+Good data sets
+INSPIRED - Toward Sociable Recommendation Dialog Systems - movie recommendations with natural language
+https://aclanthology.org/2020.emnlp-main.654.pdf
+
+DuRecDial - movie recommendations with natural language
+A Bilingual Parallel Corpus for Conversational Recommendation
+https://aclanthology.org/2021.emnlp-main.356/
+https://github.com/liuzeming01/DuRecDial?tab=readme-ov-file
+
+ReDial - not sure - doesn't have many examples of WHY movies are recommended.
+https://redialdata.github.io/website/
+
+ A Review of Modern Recommender Systems Using Generative Models (Gen-RecSys) 
+https://paperswithcode.com/paper/a-review-of-modern-recommender-systems-using
+
+
+
+Submit tables (such as \ref{tab-II}) separately with clear titles and label their positions in the main text.\\
+Non-critical supplementary material should be submitted separately and will be hosted alongside the article.
+
+
+
+TODO 
+first two tasks, is it freely available
+if not - basic software architecture
+
+describe the datasets
+and whats available - half a page per dataset
+
+second task
+developing something
+reccomender systems - use a library
+
+- something to say "I reccomend this thing to you"
+- something that explains why it reccomends it - e.g. you like morgan freeman
+
+third task
+- if need to pull the datasets
+
+
+fourth
+- does something 
+allowing users to converse with the system
+trust in the system
+
+
+\begin{table}[ht]
+ \centering
+ \makebox[\textwidth][c]{\includegraphics[width=1\textwidth]{Figures/Table_I.jpg}}%
+ \caption{Tables numbered in roman numerals}
+ \label{tab-II}
+\end{table}
+
+The table numbering format is redefined with the command below. This command switches from Arabic to Roman numerals for table captions:
+        \begin{verbatim} 
+        \renewcommand{\thetable}{\Roman{table}} 
+        \end{verbatim}
+
+
+
+
+%\break
+\printbibliography
+
+\end{document}
