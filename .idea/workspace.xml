@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Started coldstart">
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Coldstart basic parsing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/preliminary-code/cold-start-chat.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/preliminary-code/cold-start-chat.ipynb" afterDir="false" />
     </list>
@@ -88,6 +88,7 @@
       <workItem from="1731863413119" duration="223000" />
       <workItem from="1731863647465" duration="1335000" />
       <workItem from="1731864988178" duration="54000" />
+      <workItem from="1731865056565" duration="1237000" />
     </task>
     <task id="LOCAL-00001" summary="merged">
       <option name="closed" value="true" />
@@ -153,7 +154,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731863234723</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Coldstart basic parsing">
+      <option name="closed" value="true" />
+      <created>1731865204196</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1731865204196</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,7 +177,8 @@
     <MESSAGE value="Basic testing no.2" />
     <MESSAGE value="Updated log book" />
     <MESSAGE value="Started coldstart" />
-    <option name="LAST_COMMIT_MESSAGE" value="Started coldstart" />
+    <MESSAGE value="Coldstart basic parsing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Coldstart basic parsing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -180,22 +190,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
           <url>notebook:///Users/Cathal/Rec-Genie/preliminary-code/cold-start-chat.ipynb</url>
-          <line>87</line>
+          <line>118</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
           <url>notebook:///Users/Cathal/Rec-Genie/preliminary-code/cold-start-chat.ipynb</url>
-          <line>120</line>
+          <line>161</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
           <url>notebook:///Users/Cathal/Rec-Genie/preliminary-code/cold-start-chat.ipynb</url>
-          <line>75</line>
+          <line>105</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
           <url>notebook:///Users/Cathal/Rec-Genie/preliminary-code/cold-start-chat.ipynb</url>
-          <line>80</line>
+          <line>110</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
