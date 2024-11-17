@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Basic testing no.2">
-      <change afterPath="$PROJECT_DIR$/preliminary-code/cold-start-chat.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Rec-Genie.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Rec-Genie.iml" afterDir="false" />
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Started coldstart">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fyp/logbook.md" beforeDir="false" afterPath="$PROJECT_DIR$/fyp/logbook.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simpleRec.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/preliminary-code/simpleRec.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/simpleRec.py" beforeDir="false" afterPath="$PROJECT_DIR$/preliminary-code/simpleRec.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/preliminary-code/cold-start-chat.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/preliminary-code/cold-start-chat.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +84,10 @@
       <workItem from="1731665234632" duration="1581000" />
       <workItem from="1731673025822" duration="599000" />
       <workItem from="1731845876331" duration="615000" />
-      <workItem from="1731853433591" duration="6480000" />
+      <workItem from="1731853433591" duration="6747000" />
+      <workItem from="1731863413119" duration="223000" />
+      <workItem from="1731863647465" duration="1335000" />
+      <workItem from="1731864988178" duration="54000" />
     </task>
     <task id="LOCAL-00001" summary="merged">
       <option name="closed" value="true" />
@@ -139,7 +137,23 @@
       <option name="project" value="LOCAL" />
       <updated>1731534409316</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Updated log book">
+      <option name="closed" value="true" />
+      <created>1731863227058</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1731863227058</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Started coldstart">
+      <option name="closed" value="true" />
+      <created>1731863234723</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1731863234723</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -152,7 +166,9 @@
     <MESSAGE value="Added description and references" />
     <MESSAGE value="Basic testing" />
     <MESSAGE value="Basic testing no.2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Basic testing no.2" />
+    <MESSAGE value="Updated log book" />
+    <MESSAGE value="Started coldstart" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started coldstart" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -165,7 +181,22 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
           <url>notebook:///Users/Cathal/Rec-Genie/preliminary-code/cold-start-chat.ipynb</url>
           <line>87</line>
-          <option name="timeStamp" value="4" />
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
+          <url>notebook:///Users/Cathal/Rec-Genie/preliminary-code/cold-start-chat.ipynb</url>
+          <line>120</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
+          <url>notebook:///Users/Cathal/Rec-Genie/preliminary-code/cold-start-chat.ipynb</url>
+          <line>75</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
+          <url>notebook:///Users/Cathal/Rec-Genie/preliminary-code/cold-start-chat.ipynb</url>
+          <line>80</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/.venv/lib/python3.9/site-packages/lenskit/topn.py</url>
