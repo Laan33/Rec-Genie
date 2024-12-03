@@ -25,6 +25,7 @@
 \usepackage{adjustbox}
 \usepackage{array}
 \usepackage{url}
+\usepackage{comment}
 \usepackage{titlesec}
 %\usepackage[compatibility=false]{caption}
 \usepackage{authblk}
@@ -39,112 +40,17 @@
 
 % Emerald Harvard Citation Style
 
-\usepackage[english]{babel}
-\usepackage[style=authoryear,backend=biber,natbib=true,maxcitenames=2,uniquelist=false]{biblatex}
-\addbibresource{Bibliography.bib} % your .bib file
+% \usepackage[english]{babel}
+% \usepackage[style=authoryear,backend=biber,natbib=true,maxcitenames=2,uniquelist=false]{biblatex}
 
-% Customizing biblatex for Harvard style
-% Customizing biblatex for Harvard style
-\DeclareNameAlias{sortname}{family-given}
-\DeclareNameAlias{default}{family-given}
+\usepackage[backend=bibtex,style=numeric]{biblatex}
+\addbibresource{Bibliography.bib}
 
-\renewbibmacro{in:}{}
-\DeclareFieldFormat[article]{title}{\mkbibquote{#1}\addcomma}
-\DeclareFieldFormat[book]{title}{\mkbibemph{#1}\addcomma}
-\DeclareFieldFormat[bookinbook]{title}{\mkbibemph{#1}\addcomma}
-\DeclareFieldFormat[inbook]{title}{\mkbibquote{#1}\addcomma}
-\DeclareFieldFormat[incollection]{title}{\mkbibquote{#1}\addcomma}
-\DeclareFieldFormat[inproceedings]{title}{\mkbibquote{#1}\addcomma}
-\DeclareFieldFormat[manual]{title}{\mkbibemph{#1}\addcomma}
-\DeclareFieldFormat[misc]{title}{\mkbibemph{#1}\addcomma}
-\DeclareFieldFormat[thesis]{title}{\mkbibemph{#1}\addcomma}
-\DeclareFieldFormat[unpublished]{title}{\mkbibquote{#1}\addcomma}
-\DeclareFieldFormat[patent]{title}{\mkbibemph{#1}\addcomma}
-\DeclareFieldFormat[report]{title}{\mkbibemph{#1}\addcomma}
-\DeclareFieldFormat[online]{title}{\mkbibquote{#1}\addcomma}
-\DeclareFieldFormat[software]{title}{\mkbibemph{#1}\addcomma}
-\DeclareFieldFormat[booklet]{title}{\mkbibemph{#1}\addcomma}
-\DeclareFieldFormat[periodical]{title}{\mkbibemph{#1}\addcomma}
-\DeclareFieldFormat[standard]{title}{\mkbibemph{#1}\addcomma}
 
-\DeclareFieldFormat[article]{journaltitle}{\iffieldundef{shortjournal}{\mkbibemph{#1}\addcomma}{\mkbibemph{\printfield{shortjournal}}\addcomma}}
-\DeclareFieldFormat{volume}{\bibstring{volume}~#1}
-\DeclareFieldFormat{number}{\bibstring{number}~#1}
 
-% Definitions for "Vol." and "No."
-\DefineBibliographyStrings{english}{
-  volume = {Vol.},
-  number = {No.}
-}
 
-\renewbibmacro*{volume+number+eid}{%
-  \printfield{volume}%
-  \setunit*{\addspace}%
-  \printfield{number}%
-  \setunit{\addcomma\space}%
-  \printfield{eid}}
 
-\renewbibmacro*{journal+issuetitle}{%
-  \usebibmacro{journal}%
-  \setunit*{\addcomma\space}%
-  \usebibmacro{volume+number+eid}%
-  \setunit{\addcomma\space}%
-  \usebibmacro{issue+date}}
 
-\renewbibmacro*{publisher+location+date}{%
-  \printlist{publisher}%
-  \iflistundef{location}
-    {\setunit*{\addcomma\space}}
-    {\setunit*{\addcolon\space}}%
-  \printlist{location}%
-  \setunit*{\addcomma\space}%
-  \usebibmacro{date}}
-
-\renewcommand*{\bibpagespunct}{\addcomma\space}
-
-% Customizing page field format to prevent duplication
-% \DeclareFieldFormat{pages}{%
-%   \mkfirstpage[{\mkpageprefix[page]{#1}}]{#1}}
-
-% Customizing citations for Harvard style
-\DeclareCiteCommand{\cite}[\mkbibparens]
-  {\usebibmacro{prenote}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{cite}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
-
-\renewbibmacro*{cite:labelyear+extrayear}{%
-  \iffieldundef{labelyear}
-    {}
-    {\printtext[bibhyperref]{%
-       \printfield{labelyear}%
-       \printfield{extrayear}}}}
-
-\renewbibmacro*{cite:labeldate+extradate}{%
-  \iffieldundef{labelyear}
-    {}
-    {\printtext[bibhyperref]{%
-       \printfield{labelyear}%
-       \printfield{extradate}}}}
-
-\AtEveryBibitem{
-  \clearfield{month}
-  \clearfield{day}
-  \ifentrytype{book}{
-    \clearlist{location}
-  }{}
-}
-
-% Formatting "et al." in italics followed by a comma
-\DefineBibliographyStrings{english}{
-  andothers = {\textit{et al.},}
-}
-
-\DeclareFieldFormat[article]{volume}{\bibstring{jourvol}\addnbspace #1}
-\DeclareFieldFormat[article]{number}{\bibstring{number}\addnbspace #1}
-\DeclareFieldFormat[article]{volume}{Vol. #1}
-\DeclareFieldFormat[article]{number}{No. #1}
 % Customizing DOI field format to lowercase "doi"
 %\DeclareFieldFormat{doi}{\bibstring{doi}\addcolon\space\url{#1}}
 
@@ -172,8 +78,7 @@
 \author[1]{Cathal Lawlor}
 \author[2]{Colm O Riordan}
 
-\affil[1]{University of Galway, Computer Science, Galway, Ireland}
-\affil[1]{University of Galway, Computer Science, Galway, Ireland}
+\affil[1]{School of Computer Science, University of Galway, Ireland}
 
 \title{Improving Conversational Recommendation Systems with Natural Language Understanding and Large Language Models}
 \title{Improving Conversational Recommendation Systems with Natural Language Understanding and Large Language Models}
@@ -193,74 +98,63 @@
 \textbf{Originality/Value} - This research offers a novel perspective on the use of conversational AI to improve on current reccomendation systems, providing valuable insights that extend the current understanding of [subject matter]. The study’s findings contribute to [mention the advancement or practical application], highlighting areas for future research and potential policy or practical applications. 
 \\
 \\
+
+\begin{comment}
+Table of Contents ....................................................................................................................................... 1
+List Of Figures ........................................................................................................................................... 2
+Chapter 1. Introduction ............................................................................................................................. 3
+1.1 Purpose of project ..................................................................................................................... 3
+1.2 Project Topic Description........................................................................................................ 3
+1.3 Project Topic Relevance .......................................................................................................... 4
+1.4 Document Structure .................................................................................................................. 4
+Chapter 2. Preliminary Literature Review ............................................................................................ 5
+2.1 Existing Approaches................................................................................................................. 5
+2.2 Research ...................................................................................................................................... 5
+2.3 Innovative Approach ................................................................................................................ 6
+Chapter 3. Project Goals and Requirements ........................................................................................ 7
+3.1 Primary Goals and Requirements .......................................................................................... 7
+3.2 Secondary Goals and Requirements .................................................................................... 7
+Chapter 4. Planned Software Outline .................................................................................................... 8
+4.1 Planned Backend Software ..................................................................................................... 8
+4.2 Planned Frontend and UI Software ....................................................................................... 8
+Chapter 5. Software Tools ..................................................................................................................... 10
+5.1 Programming languages ........................................................................................................ 10
+5.2 APIs ........................................................................................................................................... 10
+5.3 Planned Machine Learning Software .................................................................................. 10
+5.4 Version Control ....................................................................................................................... 10
+5.5 Task Management ................................................................................................................... 10
+Chapter 6. Planned Steps........................................................................................................................ 11
+6.1 Planned Steps & Milestones ................................................................................................. 11
+References ................................................................................................................................................. 12
+\end{comment}
+
+
 %add 6 keywords
 % \textbf{Keywords:} keyword 1; keyword 2; keyword 3, keyword 4; keyword 5; keyword 6
 \end{abstract}
-% \linenumbers
-\tableofcontents
 
 % \linenumbers
 \tableofcontents
 
-
-\section*{Template Overview}
-
-
-\textcolor{blue}{This \LaTeX template is designed to incorporate the specific Harvard citation style defined by Emerald Publishing, along with section styles and other adjustments required for submission in Construction Innovation journal.
-Users should adapt the styling to align with the guidelines of the journal to which they are submitting their article. Make sure to remove the authors' names and acknowledgements if you are submitting an anonymous file for double-blind peer review.}
 
 \section{Introduction}
 \label{sec:introduction}
 \input{sections/introduction.tex}
 
-
-% In the \textcolor{teal}{\textit{Introduction}}, 
-
-\section{Literature Review}
+\section{Preliminary Literature Review}
 \label{sec:literature_review}
-% Chapter 2 Literature Review A critical review of literature related to your project topic.
+\input{sections/preliminaryLiteratureReview.tex}
 
 
-
-\section{Requirements and Methodology}
-\label{sec:requirements_methodology}
-% Chapter 3 Requirements and Methodology
-% A discussion and justification of your project requirements, positioned with respect to your literature review, where
-% appropriate. A discussion of approaches suitable for addressing your project challenge. This might include a technology review,
-% as well as techniques and methodologies that have been previously used. Your approach should be presented, including
-% how it was influenced by existing approaches.
-
-\section{Literature Review}
-\label{sec:literature_review}
-\input{sections/literatureReview.tex}
-
-
-
-\section{Requirements and Methodology}
-\label{sec:requirements_methodology}
-% Chapter 3 Requirements and Methodology
-% A discussion and justification of your project requirements, positioned with respect to your literature review, where
-% appropriate. A discussion of approaches suitable for addressing your project challenge. This might include a technology review,
-% as well as techniques and methodologies that have been previously used. Your approach should be presented, including
-% how it was influenced by existing approaches.
-
-The \textcolor{teal}{\textit{Methods}} section should provide a comprehensive and detailed description of the research procedures employed in the study. 
-It should explain the data collection and analysis techniques, ensuring that the description is thorough enough to allow others to replicate the study. 
-The section should be written in the past tense and typically employ passive voice to maintain an objective tone. 
-Additionally, it is essential to include all necessary bibliographic information for each source cited, such as in the example \cite{fellows_research_2021}.
-
-Use the Emerald Harvard style defined in this template for references, and adjust the citation style if necessary. Include DOIs where available. 
+\section{Goals and Requirements}
+\label{sec:goals_requirements}
 
 NotebookLM
 https://notebooklm.google.com/notebook/7bd5769d-8170-4ff1-bc4f-f9c779cac894
 
-\section{Dataset Descriptions}
-\input{sections/datasetDescriptions.tex}
+% \section{Dataset Descriptions}
+% \input{sections/datasetDescriptions.tex}
 
-\section{Implementation}
-\label{sec:implementation}
-% Chapter 4 Implementation What you did; Description of the technical issues of your project.
-% Depending on your project, this might include several chapters titled, for example, Design, Implementation, and Testing
 
 For evaluation, using the INSPIRE dataset.
 As an objective measure, the authors also propose to use the level of proactivity of the chatbot. 
@@ -277,41 +171,15 @@ A strong \textcolor{teal}{\textit{Conclusion}} typically encompasses several ess
 
 \hfill
 
-\textit{Acknowledgments} \\Mention all external funding sources in the acknowledgements.\\
 
-\textit{Disclosure statement:} \\No potential conflict of interest is reported by the authors
-
-
-% Appendices Including your Standard Operating Procedure (SOP) and Risk
-% Assessment (RA) mentioned below.
-
-\section{Implementation}
-\label{sec:implementation}
-% Chapter 4 Implementation What you did; Description of the technical issues of your project.
-% Depending on your project, this might include several chapters titled, for example, Design, Implementation, and Testing
+% \section{Implementation}
+% \label{sec:implementation}
+% % Chapter 4 Implementation What you did; Description of the technical issues of your project.
+% % Depending on your project, this might include several chapters titled, for example, Design, Implementation, and Testing
 
 For evaluation, using the INSPIRED dataset.
 As an objective measure, the authors also propose to use the level of proactivity of the chatbot. 
 
-\section{Results and Analysis}
-\label{sec:results_analysis}
-% Chapter 5 Results and Analysis Results; what happened, evaluation, final deliverables, etc.
-
-\section{Conclusion and Future Work}
-\label{sec:conclusion_future_work}
-% Chapter 6 Conclusion and Future Work
-% Discussion, conclusion, future work, summary of contribution, putting your results in context.
-A strong \textcolor{teal}{\textit{Conclusion}} typically encompasses several essential elements. It begins with a restatement of the thesis or main idea, reinforcing the core message of the paper. This is followed by a summary of the key points discussed throughout the text, which helps to consolidate the main arguments. The conclusion should also include final thoughts or reflections on the topic, providing a thoughtful discussion wrap-up. 
-
-\hfill
-
-\textit{Acknowledgments} \\Mention all external funding sources in the acknowledgements.\\
-
-\textit{Disclosure statement:} \\No potential conflict of interest is reported by the authors
-
-
-% Appendices Including your Standard Operating Procedure (SOP) and Risk
-% Assessment (RA) mentioned below.
 
 
 \section{Interesting Links} % Placeholder
@@ -363,9 +231,6 @@ https://paperswithcode.com/paper/a-review-of-modern-recommender-systems-using
 
 
 
-Submit tables (such as \ref{tab-II}) separately with clear titles and label their positions in the main text.\\
-Non-critical supplementary material should be submitted separately and will be hosted alongside the article.
-
 
 
 TODO 
@@ -390,20 +255,6 @@ fourth
 - does something 
 allowing users to converse with the system
 trust in the system
-
-
-\begin{table}[ht]
- \centering
- \makebox[\textwidth][c]{\includegraphics[width=1\textwidth]{Figures/Table_I.jpg}}%
- \caption{Tables numbered in roman numerals}
- \label{tab-II}
-\end{table}
-
-The table numbering format is redefined with the command below. This command switches from Arabic to Roman numerals for table captions:
-        \begin{verbatim} 
-        \renewcommand{\thetable}{\Roman{table}} 
-        \end{verbatim}
-
 
 
 
