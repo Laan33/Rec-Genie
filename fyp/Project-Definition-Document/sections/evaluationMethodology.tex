@@ -1,5 +1,60 @@
 
-% This is where I'll cover the evaluation methodology for assessing the system
+Due to the complex nature of conversational recommender systems, I will be evaluating the system in two different approaches: \textbf{system-centric} and \textbf{user-centric} evaluations. 
 
+The system-centric evaluation will focus on the performance of the system in terms of recommendation quality, while the user-centric evaluation will focus on the user experience and satisfaction with the system.
+
+The evaluation of CRSs has many challenges, including the need for user involvement, fairness in recommendations, 
+and the necessity for multi-metric assessments that capture various performance dimensions. 
+Fairness is particularly pertinent, as it seeks to ensure equitable treatment across different demographic groups, 
+thereby avoiding biases in recommendations.
+
+\subsection{System-Centric Evaluation}
+The system-centric evaluation will focus on evaluating the performance of the conversational recommender system.
+It will focus on the algorithmic accuracy and metrics such as precision and recall, typically relying on historical data.
+
+\subsubsection{Evaluation Metrics}
+I will be judging the system performance based on the following metrics:
+\begin{itemize}
+    \item \textbf{Recommendation Quality}: How good are the recommendations made by the system?
+    \item \textbf{Recommendation Accuracy}: How accurate are the recommendations made by the system?
+    \item \textbf{Recommendation Diversity}: How diverse are the recommendations made by the system?
+    \item \textbf{Recommendation Novelty \& Serendipity}: How novel and surprising are the recommendations made by the system?
+    \item \textbf{Recommendation Coverage}: How many items can the system recommend?
+    \item \textbf{Recommendation Explainability}: How well can the system explain its recommendations?
+\end{itemize}
+
+I will be using the evaluation metrics from the LensKit library \cite{ekstrand_2020_lenskit} to evaluate the performance of the conversational recommender system.
+This will be both prediction accuracy metrics and top-N recommendation metrics.
+
+
+% --------------------------------------------------
+
+
+\subsection{User-Centric Evaluation}
+The user-centric evaluations prioritize user engagement and satisfaction, which will often require direct feedback from users.
+
+\subsubsection{User Feedback Illicitation}
+User-centric evaluations require direct feedback from the users interacting with the system. 
+This feedback can be explicit, with users providing ratings or preferences or implicit, inferred from user behaviour such as clicks or dwell time.
+
+For this project, I don't believe the scope of my project will allow for a full user study,
+but I will aim to gather feedback from users in a explicit manner, such as through live user testing and post interaction surveys.
+
+The scope will also limit me in implementing implicit feedback mechanisms, such as tracking user interactions with the system.
+Some implicit feedback mechanisms I could implement include tracking how many movies a user watches after a recommendation.
+
+
+\subsubsection{Evaluation Metrics}
+I will be judging the user experience based on the following metrics:
+\begin{itemize}
+    \item \textbf{User Satisfaction}: How satisfied are users with the system?
+    \item \textbf{User Engagement}: How engaged are users with the system?
+    \item \textbf{User Retention}: How many users would return to use the system again?
+    \item \textbf{User Feedback}: What feedback do users provide about the system?
+    \item \textbf{User Usage Manner}: How did the user interact with the system?
+    \item \textbf{User Preferences}: How well does the system understand user preferences?
+    \item \textbf{User Recommendations}: How well does the system recommend items to users? Does the user think the recommendations are relevant?
+    \item \textbf{User Conversations}: How well does the system engage in conversations with users? Does the user feel listened to and understood?
+\end{itemize}
 
 
