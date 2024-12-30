@@ -19,10 +19,9 @@ This section provides an overview of the various software, tools, and datasets u
 
 \subsection{Datasets}
 \begin{itemize}
-    \item \textbf{ML-1000k}: 
-    This dataset\cite{10.1145/2827872} contains 100,000 ratings (ranging in 1-5) from 943 users on 1682 movies. 
-    Each user has rated at least 20 movies, and there is simple demographic info for the users (age, gender, occupation, zip). 
-    It was released in 2003 and is a widely used dataset for recommendation systems research. 
+    \item \textbf{MovieLens 32M}: 
+    This dataset\cite{10.1145/2827872} is a stable benchmark dataset. 
+    It has 32 million ratings and two million tag applications applied to 87,585 movies by 200,948 users. Collected on 10/2023, released 05/2024.
     I will be using this dataset for training and evaluating the conversational recommender system.
 
     \item \textbf{INSPIRED}: 
@@ -33,11 +32,11 @@ This section provides an overview of the various software, tools, and datasets u
     automatic and human evaluations. This work aims to build sociable recommendation dialog systems grounded in social science theories.
     I will be using this dataset to train and evaluate the conversational recommender system.
 
-    \item \textbf{The Movies Dataset}: This dataset contains metadata for 45,000 movies listed in the Full MovieLens dataset. It includes data such as movie descriptions, genres, keywords, release dates, and more.
+    \item \textbf{The Movie Database (TMDB) API}: TMDB\cite{tmdb} is a community built movie and TV database. The database contains information on movies, TV shows, actors, and more.
+    I'm using it as it contains metadata on movies, such as genres, actors, directors, and more. This data will be used to provide information on movies to the user, and to build into reccomendations.
+
     
-    \item \textbf{RecDial}: 
-    \item \textbf{DuRecDial}:
-    \item \textbf{TG-ReDial}: TG-ReDial\cite{zhou2020topicguided} is a topic guided version of the ReDial dataset
+
 \end{itemize}
 
 

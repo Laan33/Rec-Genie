@@ -54,22 +54,21 @@ I will be building the project in steps, where I am keeping each component as mo
 The system will be built with the following components:
 \begin{itemize}
     \item \textbf{Chat interface}: The user interface for the user to interact and converse with the system.
-    \item \textbf{NLP System}
+    
+    \item \textbf{NLP Module}
     \subitem \textbf{Topic Extraction}: Extracting topics and features from the user's messages.
     \subitem \textbf{Sentiment Analysis}: Extracting topic sentiment from the user's messages.
 
-    \item \textbf{Reccomendation System}:
-    \subitem \textbf{Recommendation Generation}: Generating recommendations for the user.
-    \subitem \textbf{Recommendation Explaination Metrics}: Outputs the key metrics used to generate the recommendation.
+    \item \textbf{Reccomendation Module}:
+    \subitem \textbf{RecSys}: Collaborative and content-based filtering reccomendations.
+    \subitem \textbf{Decision Values}: Provides result values for a given recommendation.
 
     \item \textbf{LLM Module}: Using Large Language Models to converse with the user.
-    \subitem \textbf{User Preference Exploration}: Using LLMs to guide the user to explore their preferences.
-    \subitem \textbf{Recommendation Explainability}: Using LLMs to explain why a recommendation was made taking in reccomendation explaination metrics.
+    \subitem \textbf{User Preference Exploration}: Help guide the user to explore their preferences.
+    \subitem \textbf{Rec Explainability}: Explaining how and why a recommendation was made.
 
 
-    \item \textbf{Weighting Scheme System}: This component will be responsible for weighting the user's preferences and the system's recommendations.
-    \item \subitem \textbf{User Preference Weighting}: Adjusts the users weighting scheme by takign NLP sentiment analysis into account.
-    \item \subitem \textbf{Recommendation Weighting}: Weights the system's recommendations.
+    \item \textbf{Sentiment Weighting Calculator}: Takes sentiment analysis and adjusts the weighting scheme. 
 
 \end{itemize}
 
