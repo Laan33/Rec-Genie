@@ -45,16 +45,17 @@ and provide more accurate recommendations
 
 
 \subsubsection{Data scarcity and training cost}
-One thing noted in papers is data scarcity remains a significant challenge in training effective CRSs.
-The use of distillation and fine tuning techniques can be used to improve the performance of the model, while also greatly reducing the computational cost of training the model.
+Data scarcity remains a significant challenge in training effective Conversational Recommender Systems (CRSs). To address this issue, techniques such as model distillation and fine-tuning can be employed to enhance model performance while reducing computational costs.
 
-Covered in this paper\cite{hsieh2023distillingstepbystepoutperforminglarger}, the authors propose a step-by-step distillation approach to train a smaller model to mimic a larger model, and then fine-tune the smaller model on the target task.
-This approach is shown to outperform the larger model on the target task, while also being more computationally efficient.
+In the paper by Hsieh et al. \cite{hsieh2023distillingstepbystepoutperforminglarger}, the authors propose a step-by-step distillation approach. This method involves training a smaller model to mimic the behavior of a larger model, followed by fine-tuning the smaller model on the target task. This approach not only outperforms the larger model on the target task but also proves to be more computationally efficient.
 
-Another approach to address data scarcity is to use a larger model to generate synthetic data for training. 
-This technique leverages the capabilities of a pre-trained large language model to create additional training examples, which can then be used to train a smaller, more efficient model. 
+Another strategy to mitigate data scarcity is the generation of synthetic data using a larger pre-trained model. 
+This technique leverages the capabilities of a large language model to create additional high quality training examples, 
+which can then be used to train a smaller, more efficient model. 
 By augmenting the training dataset with synthetic data, the performance of the conversational recommender system can be improved without the need for extensive real-world data collection. 
-This method is particularly useful in scenarios where obtaining large amounts of labeled data is challenging or costly, for example, in this project it is not feasible for me to have a large amount of users interacting with my system to generate data
+This method is particularly useful in scenarios where obtaining large amounts of labeled data is challenging or costly. 
+For instance, in this project, it is not feasible for me to have a large number of users interacting with the system to generate training data.
+
 
 \subsubsection{Evaluation}
 The evaluation of conversational recommender systems (CRSs) is a multifaceted challenge that encompasses various dimensions such as recommendation accuracy, user satisfaction, and interaction quality. Traditional metrics like precision, recall, and F1-score are often employed to measure the accuracy of recommendations. However, these metrics alone are insufficient to capture the interactive and dynamic nature of CRSs.
@@ -63,12 +64,13 @@ Recent research has emphasized the importance of user-centric evaluation metrics
 
 Moreover, the use of simulation environments and user simulators has gained traction\cite{huang2024conceptevaluationprotocol} as a means to conduct large-scale evaluations without the need for extensive real-world user interactions. These simulators can model user behavior and preferences, providing a controlled setting to test and refine CRSs.
 
-Despite these advancements, there remains a need for standardized evaluation frameworks that can comprehensively assess the performance of CRSs across different domains and use cases. The development of such frameworks is crucial for advancing the field and ensuring the deployment of effective and user-friendly conversational recommender systems.
+Despite these advancements, papers outline that there remains a need for standardized evaluation frameworks that can comprehensively assess the performance of CRSs across different domains and use cases.
 
 \subsubsection{Explainability}
-In conversational reccomendation systems, explainability is a key factor in building trust with the user. The system has to be able to explain why it made a recommendation and how it came to that conclusion. Current approaches to explainability in recommendation systems include:
-\cite{Guo_2023} In 
-
+In conversational recommendation systems, explainability is crucial for building trust with users. 
+The system must be able to clearly explain why a particular recommendation was made and how it arrived at that conclusion. 
+Current approaches to explainability in recommendation systems, such as those discussed by Guo et al. \cite{Guo_2023}, focus on providing transparent and understandable justifications for recommendations. 
+This project aims to incorporate these explainability techniques to ensure that users feel confident and informed about the recommendations they receive.
 
 \subsubsection{Critiquing-based reccomendation systems}
 My project touches in on critiquing-based recommendation systems, where the user is asked to provide feedback on the recommendations they are given, and the system uses this feedback to refine the recommendations.
