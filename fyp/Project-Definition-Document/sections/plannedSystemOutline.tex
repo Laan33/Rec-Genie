@@ -37,16 +37,13 @@
 % -- using user document matrix to evaluate user preferences
 % -- using nlp to evaluate user responses
 
-
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/FYP_HLA.drawio.png}
-    \caption{WIP: System HLA}
+    \caption{System High-Level Architecture}
     \label{fig:systemHLA}
 \end{figure}
 
-\subsection{System Architecture}
-\label{sec:systemArchitecture}
 The system will be built with a multi-agent approach, with each agent responsible for a different aspect of the system.
 
 I will be building the project in steps, where I am keeping each component as modular as possible to allow for easy integration and testing.
@@ -55,7 +52,7 @@ The system will be built with the following components:
 \begin{itemize}
     \item \textbf{Chat interface}: The user interface for the user to interact and converse with the system.
     
-    \item \textbf{NLP Module}
+    \item \textbf{NLP Module}:
     \subitem \textbf{Topic Extraction}: Extracting topics and features from the user's messages.
     \subitem \textbf{Sentiment Analysis}: Extracting topic sentiment from the user's messages.
 
@@ -67,9 +64,9 @@ The system will be built with the following components:
     \subitem \textbf{User Preference Exploration}: Help guide the user to explore their preferences.
     \subitem \textbf{Rec Explainability}: Explaining how and why a recommendation was made.
 
-    \item \textbf{Sentiment Weighting Calculator}: Takes sentiment analysis and adjusts the weighting scheme.
+    \item \textbf{Sentiment Weighting Calculator}: Takes sentiment analysis and adjusts users weighting scheme accordingly. 
     
-    \item \textbf{Next Action Module}: Makes decisions on what to do next based on the user's messages and the system's current state.
+    \item \textbf{Next Action Module}: Based on the user's messages and the system's current state, the module decides on what action to do next.
 
 \end{itemize}
 

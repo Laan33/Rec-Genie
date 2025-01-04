@@ -12,9 +12,13 @@ This section provides an overview of the various software, tools, and datasets u
 \subsection{Libraries \& Tools}
 \begin{itemize}
     \item \textbf{spaCy}: An open-source software library for advanced natural language processing in Python. I will be using spaCy for tokenization, lemmatization, and named entity recognition.
-    \item \textbf{Twitter-roBERTa-base for Sentiment Analysis}: NLP RoBERTa model\cite{camacho-collados-etal-2022-tweetnlp} for sentiment analysis. I will be using this model to extract sentiment from user responses.
-    \item \textbf{Hugging Face Transformers}: A library for natural language processing in Python. I will be using the transformers library to load and fine-tune large language models.
+    \cite{Honnibal_spaCy_Industrial-strength_Natural_2020}
+    \item \textbf{Twitter-roBERTa-base for Sentiment Analysis}: NLP RoBERTa model for sentiment analysis. I will be using this model to extract sentiment from user responses.
+    \cite{camacho-collados-etal-2022-tweetnlp}
+    \item \textbf{Hugging Face Transformers}: I will be using the hugging face transformers library to load and fine-tune large language models. The library has a wide range of pre-trained models that can be fine-tuned on custom datasets.
+    \cite{wolf-etal-2020-transformers}
     \item \textbf{LensKit}: A toolkit for building, researching, and studying recommender systems. I will be using LensKit for building and evaluating the conversational recommender system.
+    \cite{ekstrand_2020_lenskit}
 \end{itemize}
 
 \subsection{Datasets}
@@ -22,7 +26,7 @@ This section provides an overview of the various software, tools, and datasets u
     \item \textbf{MovieLens 32M}: 
     This dataset\cite{10.1145/2827872} is a stable benchmark dataset. 
     It has 32 million ratings and two million tag applications applied to 87,585 movies by 200,948 users. Collected on 10/2023, released 05/2024.
-    I will be using this dataset for training and evaluating the conversational recommender system.
+    I will be using this dataset for training and evaluating the conversational recommender system in terms of the quality of recommendations.
 
     \item \textbf{INSPIRED}: 
     This is a dataset\cite{hayati-etal-2020-inspired} of 1,001 human-human dialogs for movie recommendation with measures for successful recommendations. 
@@ -30,12 +34,10 @@ This section provides an overview of the various software, tools, and datasets u
     Analysis shows that sociable recommendation strategies, such as sharing personal opinions or communicating with encouragement, 
     more frequently lead to successful recommendations. Models trained with these strategy labels outperform baseline models in both 
     automatic and human evaluations. This work aims to build sociable recommendation dialog systems grounded in social science theories.
-    I will be using this dataset to train and evaluate the conversational recommender system.
+    I will be using this dataset to train and evaluate the conversational recommender system in terms of both the quality of recommendations and the quality of the conversation.
 
-    \item \textbf{The Movie Database (TMDB) API}: TMDB\cite{tmdb} is a community built movie and TV database. The database contains information on movies, TV shows, actors, and more.
+    \item \textbf{The Movie Database (TMDB) API}: TMDB\cite{tmdb} is a community built movie and TV database. The database contains information on movies, TV shows, actors, and various other pieces of data.
     I'm using it as it contains metadata on movies, such as genres, actors, directors, and more. This data will be used to provide information on movies to the user, and to build into reccomendations.
-
-    
 
 \end{itemize}
 

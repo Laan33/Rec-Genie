@@ -67,10 +67,14 @@ Moreover, the use of simulation environments and user simulators has gained trac
 Despite these advancements, papers outline that there remains a need for standardized evaluation frameworks that can comprehensively assess the performance of CRSs across different domains and use cases.
 
 \subsubsection{Explainability}
-In conversational recommendation systems, explainability is crucial for building trust with users. 
-The system must be able to clearly explain why a particular recommendation was made and how it arrived at that conclusion. 
-Current approaches to explainability in recommendation systems, such as those discussed by Guo et al. \cite{Guo_2023}, focus on providing transparent and understandable justifications for recommendations. 
-This project aims to incorporate these explainability techniques to ensure that users feel confident and informed about the recommendations they receive.
+In conversational recommendation systems, explainability is crucial for building trust with users. The system must be able to clearly explain why a particular recommendation was made and how it arrived at that conclusion. 
+
+Current approaches to explainability in recommendation systems, such as those discussed by Guo et al. \cite{Guo_2023}, or Xu et al. \cite{Tag_based_post_hoc} focus on providing transparent and understandable justifications for recommendations. These approaches often involve breaking down the recommendation process into comprehensible steps that can be communicated to the user. For instance, a system might explain that a movie recommendation is based on the user's previous preferences for a specific genre or the popularity of the movie among similar users.
+
+
+Recent advancements in natural language processing have enabled more sophisticated explainability mechanisms. NLP techniques can be used to generate natural language explanations that are easy for users to understand. Additionally, dialogue management systems can handle follow-up questions from users, providing further clarification and enhancing the overall transparency of the recommendation process.
+
+In this project, I aim to incorporate these explainability techniques to ensure that users feel confident and informed about the recommendations they receive. By leveraging both content-based and collaborative filtering explanations, as well as utilizing NLP for natural language justifications, we can create a conversational recommendation system that not only provides accurate recommendations but also builds trust and engagement with users.
 
 \subsubsection{Critiquing-based reccomendation systems}
 My project touches in on critiquing-based recommendation systems, where the user is asked to provide feedback on the recommendations they are given, and the system uses this feedback to refine the recommendations.
