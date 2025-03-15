@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Changed to &#10;twitter-roberta-base-sentiment-latest">
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Working rec, weightings">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Rec-Genie.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Rec-Genie.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/preliminary-code/cold-start-chat.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/preliminary-code/cold-start-chat.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cold-start-poc/Director_Content_Based_Recommender_Systems(1).ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/cold-start-poc/Director_Content_Based_Recommender_Systems(1).ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cold-start-poc/RecGenie.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/cold-start-poc/RecGenie.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fyp/Project-Definition-Document/Main.tex" beforeDir="false" afterPath="$PROJECT_DIR$/fyp/Project-Definition-Document/Main.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/preliminary-code/cold-start-chat.ipynb" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +29,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -50,16 +62,24 @@
     &quot;Python.baseSystem.executor&quot;: &quot;Run&quot;,
     &quot;Python.simpleRec.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;mvp-reset&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/Cathal/Rec-Genie/cold-start-poc&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cold-start-poc" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/datasets" />
+      <recent name="$PROJECT_DIR$/cold-start-poc" />
       <recent name="$PROJECT_DIR$/preliminary-code" />
     </key>
   </component>
@@ -89,7 +109,31 @@
       <workItem from="1731863647465" duration="1335000" />
       <workItem from="1731864988178" duration="54000" />
       <workItem from="1731865056565" duration="2568000" />
-      <workItem from="1731956601327" duration="1149000" />
+      <workItem from="1731956601327" duration="11114000" />
+      <workItem from="1733416709059" duration="2985000" />
+      <workItem from="1735481602288" duration="682000" />
+      <workItem from="1735482766111" duration="579000" />
+      <workItem from="1735483353089" duration="943000" />
+      <workItem from="1735561522252" duration="2321000" />
+      <workItem from="1735563857893" duration="2004000" />
+      <workItem from="1735565892998" duration="4016000" />
+      <workItem from="1736177861801" duration="54000" />
+      <workItem from="1736188643065" duration="8244000" />
+      <workItem from="1736450804304" duration="11935000" />
+      <workItem from="1736607828517" duration="9980000" />
+      <workItem from="1736629719947" duration="11145000" />
+      <workItem from="1736713452664" duration="2894000" />
+      <workItem from="1736970121333" duration="6711000" />
+      <workItem from="1737039610855" duration="2247000" />
+      <workItem from="1737052197009" duration="1175000" />
+      <workItem from="1737466978873" duration="3725000" />
+      <workItem from="1737474599992" duration="4504000" />
+      <workItem from="1740834717755" duration="11781000" />
+      <workItem from="1740851529323" duration="10456000" />
+      <workItem from="1741457688406" duration="24000" />
+      <workItem from="1741885137352" duration="1886000" />
+      <workItem from="1741984759442" duration="48000" />
+      <workItem from="1742045133264" duration="6457000" />
     </task>
     <task id="LOCAL-00001" summary="merged">
       <option name="closed" value="true" />
@@ -171,14 +215,152 @@
       <option name="project" value="LOCAL" />
       <updated>1731866403161</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="before switch to 'The Movies Dataset'">
+      <option name="closed" value="true" />
+      <created>1731957946614</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1731957946614</updated>
+    </task>
+    <task id="LOCAL-00012" summary="MVP desc">
+      <option name="closed" value="true" />
+      <created>1736452364494</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1736452364494</updated>
+    </task>
+    <task id="LOCAL-00013" summary="MVP LLM time">
+      <option name="closed" value="true" />
+      <created>1736457588187</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1736457588187</updated>
+    </task>
+    <task id="LOCAL-00014" summary="MVP is giving out perfect json">
+      <option name="closed" value="true" />
+      <created>1736459569044</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1736459569045</updated>
+    </task>
+    <task id="LOCAL-00015" summary="MVP before splitting into two queries">
+      <option name="closed" value="true" />
+      <created>1736613045466</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1736613045466</updated>
+    </task>
+    <task id="LOCAL-00016" summary="mvp not really working">
+      <option name="closed" value="true" />
+      <created>1736614709264</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1736614709264</updated>
+    </task>
+    <task id="LOCAL-00017" summary="MVP's base stage">
+      <option name="closed" value="true" />
+      <created>1736621011046</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1736621011046</updated>
+    </task>
+    <task id="LOCAL-00018" summary="base recommender">
+      <option name="closed" value="true" />
+      <created>1736710495109</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1736710495109</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Adding a director based recommender">
+      <option name="closed" value="true" />
+      <created>1736710978503</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1736710978503</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Added somewhat progress colab">
+      <option name="closed" value="true" />
+      <created>1740838377456</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1740838377456</updated>
+    </task>
+    <task id="LOCAL-00021" summary="ONE hot encoding the genres!">
+      <option name="closed" value="true" />
+      <created>1740843567951</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1740843567951</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Ok, acutally nice">
+      <option name="closed" value="true" />
+      <created>1740851513834</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1740851513834</updated>
+    </task>
+    <task id="LOCAL-00023" summary="IT REALLY WORKS???">
+      <option name="closed" value="true" />
+      <created>1740862504030</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1740862504030</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Saving things">
+      <option name="closed" value="true" />
+      <created>1741093208612</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1741093208612</updated>
+    </task>
+    <task id="LOCAL-00025" summary="I'm back again">
+      <option name="closed" value="true" />
+      <created>1742046701481</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1742046701481</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Working rec, weightings">
+      <option name="closed" value="true" />
+      <created>1742057868567</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1742057868567</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="merged" />
     <MESSAGE value="Added to README.md and base workspace stuff" />
     <MESSAGE value="Added gitignore" />
     <MESSAGE value="Added description and references" />
@@ -188,49 +370,45 @@
     <MESSAGE value="Started coldstart" />
     <MESSAGE value="Coldstart basic parsing" />
     <MESSAGE value="Changed to &#10;twitter-roberta-base-sentiment-latest" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed to &#10;twitter-roberta-base-sentiment-latest" />
+    <MESSAGE value="before switch to 'The Movies Dataset'" />
+    <MESSAGE value="MVP desc" />
+    <MESSAGE value="MVP LLM time" />
+    <MESSAGE value="MVP is giving out perfect json" />
+    <MESSAGE value="MVP before splitting into two queries" />
+    <MESSAGE value="mvp not really working" />
+    <MESSAGE value="MVP's base stage" />
+    <MESSAGE value="base recommender" />
+    <MESSAGE value="Adding a director based recommender" />
+    <MESSAGE value="Added somewhat progress colab" />
+    <MESSAGE value="ONE hot encoding the genres!" />
+    <MESSAGE value="Ok, acutally nice" />
+    <MESSAGE value="IT REALLY WORKS???" />
+    <MESSAGE value="Saving things" />
+    <MESSAGE value="I'm back again" />
+    <MESSAGE value="Working rec, weightings" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working rec, weightings" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
-          <url>notebook:///Users/Cathal/Rec-Genie/simpleRec.ipynb</url>
-          <line>6</line>
+          <url>notebook:///Users/Cathal/Rec-Genie/cold-start-poc/cold-start-chat.ipynb</url>
+          <line>13</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
-          <url>notebook:///Users/Cathal/Rec-Genie/preliminary-code/cold-start-chat.ipynb</url>
-          <line>158</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
-          <url>notebook:///Users/Cathal/Rec-Genie/preliminary-code/cold-start-chat.ipynb</url>
-          <line>114</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
-          <url>notebook:///Users/Cathal/Rec-Genie/preliminary-code/cold-start-chat.ipynb</url>
-          <line>110</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/.venv/lib/python3.9/site-packages/lenskit/topn.py</url>
-          <line>21</line>
+          <url>notebook:///Users/Cathal/Rec-Genie/cold-start-poc/cold-start-chat.ipynb</url>
+          <line>369</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/.venv/lib/python3.9/site-packages/lenskit/topn.py</url>
-          <line>71</line>
-          <option name="timeStamp" value="3" />
+        <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
+          <url>notebook:///Users/Cathal/Rec-Genie/cold-start-poc/RecGenie.ipynb</url>
+          <line>393</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/.venv/lib/python3.9/site-packages/lenskit/topn.py</url>
-          <line>88</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/.venv/lib/python3.9/site-packages/lenskit/topn.py</url>
-          <line>136</line>
+        <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
+          <url>notebook:///Users/Cathal/Rec-Genie/cold-start-poc/RecGenie.ipynb</url>
+          <line>546</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
