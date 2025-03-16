@@ -330,3 +330,4 @@ cython_debug/
 .DS_Store
 /ml-100k/mku.sh
 /.idea/
+/rec-sys/credentials.py
