@@ -1,5 +1,8 @@
 
 
+def compute_content_scores(user_profile, movies_df, credits_df):
+
+
 
 def recommend_movies(user_id, user_profile, films, top_3_credits_df, directors, ratings_df, top_n=20):
 
