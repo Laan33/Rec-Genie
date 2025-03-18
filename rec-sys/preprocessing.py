@@ -22,15 +22,21 @@ def one_hot_encode_genres(film_df):
     genre_ohe = pd.DataFrame(mlb.fit_transform(film_df['genre_list']),
                              columns=mlb.classes_,
                              index=film_df.index)
+    genre_list_mlb = mlb.classes_
+
     # Concatenate the one-hot encoded genres to the original DataFrame
     ohe_film_df = pd.concat([film_df, genre_ohe], axis=1)
-    return ohe_film_df.drop(columns=['genres', 'genre_list'])
+    return ohe_film_df.drop(columns=['genres', 'genre_list']), genre_list_mlb
 
 
-def clean_credits(credits_df):
-    credits_df['cast'] = credits_df['cast'].apply(lambda x: json.loads(x)[:3] if isinstance(x, str) else [])
-    credits_df['directors'] = credits_df['crew'].apply(lambda x: [p['name'] for p in json.loads(x) if p['job'] == 'Director'] if isinstance(x, str) else [])
-    return credits_df
+# def clean_credits(credits_df):
+#     credits_df['cast'] = credits_df['cast'].apply(lambda x: json.loads(x)[:3] if isinstance(x, str) else [])
+#     credits_df['directors'] = credits_df['crew'].apply(lambda x: [p['name'] for p in json.loads(x) if p['job'] == 'Director'] if isinstance(x, str) else [])
+#     return credits_df
+
+def condense_credits(credits_df):
+    top_3_credits_df = pd.concat([get_first_3_cast(credits_df), get_directors_from_crew(credits_df), credits_df['id']], axis=1)
+    return top_3_credits_df
 
 def get_first_3_cast(cast_series):
     """
@@ -64,37 +70,18 @@ def get_directors_from_crew(film_credits):
         film_credits (pandas.DataFrame): A Pandas DataFrame containing 'crew' column with crew information.
 
     Returns:
-        pandas.DataFrame: DataFrame with a column 'director_name' containing the names of the director(s), and the corresponding director 'id', and 'credits id' for the film.
-
+        pandas.DataFrame: DataFrame with a column 'director_info' containing tuples of (director name, film id).
     """
     film_credits = film_credits.set_index('id')
 
     director_info = []
 
-    for index, row in film_credits.iterrows():  # Iterate using index and row
-        crew_list_str = row['crew']
-        crew_list = ast.literal_eval(crew_list_str)
-        director_name = None
-
-        for crew_member_l in crew_list:
-            if crew_member_l['job'] == 'Director':
-                director_name = crew_member_l['name']
-                director_credit_id = crew_member_l['credit_id']
-                break
-
+    for index, row in film_credits.iterrows():
+        crew_list = ast.literal_eval(row['crew'])
+        director_name = next((member['name'] for member in crew_list if member['job'] == 'Director'), None)
         director_info.append((director_name, index))
 
     return pd.DataFrame({'director_info': director_info})
-
-
-# director_info_df = get_directors_from_crew(credits_df)
-# director_info_df.head()
-#
-# # Usage:
-# cast_info_df = get_first_3_cast(credits_df['cast'])
-
-
-# pre_genre_steal_df = movies_df.copy()
 
 
 
