@@ -25,9 +25,8 @@ def load_user_profile():
 genre_normalisation = 0.12
 
 
-def create_user_profile(user_id, films_df, ratings_df, top_3_credits_df, genre_list_mlb):
+def create_user_profile(user_id, films_df, ratings_df, genre_list_mlb):
     """Creates a user profile based on ratings for movies with shared cast/directors."""
-    directors = []
     user_ratings = ratings_df[ratings_df['userId'] == user_id]
     profile = {}
 
@@ -35,28 +34,22 @@ def create_user_profile(user_id, films_df, ratings_df, top_3_credits_df, genre_l
         movie_id = rating_row['movieId']
         rating = rating_row['rating']
 
-        # find the index of the movie_id in top_3_credits_df
-        try:
-            movie_index = top_3_credits_df[top_3_credits_df['id'] == movie_id].index[0]
-        except IndexError:
-            print(f"Movie ID {movie_id} not found in top_3_credits_df")
-            continue  # if the movie_id isn't in top_3_credits_df, skip this movie
-
         # Add cast and director IDs to user profile with weighted ratings
-        cast_ids = top_3_credits_df['cast_info'].iloc[movie_index]
+        cast_ids = films_df['cast_info'].iloc[movie_id]
         for cast_member in cast_ids:
             profile[cast_member[1]] = profile.get(cast_member[1], 0) + rating
 
-        director_info = top_3_credits_df['director_info'].iloc[movie_index]
+        director_info = films_df['director_info'].iloc[movie_id]
         if director_info is not None:
             profile[director_info[0]] = profile.get(director_info[0], 0) + rating
-            directors.append(director_info[0])
 
         # Add genre IDs to user profile with weighted ratings
         genre_score = genre_normalisation * rating
         for film_genre in genre_list_mlb:
-            if films_df[film_genre].iloc[movie_index] == 1:
+            if films_df[film_genre].iloc[movie_id] == 1:
                 profile[film_genre] = profile.get(film_genre, 0) + genre_score
 
-    return profile, directors
+        profile.id = user_id
+
+    return profile
 

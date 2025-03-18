@@ -18,6 +18,8 @@ def extract_genres(film_df):
     return film_df
 
 def one_hot_encode_genres(film_df):
+    extract_genres(film_df)
+
     mlb = MultiLabelBinarizer()
     genre_ohe = pd.DataFrame(mlb.fit_transform(film_df['genre_list']),
                              columns=mlb.classes_,
@@ -35,8 +37,11 @@ def one_hot_encode_genres(film_df):
 #     return credits_df
 
 def condense_credits(credits_df):
-    top_3_credits_df = pd.concat([get_first_3_cast(credits_df), get_directors_from_crew(credits_df), credits_df['id']], axis=1)
+    # Print the column names
+    print(credits_df.columns)
+    top_3_credits_df = pd.concat([get_first_3_cast(credits_df['cast']), get_directors_from_crew(credits_df), credits_df['id']], axis=1)
     return top_3_credits_df
+
 
 def get_first_3_cast(cast_series):
     """
@@ -62,7 +67,7 @@ def get_first_3_cast(cast_series):
     return pd.DataFrame({'cast_info': all_cast_info})
 
 
-def get_directors_from_crew(film_credits):
+def get_directors_from_crew(crew_series):
     """
     Extracts the names of the director(s) from the 'crew' column of a Pandas DataFrame.
 
@@ -72,16 +77,34 @@ def get_directors_from_crew(film_credits):
     Returns:
         pandas.DataFrame: DataFrame with a column 'director_info' containing tuples of (director name, film id).
     """
-    film_credits = film_credits.set_index('id')
+    crew_series = crew_series.set_index('id')
 
     director_info = []
-
-    for index, row in film_credits.iterrows():
-        crew_list = ast.literal_eval(row['crew'])
+    for idx, crew_list_str in crew_series['crew'].items():
+        crew_list = ast.literal_eval(crew_list_str)  # Convert string to list
         director_name = next((member['name'] for member in crew_list if member['job'] == 'Director'), None)
-        director_info.append((director_name, index))
-
+        director_info.append((director_name, idx))
     return pd.DataFrame({'director_info': director_info})
+
+
+def data_tidying(ohe_films_df, top_3_credits_df):
+    # Convert the 'id' columns to numeric, forcing errors to NaN
+    ohe_films_df.loc[:, 'id'] = pd.to_numeric(ohe_films_df['id'], errors='coerce')
+    top_3_credits_df['id'] = pd.to_numeric(top_3_credits_df['id'], errors='coerce')
+
+    # Drop rows with NaN values in the 'id' columns
+    ohe_films_df = ohe_films_df.dropna(subset=['id'])
+    top_3_credits_df = top_3_credits_df.dropna(subset=['id'])
+
+    # Convert the 'id' columns to integers
+    ohe_films_df.loc[:, 'id'] = ohe_films_df['id'].astype(int)
+    top_3_credits_df['id'] = top_3_credits_df['id'].astype(int)
+
+    # Merge the two DataFrames on the 'id' column
+    ohe_films_df = ohe_films_df.merge(top_3_credits_df, on='id', how='inner')
+
+    # Format looks like this: id, title, release_date, popularity, vote_average, vote_count, genre1, genre2, ..., genreN, cast_info, director_info
+    return ohe_films_df
 
 
 
