@@ -84,11 +84,12 @@ def fill_in_collab_scores(films_df, collab_scores):
     return collab_scores
 
 def punish_low_ratings(rating):
-    # Apply penalty: Negative weight for ratings below 2.5
+    print(rating)
+    # Apply penalty: Negative weight for ratings below 2
     # Normalize to a 0-5 scale
     rating = (rating / 2)
 
-    if rating < 2.5:
-        return -abs(2.5 - rating)  # Negative penalty
+    if rating < 2:
+        return -abs(2 - rating)  # Negative penalty
     print(rating)
     return rating
