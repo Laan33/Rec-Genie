@@ -7,7 +7,9 @@ weights = {
     'director_ft_weight': 0.4,
     'genre_ft_weight': 0.4,
     'content_weight': 0.7,
-    'collab_weight': 1
+    'collab_weight': 1,
+    'genre_normalisation': 0.12,
+    'average_rating_weight': 0.3
 }
 
 num_recs = 400 # Number of recommendations to return
@@ -17,12 +19,15 @@ def hybrid_recommend(user_id, user_profile, films_df, credits_df, ratings_df, ge
     user_user_ratings = ratings_df.copy()
     collab_scores = get_user_user_recs(user_id, user_user_ratings)
 
+    collab_scores_covered = fill_in_collab_scores(films_df, collab_scores)
+    # TODO - If no collaborative recommendations are available, add the vote_average as a fallback to the score
+
     # Convert collab_scores into a dictionary for faster lookup
-    collab_scores_dict = dict(zip(collab_scores['item'], collab_scores['score']))
+    collab_scores_dict = dict(zip(collab_scores_covered['id'], collab_scores_covered['score']))
 
     final_scores = {
         movie_id: {
-            'final_score': content_score + collab_scores_dict.get(movie_id, 0) * weights['collab_weight'],  # Default to 0 if not found
+            'final_score': content_score + collab_scores_dict.get(movie_id, 0),  # Default to 0 if not found
             'content_score': content_score,
             'cast_score': cast_score,
             'director_score': director_score,
@@ -59,3 +64,23 @@ def score_breakdown(films_df, recommended_movies):
 
     # Sort the DataFrame by the final_score in descending order
     return scored_films.sort_values(by='score', ascending=False)
+
+def fill_in_collab_scores(films_df, collab_scores):
+    # Multiply the collaborative scores by the weight
+    collab_scores['score'] = collab_scores['score'] * weights['collab_weight']
+
+    # If no collaborative recommendations are available, add the vote_average as a fallback to the score
+    collab_scores['score'] = collab_scores['score'].fillna(0)
+    collab_scores = collab_scores.rename(columns={'item': 'id'})
+
+    # Merge vote_average from films_df
+    collab_scores = collab_scores.merge(films_df[['id', 'vote_average']], on='id', how='left')
+
+    # Replace 0 scores with vote_average where applicable
+    collab_scores['score'] = collab_scores['score'].where(collab_scores['score'] != 0, collab_scores['vote_average'] * weights['average_rating_weight'])
+
+    # Drop the now-unneeded vote_average column
+    collab_scores = collab_scores.drop(columns=['vote_average'])
+
+    return collab_scores
+

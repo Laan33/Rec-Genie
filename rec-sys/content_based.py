@@ -24,7 +24,7 @@ def compute_content_scores(user_id, user_profile, films, credits_df, ratings_df,
             cast_score += user_profile.get(cast_member[1], 0) * weights["cast_ft_weight"]
         score += cast_score
 
-        director_info = films["director_info"].iloc[movie_index]
+        director_info = credits_df["director_info"].iloc[movie_index]
         director_score += user_profile.get(director_info[0], 0) * weights["director_ft_weight"]
         score += director_score
 

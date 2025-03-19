@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Seemingly working!">
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="big data getting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cold-start-poc/Content_Based_Recommender_Systems(1).ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/cold-start-poc/Content_Based_Recommender_Systems(1).ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/content_based.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/content_based.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/data_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/data_loader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/hybrid_recommender.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/hybrid_recommender.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/main.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/user_profile.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/user_profile.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/user_profile.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/user_profile.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +138,7 @@
       <workItem from="1742378314325" duration="5000" />
       <workItem from="1742378670602" duration="13331000" />
       <workItem from="1742392408514" duration="399000" />
-      <workItem from="1742392828271" duration="636000" />
+      <workItem from="1742392828271" duration="4451000" />
     </task>
     <task id="LOCAL-00001" summary="merged">
       <option name="closed" value="true" />
@@ -479,7 +476,23 @@
       <option name="project" value="LOCAL" />
       <updated>1742390079229</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Working before LLM OR BIG DATA">
+      <option name="closed" value="true" />
+      <created>1742393518843</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1742393518843</updated>
+    </task>
+    <task id="LOCAL-00044" summary="big data getting">
+      <option name="closed" value="true" />
+      <created>1742396668744</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1742396668746</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -509,8 +522,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="MVP's base stage" />
-    <MESSAGE value="base recommender" />
     <MESSAGE value="Adding a director based recommender" />
     <MESSAGE value="Added somewhat progress colab" />
     <MESSAGE value="ONE hot encoding the genres!" />
@@ -534,7 +545,9 @@
     <MESSAGE value="Fixed user_profile.py, and ratings dropping timestamps" />
     <MESSAGE value="Score breakdown is working ? before collab fix" />
     <MESSAGE value="Seemingly working!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Seemingly working!" />
+    <MESSAGE value="Working before LLM OR BIG DATA" />
+    <MESSAGE value="big data getting" />
+    <option name="LAST_COMMIT_MESSAGE" value="big data getting" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
