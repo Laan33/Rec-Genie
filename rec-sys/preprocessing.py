@@ -109,5 +109,18 @@ def data_tidying(ohe_films_df, top_3_credits_df):
     return ohe_films_df
 
 
+def filter_films(films_df):
+    # Drop films before 1985 and after today
+    current_month_year = (pd.Timestamp.now() + pd.DateOffset(months=1)).to_period('M')
+    films_df['release_date'] = pd.to_datetime(films_df['release_date'], errors='coerce')
+    films_df = films_df.dropna(subset=['release_date'])
+    films_df = films_df[(films_df['release_date'].dt.year >= 1985) & (films_df['release_date'].dt.to_period('M') < current_month_year)]
+
+    # Drop films with low vote counts
+    films_df = films_df[films_df['vote_count'] > 5]
+
+    return films_df
+
+
 
 

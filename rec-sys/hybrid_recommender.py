@@ -20,7 +20,6 @@ def hybrid_recommend(user_id, user_profile, films_df, credits_df, ratings_df, ge
     collab_scores = get_user_user_recs(user_id, user_user_ratings)
 
     collab_scores_covered = fill_in_collab_scores(films_df, collab_scores)
-    # TODO - If no collaborative recommendations are available, add the vote_average as a fallback to the score
 
     # Convert collab_scores into a dictionary for faster lookup
     collab_scores_dict = dict(zip(collab_scores_covered['id'], collab_scores_covered['score']))
@@ -37,7 +36,7 @@ def hybrid_recommend(user_id, user_profile, films_df, credits_df, ratings_df, ge
         for movie_id, content_score, cast_score, director_score, genre_score in content_scores
     }
 
-    return sorted(final_scores.items(), key=lambda x: x[1]['final_score'], reverse=True)[:400]
+    return sorted(final_scores.items(), key=lambda x: x[1]['final_score'], reverse=True)[:num_recs]
 
 
 def score_breakdown(films_df, recommended_movies):
@@ -77,10 +76,19 @@ def fill_in_collab_scores(films_df, collab_scores):
     collab_scores = collab_scores.merge(films_df[['id', 'vote_average']], on='id', how='left')
 
     # Replace 0 scores with vote_average where applicable
-    collab_scores['score'] = collab_scores['score'].where(collab_scores['score'] != 0, collab_scores['vote_average'] * weights['average_rating_weight'])
-
+    collab_scores['score'] = collab_scores['score'].where(collab_scores['score'] != 0,
+                                                          (collab_scores['vote_average'].apply(punish_low_ratings) * weights['average_rating_weight']))
     # Drop the now-unneeded vote_average column
     collab_scores = collab_scores.drop(columns=['vote_average'])
 
     return collab_scores
 
+def punish_low_ratings(rating):
+    # Apply penalty: Negative weight for ratings below 2.5
+    # Normalize to a 0-5 scale
+    rating = (rating / 2)
+
+    if rating < 2.5:
+        return -abs(2.5 - rating)  # Negative penalty
+    print(rating)
+    return rating
