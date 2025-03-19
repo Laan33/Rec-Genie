@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Adjusting for the aul LLM time">
-      <change beforePath="$PROJECT_DIR$/rec-sys/content_based.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/content_based.py" afterDir="false" />
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Optimisations">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/main.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/user_profile.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/user_profile.py" afterDir="false" />
@@ -81,6 +81,36 @@
       <recent name="$PROJECT_DIR$/preliminary-code" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Rec-Genie" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/rec-sys" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rec-sys/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -137,15 +167,7 @@
       <workItem from="1742378314325" duration="5000" />
       <workItem from="1742378670602" duration="13331000" />
       <workItem from="1742392408514" duration="399000" />
-      <workItem from="1742392828271" duration="10530000" />
-    </task>
-    <task id="LOCAL-00001" summary="merged">
-      <option name="closed" value="true" />
-      <created>1730899377613</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1730899377613</updated>
+      <workItem from="1742392828271" duration="13965000" />
     </task>
     <task id="LOCAL-00002" summary="Added to README.md and base workspace stuff">
       <option name="closed" value="true" />
@@ -531,7 +553,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742404778661</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Optimisations">
+      <option name="closed" value="true" />
+      <created>1742406520035</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1742406520038</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -561,7 +591,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Ok, acutally nice" />
     <MESSAGE value="IT REALLY WORKS???" />
     <MESSAGE value="Saving things" />
     <MESSAGE value="I'm back again" />
@@ -586,7 +615,8 @@
     <MESSAGE value="big WORKING???" />
     <MESSAGE value="Tidying!!" />
     <MESSAGE value="Adjusting for the aul LLM time" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adjusting for the aul LLM time" />
+    <MESSAGE value="Optimisations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Optimisations" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -596,12 +626,17 @@
           <line>390</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rec-sys/main.py</url>
+          <line>79</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Rec_Genie$simpleRec.coverage" NAME="simpleRec Coverage Results" MODIFIED="1731520402730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Rec_Genie$main.coverage" NAME="main Coverage Results" MODIFIED="1742333488915" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rec-sys" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$main.coverage" NAME="main Coverage Results" MODIFIED="1742407746749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rec-sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$baseSystem.coverage" NAME="baseSystem Coverage Results" MODIFIED="1731503707738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Rec_Genie$data_loader.coverage" NAME="data_loader Coverage Results" MODIFIED="1742333006709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rec-sys" />
   </component>

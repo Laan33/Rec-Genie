@@ -128,7 +128,7 @@ def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
     return profile
 
 
-def adjust_user_profile(user_profile, user_weights, films_df, genre_list_mlb):
+def adjust_user_profile(user_profile, user_weights, feedback):
     """Permanently adjusts the user profile based on feedback adjustments on the weighting."""
     # Adjust the user profile based on the user's ratings
 
