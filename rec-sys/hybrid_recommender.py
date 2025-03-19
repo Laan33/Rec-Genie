@@ -15,7 +15,8 @@ num_recs = 20 # Number of recommendations to return
 
 def hybrid_recommend(user_id, user_profile, films_df, credits_df, ratings_df, genre_list_mlb):
     content_scores = compute_content_scores(user_id, user_profile, films_df, credits_df, ratings_df, weights, genre_list_mlb,top_n=num_recs)
-    collab_scores = get_user_user_recs(user_profile.id, ratings_df)
+    user_user_ratings = ratings_df.copy()
+    collab_scores = get_user_user_recs(user_id, user_user_ratings)
 
     final_scores = {
         movie_id: {
@@ -29,8 +30,7 @@ def hybrid_recommend(user_id, user_profile, films_df, credits_df, ratings_df, ge
         for movie_id, content_score, cast_score, director_score, genre_score in content_scores
     }
 
-    return sorted(final_scores.items(), key=lambda x: x[1], reverse=True)[:num_recs]
-
+    return sorted(final_scores.items(), key=lambda x: x[1]['final_score'], reverse=True)[:num_recs]
 
 def score_breakdown(films_df, recommended_movies):
     return films_df[films_df['id'].isin([movie_id for movie_id, _, _, _, _, _ in recommended_movies])][['title', 'release_date', 'vote_average', 'vote_count']].assign(

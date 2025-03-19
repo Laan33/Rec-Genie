@@ -37,8 +37,6 @@ def one_hot_encode_genres(film_df):
 #     return credits_df
 
 def condense_credits(credits_df):
-    # Print the column names
-    print(credits_df.columns)
     top_3_credits_df = pd.concat([get_first_3_cast(credits_df['cast']), get_directors_from_crew(credits_df), credits_df['id']], axis=1)
     return top_3_credits_df
 

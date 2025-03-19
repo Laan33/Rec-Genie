@@ -5,7 +5,8 @@ def setup_user_user(ratings, nnbrs, min_nbrs):
     # These two numbers set the minimum (3) and maximum (15) number of neighbours to consider. These are considered "reasonable defaults", but you can experiment with others too
     user_user = UserUser(nnbrs, min_nbrs=min_nbrs)
 
-    ratings = ratings.drop(columns=['timestamp'])
+    if 'timestamp' in ratings.columns:
+        ratings = ratings.drop(columns=['timestamp'])
     ratings.rename(columns={'userId': 'user'}, inplace=True)
     ratings.rename(columns={'movieId': 'item'}, inplace=True)
 
