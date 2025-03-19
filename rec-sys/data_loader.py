@@ -12,10 +12,14 @@ def mount_drive():
     dataset_path = '/content/drive/MyDrive/Colab_Notebooks/Datasets/'
 
 def load_movies():
-    return pd.read_csv(dataset_path + "/movies_metadata.csv", usecols=['id', 'title', 'release_date', 'genres', 'popularity', 'vote_average', 'vote_count'])
+    return pd.read_csv(dataset_path + "/TMDB_all_movies.csv",
+                       usecols=['id', 'title', 'release_date', 'genres', 'popularity', 'vote_average', 'vote_count', 'imdb_id'])
 
 def load_ratings():
     return pd.read_csv(dataset_path + "/ratings.csv", usecols=['userId', 'movieId', 'rating'])
+
+def load_ratings_timestamped():
+    return pd.read_csv(dataset_path + "/ratings.csv")
 
 def load_credits():
     return pd.read_csv(dataset_path + "/credits.csv")

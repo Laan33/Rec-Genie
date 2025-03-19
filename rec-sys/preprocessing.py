@@ -7,21 +7,25 @@ from sklearn.preprocessing import MultiLabelBinarizer
 genres_to_drop = [7759, 7760, 7761, 11602, 11176, 33751, 29812, 2883, 17161, 18012, 18013, 23822] # Remove low quality entries
 
 def extract_genres(film_df):
+    # Step 1: Ensure genres are parsed correctly as a list of genre names
     film_df['genres'] = film_df['genres'].apply(
-        lambda x: json.loads(x.replace("'", "\"")) if isinstance(x, str) else x
-    ).apply(
-        lambda x: [gen for gen in x if gen['id'] not in genres_to_drop] if isinstance(x, list) else []
+        lambda x: [{'name': genre.strip()} for genre in x.split(',')] if isinstance(x, str) else []
     )
 
+    # Step 2: Create a list of genre names, ensuring it's a list and includes the genres
     film_df['genre_list'] = film_df['genres'].apply(
-        lambda x: [gen['name'] for gen in x] if isinstance(x, list) else [])
+        lambda x: [gen['name'] for gen in x] if isinstance(x, list) else []
+    )
+
     return film_df
 
 def one_hot_encode_genres(film_df):
-    extract_genres(film_df)
+    film_df = extract_genres(film_df)
+    # Ensure genre_list is a list of lists for MultiLabelBinarizer
+    genre_list = film_df['genre_list'].apply(lambda x: x.split(', ') if isinstance(x, str) else x)
 
     mlb = MultiLabelBinarizer()
-    genre_ohe = pd.DataFrame(mlb.fit_transform(film_df['genre_list']),
+    genre_ohe = pd.DataFrame(mlb.fit_transform(genre_list),
                              columns=mlb.classes_,
                              index=film_df.index)
     genre_list_mlb = mlb.classes_
