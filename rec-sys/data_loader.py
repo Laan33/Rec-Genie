@@ -12,7 +12,6 @@ def mount_drive():
     dataset_path = '/content/drive/MyDrive/Colab_Notebooks/Datasets/'
 
 def load_movies():
-    # TODO - need to drop movies_df = movies_df.drop(35587) # A weird film entry is now gone!
     return pd.read_csv(dataset_path + "/movies_metadata.csv", usecols=['id', 'title', 'release_date', 'genres', 'popularity', 'vote_average', 'vote_count'])
 
 def load_ratings():

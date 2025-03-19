@@ -4,9 +4,8 @@ from content_based import compute_content_scores
 # Constants
 weights = {
     'cast_ft_weight': 0.3,
-    'director_ft_weight': 0.7,
-    'genre_ft_weight': 0.07,
-    'user_user_weight': 1,
+    'director_ft_weight': 0.4,
+    'genre_ft_weight': 0.4,
     'content_weight': 0.7,
     'collab_weight': 1
 }
@@ -23,12 +22,12 @@ def hybrid_recommend(user_id, user_profile, films_df, credits_df, ratings_df, ge
 
     final_scores = {
         movie_id: {
-            'final_score': weights['content_weight'] * content_score + weights['collab_weight'] * collab_scores_dict.get(movie_id, 0),  # Default to 0 if not found
+            'final_score': content_score + collab_scores_dict.get(movie_id, 0) * weights['collab_weight'],  # Default to 0 if not found
             'content_score': content_score,
             'cast_score': cast_score,
             'director_score': director_score,
             'genre_score': genre_score,
-            'collab_score': collab_scores_dict.get(movie_id, 0)  # Default to 0 if not found
+            'collab_score': collab_scores_dict.get(movie_id, 0) * weights['collab_weight']  # Default to 0 if not found
         }
         for movie_id, content_score, cast_score, director_score, genre_score in content_scores
     }

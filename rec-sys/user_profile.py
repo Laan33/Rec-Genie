@@ -89,6 +89,10 @@ def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
         movie_id = int(rating_row['movieId'])
         rating = rating_row['rating']
 
+        # Apply penalty: Negative weight for ratings below 2.5
+        if rating < 2.5:
+            rating = -abs(2.5 - rating)  # Negative penalty
+
         # Add cast and director IDs to user profile with weighted ratings
         cast_ids = films_df.loc[films_df['id'] == movie_id, 'cast_info'].values[0]
         for cast_member in cast_ids:
@@ -100,7 +104,7 @@ def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
 
         # Add genre IDs to user profile with weighted ratings
         genre_score = genre_normalisation * rating
-        # print("genre list: ", genre_list_mlb)
+
         for film_genre in genre_list_mlb:
             if films_df.loc[films_df['id'] == movie_id, film_genre].values[0] == 1:
                 profile[film_genre] = profile.get(film_genre, 0) + genre_score
