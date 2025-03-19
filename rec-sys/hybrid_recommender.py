@@ -17,6 +17,8 @@ num_recs = 400 # Number of recommendations to return
 def hybrid_recommend(user_id, user_profile, films_df, credits_df, ratings_df, genre_list_mlb):
     content_scores = compute_content_scores(user_id, user_profile, films_df, credits_df, ratings_df, weights, genre_list_mlb)
     user_user_ratings = ratings_df.copy()
+    user_user_ratings = remove_non_applicable_films(films_df, user_user_ratings)
+
     collab_scores = get_user_user_recs(user_id, user_user_ratings)
 
     collab_scores_covered = fill_in_collab_scores(films_df, collab_scores)
@@ -84,12 +86,16 @@ def fill_in_collab_scores(films_df, collab_scores):
     return collab_scores
 
 def punish_low_ratings(rating):
-    print(rating)
     # Apply penalty: Negative weight for ratings below 2
-    # Normalize to a 0-5 scale
     rating = (rating / 2)
 
     if rating < 2:
         return -abs(2 - rating)  # Negative penalty
-    print(rating)
     return rating
+
+def remove_non_applicable_films(films_df, ratings_df):
+    # Remove ratings that have film ids not in films_df
+    valid_ids = films_df['id']
+    ratings_df = ratings_df[ratings_df['movieId'].isin(valid_ids)]
+
+    return ratings_df
