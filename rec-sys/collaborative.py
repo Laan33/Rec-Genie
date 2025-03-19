@@ -15,8 +15,8 @@ def setup_user_user(ratings, nnbrs, min_nbrs):
     print("User-User algorithm set up!")
     return algo
 
-def get_user_user_recs(user_id, user_ratings ,num_ids = 500, nnbrs=15, min_nbrs=3):
+def get_user_user_recs(user_id, user_ratings, nnbrs=15, min_nbrs=3):
     algo = setup_user_user(user_ratings, nnbrs, min_nbrs)
-    return algo.recommend(user_id, num_ids)
+    return algo.recommend(user_id)
 
 

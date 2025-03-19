@@ -1,6 +1,6 @@
 
 
-def compute_content_scores(user_id, user_profile, films, credits_df, ratings_df, weights, genre_list_mlb, top_n=20):
+def compute_content_scores(user_id, user_profile, films, credits_df, ratings_df, weights, genre_list_mlb):
     user_rated_movies = set(ratings_df[ratings_df['userId'] == user_id]['movieId'])
     unrated_movies = films[~films['id'].isin(user_rated_movies)]
 
@@ -37,7 +37,7 @@ def compute_content_scores(user_id, user_profile, films, credits_df, ratings_df,
 
 
     recommendations.sort(key=lambda x: x[1], reverse=True)  # Sort by score
-    top_recommendations = recommendations[:top_n]
+    top_recommendations = recommendations
 
     top_recommendations = [(movie_id, score, cast_score, director_score, genre_score)
                            for movie_id, score, cast_score, director_score, genre_score in top_recommendations]

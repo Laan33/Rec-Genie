@@ -94,11 +94,11 @@ def data_tidying(ohe_films_df, top_3_credits_df):
     ohe_films_df = ohe_films_df.dropna(subset=['id'])
     top_3_credits_df = top_3_credits_df.dropna(subset=['id'])
 
-    # Convert the 'id' columns to integers
+    # # Convert the 'id' columns to integers
     ohe_films_df.loc[:, 'id'] = ohe_films_df['id'].astype(int)
     top_3_credits_df['id'] = top_3_credits_df['id'].astype(int)
 
-    # Merge the two DataFrames on the 'id' column
+    # # Merge the two DataFrames on the 'id' column
     ohe_films_df = ohe_films_df.merge(top_3_credits_df, on='id', how='inner')
 
     # Format looks like this: id, title, release_date, popularity, vote_average, vote_count, genre1, genre2, ..., genreN, cast_info, director_info

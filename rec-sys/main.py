@@ -35,7 +35,7 @@ credits_df = pre.condense_credits(credits_df)
 films_df = pre.data_tidying(ohe_films_df, credits_df)
 
 # Generate the user profile
-user_profile_df = user_pf.load_user_profile()
+user_profile_df = user_pf.load_user_ratings()
 user_profile = user_pf.create_user_profile(USER_ID, films_df, ratings_df, user_profile_df)
 
 # Append the user profile to the ratings DataFrame

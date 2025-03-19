@@ -4,19 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="I'm moving the ml-32m ratings to films/. Credits from movies/7/ to films/. same with movies_metadata">
-      <change afterPath="$PROJECT_DIR$/rec-sys/config.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rec-sys/data_preprocessing.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rec-sys/main.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rec-sys/user_profile.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rec-sys/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Score breakdown is working ? before collab fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cold-start-poc/RecGenie.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/cold-start-poc/RecGenie.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/collaborative.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/collaborative.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/content_based.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/content_based.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/data_loading.ipynb" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/hybrid_recommender.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/hybrid_recommender.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rec-sys/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/main.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rec-sys/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/preprocessing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/user_profile.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/user_profile.py" afterDir="false" />
     </list>
@@ -143,7 +137,9 @@
       <workItem from="1741984759442" duration="48000" />
       <workItem from="1742045133264" duration="20104000" />
       <workItem from="1742311658796" duration="20870000" />
-      <workItem from="1742333841130" duration="2141000" />
+      <workItem from="1742333841130" duration="2808000" />
+      <workItem from="1742378314325" duration="5000" />
+      <workItem from="1742378670602" duration="10585000" />
     </task>
     <task id="LOCAL-00001" summary="merged">
       <option name="closed" value="true" />
@@ -449,7 +445,31 @@
       <option name="project" value="LOCAL" />
       <updated>1742333003734</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="AASHHGH">
+      <option name="closed" value="true" />
+      <created>1742336109502</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1742336109502</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Fixed user_profile.py, and ratings dropping timestamps">
+      <option name="closed" value="true" />
+      <created>1742380999154</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1742380999154</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Score breakdown is working ? before collab fix">
+      <option name="closed" value="true" />
+      <created>1742389161220</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1742389161220</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -479,9 +499,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="MVP LLM time" />
-    <MESSAGE value="MVP is giving out perfect json" />
-    <MESSAGE value="MVP before splitting into two queries" />
     <MESSAGE value="mvp not really working" />
     <MESSAGE value="MVP's base stage" />
     <MESSAGE value="base recommender" />
@@ -504,7 +521,10 @@
     <MESSAGE value="Going somewhere" />
     <MESSAGE value="Going somewhereTIDY" />
     <MESSAGE value="I'm moving the ml-32m ratings to films/. Credits from movies/7/ to films/. same with movies_metadata" />
-    <option name="LAST_COMMIT_MESSAGE" value="I'm moving the ml-32m ratings to films/. Credits from movies/7/ to films/. same with movies_metadata" />
+    <MESSAGE value="AASHHGH" />
+    <MESSAGE value="Fixed user_profile.py, and ratings dropping timestamps" />
+    <MESSAGE value="Score breakdown is working ? before collab fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Score breakdown is working ? before collab fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

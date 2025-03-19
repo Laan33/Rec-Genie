@@ -59,7 +59,7 @@ user_ratings = """
 339846,Baywatch, 2
 """
 
-def load_user_profile():
+def load_user_ratings():
     # Convert into a DataFrame
     user_ratings_df = pd.read_csv(StringIO(user_ratings), header=None, names=["movieId", "movie_name", "rating"])
 
@@ -80,31 +80,32 @@ def load_user_profile():
 genre_normalisation = 0.12
 
 
-def create_user_profile(user_id, films_df, ratings_df, genre_list_mlb):
+def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
     """Creates a user profile based on ratings for movies with shared cast/directors."""
-    user_ratings = ratings_df[ratings_df['userId'] == user_id]
+    # usr_ratings = ratings_df[ratings_df['userId'] == user_id]
     profile = {}
 
-    for _, rating_row in user_ratings.iterrows():
-        movie_id = rating_row['movieId']
+    for _, rating_row in usr_ratings.iterrows():
+        movie_id = int(rating_row['movieId'])
         rating = rating_row['rating']
 
         # Add cast and director IDs to user profile with weighted ratings
-        cast_ids = films_df['cast_info'].iloc[movie_id]
+        cast_ids = films_df.loc[films_df['id'] == movie_id, 'cast_info'].values[0]
         for cast_member in cast_ids:
             profile[cast_member[1]] = profile.get(cast_member[1], 0) + rating
 
-        director_info = films_df['director_info'].iloc[movie_id]
+        director_info = films_df.loc[films_df['id'] == movie_id, 'director_info'].values[0]
         if director_info is not None:
             profile[director_info[0]] = profile.get(director_info[0], 0) + rating
 
         # Add genre IDs to user profile with weighted ratings
         genre_score = genre_normalisation * rating
+        # print("genre list: ", genre_list_mlb)
         for film_genre in genre_list_mlb:
-            if films_df[film_genre].iloc[movie_id] == 1:
+            if films_df.loc[films_df['id'] == movie_id, film_genre].values[0] == 1:
                 profile[film_genre] = profile.get(film_genre, 0) + genre_score
 
-        profile.id = user_id
+        profile['user_id'] = user_id
 
     return profile
 
