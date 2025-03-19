@@ -1,51 +1,42 @@
-import pandas as pd
+import importlib
 
+import pandas as pd
 import data_loader
-import hybrid_recommender
-import preprocessing as pre
 import user_profile as user_pf
+import preprocessing as pre
+
 
 # Change this to True if you are running on Google Colab
 RUNNING_ON_COLAB = False
 
 # Constants
-USER_ID = 999,999
+USER_ID = 999999
 
+def data():
+    if RUNNING_ON_COLAB:
+        data_loader.mount_drive()
 
+    # Load the data
+    films_df = data_loader.load_movies()
+    ratings_df = data_loader.load_ratings()
+    credits_df = data_loader.load_credits()
 
-if RUNNING_ON_COLAB:
-    data_loader.mount_drive()
+    print("Data dimensions:")
+    print("films_df: ", films_df.shape)
+    print("ratings_df: ", ratings_df.shape)
+    print("credits_df: ", credits_df.shape)
 
-# Load the data
-films_df = data_loader.load_movies()
-ratings_df = data_loader.load_ratings()
-credits_df = data_loader.load_credits()
+    return films_df, ratings_df, credits_df
 
-# Data preprocessing
-# Drop the weird film entry
-films_df = films_df.drop(35587)
+# Data processing
+def process_data(films_df, ratings_df, credits_df):
+    films_df = pre.filter_films(films_df)
 
-# One-hot encode the genres
-ohe_films_df = pre.one_hot_encode_genres(films_df)
+    ohe_films_df, genre_list_mlb = pre.one_hot_encode_genres(films_df)
+    credits_df = pre.condense_credits(credits_df)
 
-# Process the credits metadata
-credits_df = pre.condense_credits(credits_df)
+    films_df = pre.data_tidying(ohe_films_df, credits_df)
 
-# Tidy the noise and merge the credits metadata with the films DataFrame
-films_df = pre.data_tidying(ohe_films_df, credits_df)
-
-# Generate the user profile
-user_profile_df = user_pf.load_user_ratings()
-user_profile = user_pf.create_user_profile(USER_ID, films_df, ratings_df, user_profile_df)
-
-# Append the user profile to the ratings DataFrame
-ratings_df = pd.concat([ratings_df, user_profile_df], ignore_index=True)
-
-
-# Generate recommendations
-recommendations = hybrid_recommender.hybrid_recommend(USER_ID, user_profile, films_df, credits_df, ratings_df)
-hybrid_recommender.score_breakdown(films_df, recommendations)
-
-
-
-
+def user(user_id, films_df, genre_list_mlb):
+    user_ratings_df = user_pf.load_user_ratings()
+    user_profile = user_pf.user_feature_profile(user_id, films_df, user_ratings_df, genre_list_mlb)

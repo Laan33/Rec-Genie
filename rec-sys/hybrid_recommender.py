@@ -2,26 +2,27 @@ from collaborative import get_user_user_recs
 from content_based import compute_content_scores
 
 # Constants
-weights = {
-    'cast_ft_weight': 0.3,
-    'director_ft_weight': 0.4,
-    'genre_ft_weight': 0.4,
-    'content_weight': 0.7,
-    'collab_weight': 1,
-    'genre_normalisation': 0.12,
-    'average_rating_weight': 0.3
-}
+# weights = {
+#     'cast_ft_weight': 0.3,
+#     'director_ft_weight': 0.4,
+#     'genre_ft_weight': 0.4,
+#     'content_weight': 0.7,
+#     'collab_weight': 1,
+#     'genre_normalisation': 0.12,
+#     'average_rating_weight': 0.3
+# }
 
 num_recs = 400 # Number of recommendations to return
 
-def hybrid_recommend(user_id, user_profile, films_df, credits_df, ratings_df, genre_list_mlb):
-    content_scores = compute_content_scores(user_id, user_profile, films_df, credits_df, ratings_df, weights, genre_list_mlb)
+def hybrid_recommend(user_profile, films_df, credits_df, ratings_df, genre_list_mlb):
+    weights = user_profile['weights']
+    content_scores = compute_content_scores(user_profile['id'], user_profile['feature_profile'], films_df, credits_df, ratings_df, weights, genre_list_mlb)
     user_user_ratings = ratings_df.copy()
     user_user_ratings = remove_non_applicable_films(films_df, user_user_ratings)
 
-    collab_scores = get_user_user_recs(user_id, user_user_ratings)
+    collab_scores = get_user_user_recs(user_profile['id'], user_user_ratings)
 
-    collab_scores_covered = fill_in_collab_scores(films_df, collab_scores)
+    collab_scores_covered = fill_in_collab_scores(films_df, collab_scores, weights)
 
     # Convert collab_scores into a dictionary for faster lookup
     collab_scores_dict = dict(zip(collab_scores_covered['id'], collab_scores_covered['score']))
@@ -66,7 +67,7 @@ def score_breakdown(films_df, recommended_movies):
     # Sort the DataFrame by the final_score in descending order
     return scored_films.sort_values(by='score', ascending=False)
 
-def fill_in_collab_scores(films_df, collab_scores):
+def fill_in_collab_scores(films_df, collab_scores, weights):
     # Multiply the collaborative scores by the weight
     collab_scores['score'] = collab_scores['score'] * weights['collab_weight']
 

@@ -59,6 +59,16 @@ user_ratings = """
 339846,Baywatch, 2
 """
 
+standard_weights = {
+    'cast_ft_weight': 0.3,
+    'director_ft_weight': 0.4,
+    'genre_ft_weight': 0.4,
+    'content_weight': 0.7,
+    'collab_weight': 1,
+    'genre_normalisation': 0.12,
+    'average_rating_weight': 0.3
+}
+
 def load_user_ratings():
     # Convert into a DataFrame
     user_ratings_df = pd.read_csv(StringIO(user_ratings), header=None, names=["movieId", "movie_name", "rating"])
@@ -80,10 +90,9 @@ def load_user_ratings():
 genre_normalisation = 0.12
 
 
-def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
+def user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb):
     """Creates a user profile based on ratings for movies with shared cast/directors."""
-    # usr_ratings = ratings_df[ratings_df['userId'] == user_id]
-    profile = {}
+    features_profile = {}
 
     for _, rating_row in usr_ratings.iterrows():
         movie_id = int(rating_row['movieId'])
@@ -93,24 +102,38 @@ def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
         if rating < 2.5:
             rating = -abs(2.5 - rating)  # Negative penalty
 
-        # Add cast and director IDs to user profile with weighted ratings
+        # Add cast and director IDs to user features_profile with weighted ratings
         cast_ids = films_df.loc[films_df['id'] == movie_id, 'cast_info'].values[0]
         for cast_member in cast_ids:
-            profile[cast_member[1]] = profile.get(cast_member[1], 0) + rating
+            features_profile[cast_member[1]] = features_profile.get(cast_member[1], 0) + rating
 
         director_info = films_df.loc[films_df['id'] == movie_id, 'director_info'].values[0]
         if director_info is not None:
-            profile[director_info[0]] = profile.get(director_info[0], 0) + rating
+            features_profile[director_info[0]] = features_profile.get(director_info[0], 0) + rating
 
-        # Add genre IDs to user profile with weighted ratings
+        # Add genre IDs to user features_profile with weighted ratings
         genre_score = genre_normalisation * rating
 
         for film_genre in genre_list_mlb:
             if films_df.loc[films_df['id'] == movie_id, film_genre].values[0] == 1:
-                profile[film_genre] = profile.get(film_genre, 0) + genre_score
+                features_profile[film_genre] = features_profile.get(film_genre, 0) + genre_score
 
-        profile['user_id'] = user_id
+        features_profile['user_id'] = user_id
+
+    return features_profile
+
+def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
+    profile = pd.Series()
+    profile['id'] = [user_id]
+    profile['weights'] = [standard_weights]
+    profile['feature_profile'] = [user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb)]
 
     return profile
 
 
+def adjust_user_profile(user_profile, user_weights, films_df, genre_list_mlb):
+    """Permanently adjusts the user profile based on feedback adjustments on the weighting."""
+    # Adjust the user profile based on the user's ratings
+
+
+    return user_profile
