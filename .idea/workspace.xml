@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Tidying!!">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/data_preprocessing.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/hybrid_recommender.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/hybrid_recommender.py" afterDir="false" />
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Adjusting for the aul LLM time">
+      <change beforePath="$PROJECT_DIR$/rec-sys/content_based.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/content_based.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/main.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rec-sys/user_profile.py" beforeDir="false" afterPath="$PROJECT_DIR$/rec-sys/user_profile.py" afterDir="false" />
@@ -139,7 +137,7 @@
       <workItem from="1742378314325" duration="5000" />
       <workItem from="1742378670602" duration="13331000" />
       <workItem from="1742392408514" duration="399000" />
-      <workItem from="1742392828271" duration="9114000" />
+      <workItem from="1742392828271" duration="10530000" />
     </task>
     <task id="LOCAL-00001" summary="merged">
       <option name="closed" value="true" />
@@ -525,7 +523,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742400281551</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Adjusting for the aul LLM time">
+      <option name="closed" value="true" />
+      <created>1742404778661</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1742404778661</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -555,7 +561,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ONE hot encoding the genres!" />
     <MESSAGE value="Ok, acutally nice" />
     <MESSAGE value="IT REALLY WORKS???" />
     <MESSAGE value="Saving things" />
@@ -580,7 +585,8 @@
     <MESSAGE value="big data getting" />
     <MESSAGE value="big WORKING???" />
     <MESSAGE value="Tidying!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tidying!!" />
+    <MESSAGE value="Adjusting for the aul LLM time" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adjusting for the aul LLM time" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

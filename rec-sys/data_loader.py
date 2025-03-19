@@ -21,5 +21,16 @@ def load_ratings():
 def load_ratings_timestamped():
     return pd.read_csv(dataset_path + "/ratings.csv")
 
-def load_credits():
+def load_credits(load_original=False):
+    if not load_original:
+        return pd.read_csv(dataset_path + "/gen_credits_df.csv")
+    else:
+        return pd.read_csv(dataset_path + "/credits.csv")
+
+def load_credits_no_mod():
     return pd.read_csv(dataset_path + "/credits.csv")
+
+def save_credits(gen_credits_df):
+    new_credits_file_path = dataset_path + "/gen_credits_df.csv"
+
+    gen_credits_df.to_csv(new_credits_file_path, index=False)

@@ -123,11 +123,8 @@ def user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb):
     return features_profile
 
 def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
-    profile = pd.Series()
-    profile['id'] = [user_id]
-    profile['weights'] = [standard_weights]
-    profile['feature_profile'] = [user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb)]
-
+    profile = {'id': user_id, 'weights': standard_weights,
+               'feature_profile': user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb)}
     return profile
 
 
