@@ -27,6 +27,7 @@
 \usepackage{url}
 \usepackage{comment}
 \usepackage{titlesec}
+\usepackage{graphicx}
 %\usepackage[compatibility=false]{caption}
 \usepackage{authblk}
 \usepackage{xcolor} % Load the xcolor package for color options
@@ -37,15 +38,6 @@
   {\mdseries\itshape\large} % Medium series, italic shape, and large font size
   {\thesubsection}{1em}{} % Numbering, spacing, and the section title itself
 
-% University Logo
-\usepackage{graphicx}
-\usepackage{titling}
-
-\pretitle{
-  \begin{center}
-  \includegraphics[width=1\textwidth]{Figures/University_Of_Galway_Logo__Positive_Landscape.png}\par\vspace{1em}
-}
-\posttitle{\end{center}}
 
 % Emerald Harvard Citation Style
 
@@ -98,22 +90,21 @@
 \affil[1]{School of Computer Science, University of Galway, Ireland}
 
 \title{Improving Conversational Recommendation Systems with Natural Language Understanding and Large Language Models}
-\title{Improving Conversational Recommendation Systems with Natural Language Understanding and Large Language Models}
 
 
 \begin{document}
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=1\textwidth]{Figures/University_Of_Galway_Logo__Positive_Landscape.png}
-  \label{fig:universityLogo}
-\end{figure}
-\maketitle
 
+\begin{minipage}{\textwidth}
+  \centering
+  \includegraphics[width=0.8\textwidth]{Figures/University_Of_Galway_Logo__Positive_Landscape.png.png}
+  \vspace{1em} % Adjust if needed
+  \maketitle
+\end{minipage}
 
 \begin{abstract}
 \textbf{Purpose} - This study aims to investigate and improve on existing film recommendation systems by giving users an explanation for how the recommendation was made and to permit the user to provide feedback on recommendations in a conversational manner, employing natural language processing (NLP) and understanding (NLU) to alter and tune the recommendation system to emphasise weightings on certain attributes.
 
-\textbf{Design/Methodology/Approach} - The study employs a mixed-methods approach, utilizing [specific methodologies such as surveys, experiments, case studies, etc.]. Data were collected from [description of the sample or data sources] and analyzed using [specific analytical tools or software].
+\textbf{Design/Methodology/Approach} - 
 
 \textbf{Findings} - The results reveal that [briefly describe key findings], indicating that [specific conclusion or implication]. These findings provide evidence that [mention whether the hypothesis was confirmed or if new patterns emerged], offering significant implications for [specific field, industry, or theoretical framework].
 
@@ -122,54 +113,46 @@
 \\
 
 \begin{comment}
-Chapter 1  Introduction
+- Chapter 1  Introduction
+  Gentle introduction to the project – the field, the problem you are solving etc.
+  Open questions to be tackled
+  Your aims/goals.
+  Contributions
+  Lay out of report
 
-Gentle introduction to the project – the field, the problem you are solving etc.
-Open questions to be tackled
-Your aims/goals.
-Contributions
-Lay out of report
+- Chapter 2 Related Work/Literature
+  Introduction 
+  Recommender Systems – traditional approaches – collaborative filtering
+  Limitations/Issues
+  LLMs – overview background
+  Use of LLMs in related domains – conversational IR, explanations etc.
 
+- Chapter 3  Design
+  Introduction – overview of the system 
+  System architecture – include a diagram and discuss the main components in turn. (choice of approaches here)
+  Discussion of design decisions
+  Discussion of the data being used
 
-Chapter 2 Related Work/Literature
+- Chapter 4 Implementation
+  Technologies and Languages used
+  Issues when implementing; discuss challenges and solutions
 
-Introduction 
-Recommender Systems – traditional approaches – collaborative filtering
-Limitations/Issues
-LLMs – overview background
-Use of LLMs in related domains – conversational IR, explanations etc.
+- Chapter 5 Results and Evaluation   (we have some choices here)
+  Illustration the system – few sample run throughs with sample queries and recommendations -tying back to the design and the various components. 
+  This will show the reader how the system works.
 
+  Evaluation
 
-Chapter 3  Design
+  Talk about the classic metrics ( can cover in Chap 2) and they limitations in complex system. 
+  User -evaluation – tasks for users to undertake. Questions asked – we need to design these; Objective measure of the recommendations; Subjective feedback.
 
-Introduction – overview of the system 
-System architecture – include a diagram and discuss the main components in turn. (choice of approaches here)
-Discussion of design decisions
-Discussion of the data being used
+  Efficiency issues
 
-
-Chapter 4 Implementation
-
-Technologies and Languages used
-Issues when implementing; discuss challenges and solutions
-
-Chapter 5 Results and Evaluation   (we have some choices here)
-
-Illustration the system – few sample run throughs with sample queries and recommendations -tying back to the design and the various components. 
-This will show the reader how the system works.
-
-Evaluation
-
-Talk about the classic metrics ( can cover in Chap 2) and they limitations in complex system. 
-User -evaluation – tasks for users to undertake. Questions asked – we need to design these; Objective measure of the recommendations; Subjective feedback.
-
-Efficiency issues
-
-Chapter 6 Conclusion
-Summary  - re-iterate what the project was
-Conclusion – summarise main findings
-Reflections/Discussion
-Future Work
+- Chapter 6 Conclusion
+  Summary  - re-iterate what the project was
+  Conclusion – summarise main findings
+  Reflections/Discussion
+  Future Work
 
 
 \end{comment}
