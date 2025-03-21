@@ -1,28 +1,42 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer
 import gradio as gr
+from langchain_ollama import OllamaLLM
+from langchain_core.prompts import PromptTemplate
 
+# Initialize the OllamaLLM model
+llm = OllamaLLM(model="llama3.2:3b-instruct-q4_K_M")
 
-checkpoint = "TheBloke/TinyLlama-1.1B-Chat-v0.3-GPTQ"
-device = "cpu"  # "cuda" or "cpu"
-tokenizer = AutoTokenizer.from_pretrained(checkpoint)
-model = AutoModelForCausalLM.from_pretrained(checkpoint).to(device)
+# Define a chat template
+chat_template = """<|im_start|>{role}\n{content}\n"""
 
+# Define the predict function
 def predict(message, history):
+    if history is None:
+        history = []
     history.append({"role": "user", "content": message})
-    input_text = tokenizer.apply_chat_template(history, tokenize=False)
-    inputs = tokenizer.encode(input_text, return_tensors="pt").to(device)
-    outputs = model.generate(
-        inputs,
-        max_new_tokens=100,
-        temperature=0.7,  # Increase temperature for more diverse responses
-        top_p=0.9,       # Use nucleus sampling
-        repetition_penalty=1.2,  # Penalize repetition
-        do_sample=True
-    )
-    decoded = tokenizer.decode(outputs[0])
-    response = decoded.split("<|im_start|>assistant\n")[-1].split("<|im_end|>")[0]
-    return response
+    input_text = chat_template.format(role="user", content=message)
 
-demo = gr.ChatInterface(predict, type="messages")
+    # Debug: Print input text
+    print(f"Input Text: {input_text}")
 
-demo.launch()
+    # Use the OllamaLLM model to generate a response
+    try:
+        response = llm.invoke({"prompt": input_text})
+        # Debug: Print response
+        print(f"Response: {response}")
+    except Exception as e:
+        # Debug: Print error
+        print(f"Error: {e}")
+        response = "An error occurred while generating the response."
+
+    history.append({"role": "assistant", "content": response})
+    return response, history
+
+# Create the Gradio interface
+iface = gr.Interface(
+    fn=predict,
+    inputs=["text", "state"],
+    outputs=["text", "state"],
+    live=True
+)
+
+iface.launch()
