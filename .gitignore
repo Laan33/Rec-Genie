@@ -331,3 +331,4 @@ cython_debug/
 /ml-100k/mku.sh
 /.idea/
 /rec-sys/credentials.py
+Rec-Genie/rec_sys/credentials.py
