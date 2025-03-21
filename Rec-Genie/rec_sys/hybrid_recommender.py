@@ -61,7 +61,11 @@ def score_breakdown(films_df, recommended_movies):
         cast_score=[recommended_movies_dict[movie_id]['cast_score'] for movie_id in filtered_films['id']],
         director_score=[recommended_movies_dict[movie_id]['director_score'] for movie_id in filtered_films['id']],
         genre_score=[recommended_movies_dict[movie_id]['genre_score'] for movie_id in filtered_films['id']],
-        user_user_score=[recommended_movies_dict[movie_id]['collab_score'] for movie_id in filtered_films['id']]
+        user_user_score=[recommended_movies_dict[movie_id]['collab_score'] for movie_id in filtered_films['id']],
+        cast_proportion=[round(float(recommended_movies_dict[movie_id]['cast_score'] / recommended_movies_dict[movie_id]['final_score']),1) for movie_id in filtered_films['id']],
+        director_proportion=[round(recommended_movies_dict[movie_id]['director_score'] / recommended_movies_dict[movie_id]['final_score'],1) for movie_id in filtered_films['id']],
+        genre_proportion=[round(recommended_movies_dict[movie_id]['genre_score'] / recommended_movies_dict[movie_id]['final_score'],1) for movie_id in filtered_films['id']],
+        user_user_proportion=[round(recommended_movies_dict[movie_id]['collab_score'] / recommended_movies_dict[movie_id]['final_score'],1) for movie_id in filtered_films['id']]
     )
 
     # Sort the DataFrame by the final_score in descending order

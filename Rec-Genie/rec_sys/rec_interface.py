@@ -102,6 +102,7 @@ def chatbot_main():
             print(f"Chatbot: {response}")
 
 if __name__ == "__main__":
-    chatbot_main()
+    # chatbot_main()
+    main()
 
 
