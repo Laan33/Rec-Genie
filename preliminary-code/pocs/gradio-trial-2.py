@@ -11,7 +11,7 @@ model_name = "llama3.2:latest"
 llm = ChatOllama(model=model_name)
 
 prompt = ChatPromptTemplate.from_messages([
-    ("system", "You're an assistant who's good at {ability}"),
+    ("system", "You're an assistant who's good at talking to users to find out about their film interests and what matters to them in a film"),
     MessagesPlaceholder(variable_name="history"),
     ("human", "{question}"),
 ])
@@ -31,7 +31,8 @@ with_message_history = RunnableWithMessageHistory(
 def chatbot(input_value, history):
     response = with_message_history.stream(
             {"ability": "everything", "question": input_value},
-            config={"configurable": {"session_id": os.getsid(0)}},
+            config={"configurable": {"session_id": 2}},
+            # config={"configurable": {"session_id": os.getsid(1)}},
             )
     full_response = ''
     for item in response:
