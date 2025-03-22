@@ -20,7 +20,7 @@ def predict(message, history):
 
     # Use the OllamaLLM model to generate a response
     try:
-        response = llm.invoke({"prompt": input_text})
+        response = llm.invoke(input_text)  # Pass input_text directly as a string
         # Debug: Print response
         print(f"Response: {response}")
     except Exception as e:
