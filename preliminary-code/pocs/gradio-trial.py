@@ -1,42 +1,36 @@
+import sys
+from ollama import Client
 import gradio as gr
-from langchain_ollama import OllamaLLM
-from langchain_core.prompts import PromptTemplate
 
-# Initialize the OllamaLLM model
-llm = OllamaLLM(model="llama3.2:3b-instruct-q4_K_M")
+host_url = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:11434/"
 
-# Define a chat template
-chat_template = """<|im_start|>{role}\n{content}\n"""
+client = Client(host=host_url)
 
-# Define the predict function
-def predict(message, history):
-    if history is None:
-        history = []
-    history.append({"role": "user", "content": message})
-    input_text = chat_template.format(role="user", content=message)
+model_list = client.list()
+model_names = [model['model'] for model in model_list['models']]
 
-    # Debug: Print input text
-    print(f"Input Text: {input_text}")
+def chat_ollama(user_input, history, Model):
+    stream = client.chat(
+        model=Model,
+        messages=[
+                {
+                    'role': 'user',
+                    'content': user_input
+                },
+            ],
+        stream=True,
+    )
 
-    # Use the OllamaLLM model to generate a response
-    try:
-        response = llm.invoke(input_text)  # Pass input_text directly as a string
-        # Debug: Print response
-        print(f"Response: {response}")
-    except Exception as e:
-        # Debug: Print error
-        print(f"Error: {e}")
-        response = "An error occurred while generating the response."
+    partial_message = ""
+    for chunk in stream:
+        if len(chunk['message']['content']) != 0:
+            partial_message = partial_message + chunk['message']['content']
+            yield partial_message
 
-    history.append({"role": "assistant", "content": response})
-    return response, history
+with gr.Blocks(title="Ollama Chat", fill_height=True) as demo:
+    gr.Markdown("# Ollama Chat")
+    model_list = gr.Dropdown(model_names, value="llama3.2:latest", label="Model", info="Model to chat with")
+    gr.ChatInterface(chat_ollama, additional_inputs=model_list)
 
-# Create the Gradio interface
-iface = gr.Interface(
-    fn=predict,
-    inputs=["text", "state"],
-    outputs=["text", "state"],
-    live=True
-)
-
-iface.launch()
+if __name__ == "__main__":
+    demo.launch()
