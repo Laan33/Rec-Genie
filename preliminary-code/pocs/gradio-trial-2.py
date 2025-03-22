@@ -40,5 +40,11 @@ def chatbot(input_value, history):
         yield full_response
     yield full_response
 
-iface = gr.ChatInterface(fn=chatbot, title="🦙💬 Chatbot using Llama3 via Ollama")
+# session_id_num = gr.Number(2, label="Session ID", info="Session ID to use for chat history")
+iface = gr.ChatInterface(fn=chatbot,
+                         title="🦙💬 Chatbot using Llama3 via Ollama",
+                         # additional_inputs=[session_id_num],
+                         examples=[["I love the Barbie film"], ["I think the director is really important"]]
+                         )
+# iface = gr.ChatInterface(fn=chatbot, title="🦙💬 Chatbot using Llama3 via Ollama", additional_inputs=[session_id_num])
 iface.launch(inbrowser=True)
