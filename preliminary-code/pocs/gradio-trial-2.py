@@ -1,3 +1,5 @@
+from random import randint
+
 import gradio as gr
 from langchain_community.chat_models import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -32,7 +34,6 @@ def chatbot(input_value, history, session_id):
     response = with_message_history.stream(
             {"ability": "everything", "question": input_value},
             config={"configurable": {"session_id": session_id}},
-            # config={"configurable": {"session_id": os.getsid(1)}},
             )
     full_response = ''
     for item in response:
@@ -43,8 +44,13 @@ def chatbot(input_value, history, session_id):
 # accordian = gr.Accordion("Advanced Options", open=True)
 
 
-session_id_num = gr.Number(2, label="Session ID", info="Session ID to use for chat history")
-# accordian.add(session_id_num)
+session_id_num = gr.Number(
+    value=randint(200, 1000),
+    label="Session ID",
+    info="Session ID to use for chat history",
+    minimum=1,
+    maximum=1000000,
+    step=1)
 
 iface = gr.ChatInterface(fn=chatbot,
                          title="🦙💬 Chatbot using Llama3 via Ollama",
