@@ -28,10 +28,10 @@ with_message_history = RunnableWithMessageHistory(
     history_messages_key="history"
 )
 
-def chatbot(input_value, history):
+def chatbot(input_value, history, session_id):
     response = with_message_history.stream(
             {"ability": "everything", "question": input_value},
-            config={"configurable": {"session_id": 2}},
+            config={"configurable": {"session_id": session_id}},
             # config={"configurable": {"session_id": os.getsid(1)}},
             )
     full_response = ''
@@ -40,10 +40,16 @@ def chatbot(input_value, history):
         yield full_response
     yield full_response
 
-# session_id_num = gr.Number(2, label="Session ID", info="Session ID to use for chat history")
+# accordian = gr.Accordion("Advanced Options", open=True)
+
+
+session_id_num = gr.Number(2, label="Session ID", info="Session ID to use for chat history")
+# accordian.add(session_id_num)
+
 iface = gr.ChatInterface(fn=chatbot,
                          title="🦙💬 Chatbot using Llama3 via Ollama",
-                         # additional_inputs=[session_id_num],
+                         # additional_inputs_accordion=[accordian],
+                         additional_inputs=[session_id_num],
                          examples=[["I love the Barbie film"], ["I think the director is really important"]]
                          )
 # iface = gr.ChatInterface(fn=chatbot, title="🦙💬 Chatbot using Llama3 via Ollama", additional_inputs=[session_id_num])
