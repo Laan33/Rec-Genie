@@ -21,7 +21,7 @@ class AttributeSearch:
         self.films_df = pd.read_csv(films_path)
         self.credits_df = pd.read_csv(credits_path)
 
-    def search_by_film_name(film_name: str):
+    def search_by_film_name(self, film_name: str):
         """
         Search for a film by its name.
 
@@ -31,9 +31,12 @@ class AttributeSearch:
         Returns:
             pandas.DataFrame: DataFrame containing the film(s) that match the search query.
         """
+
+        return  self.films_df[self.films_df['title'].str.contains(film_name, case=False)]
+
         pass
 
-    def search_films_by_actor_name(actor_name: str):
+    def search_films_by_actor_name(self, actor_name: str):
         """
         Search for a film by an actor's name.
 
@@ -43,10 +46,12 @@ class AttributeSearch:
         Returns:
             pandas.DataFrame: DataFrame containing the film(s) that match the search query.
         """
+
+        return self.films_df[self.films_df['cast'].str.contains(actor_name, case=False)]
         pass
 
 
-    def search_films_by_director_name(director_name: str):
+    def search_films_by_director_name(self, director_name: str):
         """
         Search for a film by a director's name.
 
@@ -58,7 +63,7 @@ class AttributeSearch:
         """
         pass
 
-    def search_actor_id_by_name(actor_name: str):
+    def search_actor_id_by_name(self, actor_name: str):
         """
         Search for an actor's ID by their name.
 
@@ -70,7 +75,7 @@ class AttributeSearch:
         """
         pass
 
-    def search_director_id_by_name(director_name: str):
+    def search_director_id_by_name(self, director_name: str):
         """
         Search for a director's ID by their name.
 
@@ -82,7 +87,7 @@ class AttributeSearch:
         """
         pass
 
-    def search_genre_id_by_name(genre_name: str):
+    def search_genre_id_by_name(self, genre_name: str):
         """
         Search for a genre's ID by its name.
 

@@ -7,7 +7,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_community.chat_message_histories import SQLChatMessageHistory
 from sqlalchemy import create_engine
 
-from rec_sys.rec_interface import RecInterface
+# from rec_sys.rec_interface import RecInterface
 
 
 sample_json = {
@@ -56,18 +56,22 @@ with_message_history = RunnableWithMessageHistory(
 )
 
 def recommend_films():
-    RecInterface.recommend(user_id=session_id_num.value)
+    # RecInterface.recommend(user_id=session_id_num.value)
+    print("Recommendations generated!!!!.")
 
     return
 
-def route(input_value, history, session_id):
-    # if "breakdown" or "explain" in input_value.lower():
-    #     return score_explainer()
-    if
+# def route(input_value, history, session_id):
+#
+#     semantics_scraper(input_value, history, session_id_num)
+#     return custom_chatbot(input_value, history, session_id)
+#
+#     # if "breakdown" or "explain" in input_value.lower():
+#     #     return score_explainer()
+#     if
+#
+#     else:
 
-    else:
-        semantics_scraper(input_value, history, session_id_num)
-        return custom_chatbot(input_value, history, session_id)
 
 def custom_chatbot(input_value, history, session_id):
     # session_id_num.
@@ -112,8 +116,8 @@ with gr.Blocks(theme="Soft") as demo:
             )
             gr.Markdown("Generate recommendations")
             generate_recommendations = gr.Button(
-                label="Generate recommendations",
-                onclick=recommend_films
+                value="Generate recommendations",
+                # label="Generate recommendations",
             )
         with gr.Column(scale=2):
             gr.Markdown("### User profile")
@@ -141,6 +145,17 @@ with gr.Blocks(theme="Soft") as demo:
             ["I liked the cast in the last film I saw, but they the casting didn't make the film for me"],
         ]
     )
+    generate_recommendations.click(
+        fn=recommend_films,
+        inputs=[],
+        outputs=[]
+    )
+
+    # gr.on(
+    #     triggers=[generate_recommendations.click()],
+    #     fn=recommend_films
+    #
+    # )
 
 
 
