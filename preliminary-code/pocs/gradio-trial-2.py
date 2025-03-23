@@ -109,9 +109,9 @@ with gr.Blocks(theme="Soft") as demo:
             )
         with gr.Column(scale=2):
             gr.Markdown("### User profile")
-            user_profile = gr.JSON(
+            message_semantics = gr.JSON(
                 value=[sample_json],
-                label="User profile"
+                label="Message semantics"
             )
 
     chatbot_interface = gr.ChatInterface(
