@@ -84,8 +84,11 @@ def semantics_scraper(input_value, history):
     yield response
 
 
-with gr.Blocks() as demo:
+with gr.Blocks(theme="Soft") as demo:
     # user_profile = gr.Markdown()
+    with gr.Row():
+        gr.Markdown("# Film Recommendation Chatbot - Llama 3.2")
+
     with gr.Row():
         with gr.Column(scale=1):
             gr.Markdown("### Session ID")
@@ -116,12 +119,12 @@ with gr.Blocks() as demo:
         chatbot=gr.Chatbot(type="messages", show_copy_button=True),
         editable=True,
         type="messages",
-        title="Chatbot using Llama3 via Ollama",
         additional_inputs=[session_id_num],
         # additional_outputs=[user_profile],
         examples=[
             ["I love the Barbie film"],
-            ["I think the director really important in making or breaking a film"],
+            ["I really like Eddie Murphy in Shrek, and it's my favourite film"],
+            ["I think the director is really important in making or breaking a film"],
             ["I liked the cast in the last film I saw, but they the casting didn't make the film for me"],
         ]
         )
