@@ -41,32 +41,46 @@ def chatbot(input_value, history, session_id):
     yield full_response
 
 
-session_id_num = gr.Number(
-    value=randint(200, 1000),
-    label="Session ID",
-    interactive=True,
-    info="Session ID to use for chat history",
-    minimum=1,
-    maximum=1000000,
-    step=1
-)
-chatbot_interface = gr.ChatInterface(fn=chatbot,
-                         title="🦙💬 Chatbot using Llama3 via Ollama",
-                         additional_inputs=[session_id_num],
-                         examples=[["I love the Barbie film"], ["I think the director is really important"]]
-)
+# session_id_num = gr.Number(
+#     value=randint(200, 1000),
+#     label="Session ID",
+#     interactive=True,
+#     info="Session ID to use for chat history",
+#     minimum=1,
+#     maximum=1000000,
+#     step=1
+# )
+
 with gr.Blocks() as demo:
     with gr.Row():
         with gr.Column(scale=1):
-            gr.Markdown("Session ID")
-            session_id_num.render()
-
+            gr.Markdown("###Session ID")
+            session_id_num = gr.Number(
+                value=randint(200, 1000),
+                label="Session ID",
+                interactive=True,
+                info="Session ID to use for chat history",
+                minimum=1,
+                maximum=1000000,
+                step=1
+            )
         with gr.Column(scale=3):
-            gr.Markdown("Chatbot")
+            gr.Markdown("###User profile")
 
-    # Explicitly passing session_id_num to chatbot
-    chatbot_interface.input_components = session_id_num.value
 
-    chatbot_interface.render()
+            # session_id_display = gr.Textbox(value=session_id_num.value, label="Current Session ID", interactive=True)
+        #
+        # with gr.Column(scale=3):
+        #     gr.Markdown("Chatbot")
+
+    chatbot_interface = gr.ChatInterface(fn=chatbot,
+                                         title="Chatbot using Llama3 via Ollama",
+
+                                         additional_inputs=[session_id_num],
+                                         examples=[["I love the Barbie film"],
+                                                   ["I think the director is really important"]]
+                                         )
+
+
 
 demo.launch()
