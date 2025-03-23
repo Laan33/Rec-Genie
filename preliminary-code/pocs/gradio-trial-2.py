@@ -1,7 +1,7 @@
 from random import randint
-
 import gradio as gr
-from langchain_community.chat_models import ChatOllama
+# from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.output_parsers import StrOutputParser
@@ -41,9 +41,6 @@ def chatbot(input_value, history, session_id):
         yield full_response
     yield full_response
 
-# accordian = gr.Accordion("Advanced Options", open=True)
-
-
 session_id_num = gr.Number(
     value=randint(200, 1000),
     label="Input",
@@ -51,72 +48,30 @@ session_id_num = gr.Number(
     info="Session ID to use for chat history",
     minimum=1,
     maximum=1000000,
-    step=1)
+    step=1
+)
 
+state = gr.State(value=session_id_num.value)
 
+def update_state(session_id):
+    state.value = session_id
+    return state.value
 
 iface = gr.ChatInterface(fn=chatbot,
                          title="🦙💬 Chatbot using Llama3 via Ollama",
-                         # additional_inputs_accordion=[accordian],
-                         # additional_inputs=[session_id_num],
+                         additional_inputs=[session_id_num],
                          examples=[["I love the Barbie film"], ["I think the director is really important"]]
                          )
-# iface = gr.ChatInterface(fn=chatbot, title="🦙💬 Chatbot using Llama3 via Ollama", additional_inputs=[session_id_num])
-# iface.launch(inbrowser=True)
+
 with gr.Blocks() as demo:
     with gr.Row():
         with gr.Column(scale=1):
             gr.Markdown("Session ID")
             session_id_num.render()
+            session_id_num.change(fn=update_state, inputs=session_id_num, outputs=state)
 
         with gr.Column(scale=3):
             gr.Markdown("Chatbot")
             iface.render()
 
 demo.launch()
-
-#
-# import gradio as gr
-#
-# python_code = """
-# def fib(n):
-#     if n <= 0:
-#         return 0
-#     elif n == 1:
-#         return 1
-#     else:
-#         return fib(n-1) + fib(n-2)
-# """
-#
-# js_code = """
-# function fib(n) {
-#     if (n <= 0) return 0;
-#     if (n === 1) return 1;
-#     return fib(n - 1) + fib(n - 2);
-# }
-# """
-#
-# def chat(message, history):
-#     if "python" in message.lower():
-#         return "Type Python or JavaScript to see the code.", gr.Code(language="python", value=python_code)
-#     elif "javascript" in message.lower():
-#         return "Type Python or JavaScript to see the code.", gr.Code(language="javascript", value=js_code)
-#     else:
-#         return "Please ask about Python or JavaScript.", None
-#
-# with gr.Blocks() as demo:
-#     code = gr.Code(render=False)
-#     with gr.Row():
-#         with gr.Column():
-#             gr.Markdown("<center><h1>Write Python or JavaScript</h1></center>")
-#             gr.ChatInterface(
-#                 chat,
-#                 examples=["Python", "JavaScript"],
-#                 additional_outputs=[code],
-#                 type="messages"
-#             )
-#         with gr.Column():
-#             gr.Markdown("<center><h1>Code Artifacts</h1></center>")
-#             code.render()
-#
-# demo.launch()
