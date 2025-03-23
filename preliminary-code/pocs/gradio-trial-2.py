@@ -5,6 +5,27 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.output_parsers import StrOutputParser
 from langchain_community.chat_message_histories import SQLChatMessageHistory
+from sqlalchemy import create_engine
+
+
+sample_json = {
+                    "id": 1,
+                    "feature_profile": {
+                        "cast": ["Tom Cruise", "Nicole Kidman"],
+                        "director": ["Steven Spielberg"],
+                        "genre": ["Action", "Adventure"]
+                    },
+                    "weights": {
+                        "cast_ft_weight": 0.3,
+                        "director_ft_weight": 0.4,
+                        "genre_ft_weight": 0.4,
+                        "content_weight": 0.7,
+                        "collab_weight": 1,
+                        "genre_normalisation": 0.12,
+                        "average_rating_weight": 0.3
+                    }
+}
+
 
 model_name = "llama3.2:latest"
 
@@ -19,10 +40,13 @@ prompt = ChatPromptTemplate.from_messages([
 
 chain = prompt | llm.bind(stop=["<|eot_id|>"]) | StrOutputParser()
 
+# Create a connection using SQLAlchemy
+engine = create_engine("sqlite:///sqlite.db")
+
 with_message_history = RunnableWithMessageHistory(
     chain,
     lambda session_id: SQLChatMessageHistory(
-        session_id=session_id, connection_string="sqlite:///sqlite.db"
+        session_id=session_id, connection=engine
     ),
     input_messages_key="question",
     output_messages_key="output",
@@ -32,7 +56,10 @@ with_message_history = RunnableWithMessageHistory(
 def route(input_value, history, session_id):
     if "breakdown" in input_value.lower():
         return score_explainer()
+    # elif "semantics" in input_value.lower():
+    #     return semantics_scraper(
     else:
+        semantics_scraper(input_value, history)
         return custom_chatbot(input_value, history, session_id)
 
 def custom_chatbot(input_value, history, session_id):
@@ -43,7 +70,7 @@ def custom_chatbot(input_value, history, session_id):
     full_response = ''
     for item in response:
         full_response += item
-        yield full_response
+        # yield full_response
     yield full_response
 
 def score_explainer():
@@ -51,19 +78,17 @@ def score_explainer():
 
     yield response
 
-def semantics_scraper()
+def semantics_scraper(input_value, history):
+    response = ""
 
-# user_profile = gr.BarPlot
-# user_profile = gr.Dataframe
-# user_profile = gr.JSON
-# user_profile = gr.
+    yield response
+
 
 with gr.Blocks() as demo:
-    # chatbot = gr.Chatbot()
-    user_profile = gr.Markdown(render=False)
+    # user_profile = gr.Markdown()
     with gr.Row():
         with gr.Column(scale=1):
-            gr.Markdown("###Session ID")
+            gr.Markdown("### Session ID")
             session_id_num = gr.Number(
                 value=randint(200, 1000),
                 label="Session ID",
@@ -73,14 +98,24 @@ with gr.Blocks() as demo:
                 maximum=1000000,
                 step=1
             )
-        with gr.Column(scale=3):
-            gr.Markdown("###User profile")
-            user_profile.render()
+        with gr.Column(scale=2):
+            gr.Markdown("### User profile")
+            user_profile = gr.JSON(
+                value=[sample_json],
+                label="User profile"
+            )
+        with gr.Column(scale=2):
+            gr.Markdown("### User profile")
+            user_profile = gr.JSON(
+                value=[sample_json],
+                label="User profile"
+            )
 
     chatbot_interface = gr.ChatInterface(
         fn=custom_chatbot,
         chatbot=gr.Chatbot(type="messages", show_copy_button=True),
         editable=True,
+        type="messages",
         title="Chatbot using Llama3 via Ollama",
         additional_inputs=[session_id_num],
         # additional_outputs=[user_profile],
@@ -94,3 +129,4 @@ with gr.Blocks() as demo:
 
 
 demo.launch()
+
