@@ -7,6 +7,8 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_community.chat_message_histories import SQLChatMessageHistory
 from sqlalchemy import create_engine
 
+from rec_sys.rec_interface import RecInterface
+
 
 sample_json = {
                     "id": 1,
@@ -53,16 +55,23 @@ with_message_history = RunnableWithMessageHistory(
     history_messages_key="history"
 )
 
+def recommend_films():
+    RecInterface.recommend(user_id=session_id_num.value)
+
+    return
+
 def route(input_value, history, session_id):
-    if "breakdown" in input_value.lower():
-        return score_explainer()
-    # elif "semantics" in input_value.lower():
-    #     return semantics_scraper(
+    # if "breakdown" or "explain" in input_value.lower():
+    #     return score_explainer()
+    if
+
     else:
-        semantics_scraper(input_value, history)
+        semantics_scraper(input_value, history, session_id_num)
         return custom_chatbot(input_value, history, session_id)
 
 def custom_chatbot(input_value, history, session_id):
+    # session_id_num.
+
     response = with_message_history.stream(
         {"ability": "everything", "question": input_value},
         config={"configurable": {"session_id": session_id}},
@@ -70,7 +79,7 @@ def custom_chatbot(input_value, history, session_id):
     full_response = ''
     for item in response:
         full_response += item
-        # yield full_response
+        yield full_response
     yield full_response
 
 def score_explainer():
@@ -101,6 +110,11 @@ with gr.Blocks(theme="Soft") as demo:
                 maximum=1000000,
                 step=1
             )
+            gr.Markdown("Generate recommendations")
+            generate_recommendations = gr.Button(
+                label="Generate recommendations",
+                onclick=recommend_films
+            )
         with gr.Column(scale=2):
             gr.Markdown("### User profile")
             user_profile = gr.JSON(
@@ -120,14 +134,13 @@ with gr.Blocks(theme="Soft") as demo:
         editable=True,
         type="messages",
         additional_inputs=[session_id_num],
-        # additional_outputs=[user_profile],
         examples=[
             ["I love the Barbie film"],
             ["I really like Eddie Murphy in Shrek, and it's my favourite film"],
             ["I think the director is really important in making or breaking a film"],
             ["I liked the cast in the last film I saw, but they the casting didn't make the film for me"],
         ]
-        )
+    )
 
 
 

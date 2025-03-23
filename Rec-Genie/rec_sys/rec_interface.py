@@ -5,6 +5,27 @@ import data_loader
 import user_profile as user_pf
 import preprocessing as pre
 import hybrid_recommender as hyb
+import AttributeSearch
+
+
+
+class RecInterface:
+    user_profile = None
+
+    def __init__(self):
+        self.films_df, self.ratings_df, self.credits_df = load_data()
+        # Create an instance of the AttributeSearch class
+        self.attribute_search = AttributeSearch('path/to/films.csv', 'path/to/credits.csv')
+        self.films_df, self.credits_df, self.genre_list_mlb = process_data(self.films_df, self.ratings_df, self.credits_df)
+
+
+
+    def recommend(self, user_id):
+        recommendations = recommend(self.user_profile, self.films_df, self.credits_df, self.ratings_df, self.genre_list_mlb)
+
+
+        return recommendations[:5]
+
 
 
 
@@ -43,6 +64,12 @@ def process_data(films_df, ratings_df, credits_df):
     films_df = pre.data_tidying(ohe_films_df, credits_df)
     return films_df, credits_df, genre_list_mlb
 
+def user(user_id, ratings_df, genre_list_mlb):
+    user_ratings_df = user_pf.load_user_ratings()
+    ratings_df = pd.concat([ratings_df, user_ratings_df], ignore_index=True).drop_duplicates(subset=['userId', 'movieId'])
+    user_profile = user_pf.create_user_profile(user_id, user_ratings_df, genre_list_mlb)
+    return user_profile, ratings_df
+
 def user(user_id, films_df, ratings_df, genre_list_mlb):
     user_ratings_df = user_pf.load_user_ratings()
     ratings_df = pd.concat([ratings_df, user_ratings_df], ignore_index=True).drop_duplicates(subset=['userId', 'movieId'])
@@ -77,8 +104,9 @@ class Chatbot:
         self.films_df, self.ratings_df, self.credits_df = load_data()
         print("Data loaded successfully.")
         self.films_df, self.credits_df, self.genre_list_mlb = process_data(self.films_df, self.ratings_df, self.credits_df)
-
         print("Data processed successfully.")
+
+
     #
     # def load_data(self):
     #     # Implement your data loading logic here

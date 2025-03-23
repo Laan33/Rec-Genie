@@ -122,15 +122,52 @@ def user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb):
 
     return features_profile
 
+
+def load_or_create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
+    """Loads the user profile from a CSV file or creates it if it doesn't exist."""
+    try:
+        profile = load_user_profile(user_id)
+        return profile
+    except FileNotFoundError:
+        profile = {'id': user_id, 'weights': standard_weights,
+                   'feature_profile': user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb)}
+
+        # Save the user profile to a CSV file
+        save_user_profile(profile)
+
+        return profile
+
+
 def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
     profile = {'id': user_id, 'weights': standard_weights,
                'feature_profile': user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb)}
+
+    # Save the user profile to a CSV file
+    profile_df = pd.DataFrame([profile])
+    profile_df.to_csv(f'/userProfiles/user_profile_{user_id}.csv', index=False)
+
     return profile
 
+def load_user_profile(user_id):
+    """Loads the user profile from a CSV file."""
+    profile_df = pd.read_csv(f'/userProfiles/user_profile_{user_id}.csv')
+    return profile_df.to_dict(orient='records')[0]
 
 def adjust_user_profile(user_profile, user_weights, feedback):
-    """Permanently adjusts the user profile based on feedback adjustments on the weighting."""
-    # Adjust the user profile based on the user's ratings
+    """Permanently adjusts the user profile based on feedback adjustments on the weighting.
+    Adjust the user profile based on the user's ratings"""
+
+    # Update the user profile with the new weights
+    user_profile['weights'] = user_weights
+
+    # Load the user profile from a CSV file
+    user_profile = load_user_profile(user_profile['id'])
+
+
+def save_user_profile(user_profile):
+    # Save the user profile to a CSV file
+    profile_df = pd.DataFrame([user_profile])
+    profile_df.to_csv(f'/userProfiles/user_profile_{user_profile["id"]}.csv', index=False)
 
 
     return user_profile
