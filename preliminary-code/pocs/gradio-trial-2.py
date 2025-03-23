@@ -29,7 +29,13 @@ with_message_history = RunnableWithMessageHistory(
     history_messages_key="history"
 )
 
-def chatbot(input_value, history, session_id):
+def route(input_value, history, session_id):
+    if "breakdown" in input_value.lower():
+        return score_explainer()
+    else:
+        return custom_chatbot(input_value, history, session_id)
+
+def custom_chatbot(input_value, history, session_id):
     response = with_message_history.stream(
         {"ability": "everything", "question": input_value},
         config={"configurable": {"session_id": session_id}},
@@ -40,18 +46,21 @@ def chatbot(input_value, history, session_id):
         yield full_response
     yield full_response
 
+def score_explainer():
+    response = ""
 
-# session_id_num = gr.Number(
-#     value=randint(200, 1000),
-#     label="Session ID",
-#     interactive=True,
-#     info="Session ID to use for chat history",
-#     minimum=1,
-#     maximum=1000000,
-#     step=1
-# )
+    yield response
+
+def semantics_scraper()
+
+# user_profile = gr.BarPlot
+# user_profile = gr.Dataframe
+# user_profile = gr.JSON
+# user_profile = gr.
 
 with gr.Blocks() as demo:
+    # chatbot = gr.Chatbot()
+    user_profile = gr.Markdown(render=False)
     with gr.Row():
         with gr.Column(scale=1):
             gr.Markdown("###Session ID")
@@ -66,20 +75,21 @@ with gr.Blocks() as demo:
             )
         with gr.Column(scale=3):
             gr.Markdown("###User profile")
+            user_profile.render()
 
-
-            # session_id_display = gr.Textbox(value=session_id_num.value, label="Current Session ID", interactive=True)
-        #
-        # with gr.Column(scale=3):
-        #     gr.Markdown("Chatbot")
-
-    chatbot_interface = gr.ChatInterface(fn=chatbot,
-                                         title="Chatbot using Llama3 via Ollama",
-
-                                         additional_inputs=[session_id_num],
-                                         examples=[["I love the Barbie film"],
-                                                   ["I think the director is really important"]]
-                                         )
+    chatbot_interface = gr.ChatInterface(
+        fn=custom_chatbot,
+        chatbot=gr.Chatbot(type="messages", show_copy_button=True),
+        editable=True,
+        title="Chatbot using Llama3 via Ollama",
+        additional_inputs=[session_id_num],
+        # additional_outputs=[user_profile],
+        examples=[
+            ["I love the Barbie film"],
+            ["I think the director really important in making or breaking a film"],
+            ["I liked the cast in the last film I saw, but they the casting didn't make the film for me"],
+        ]
+        )
 
 
 
