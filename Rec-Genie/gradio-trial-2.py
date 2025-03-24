@@ -78,12 +78,17 @@ class GradioFilmRec:
         full_response = ''
         for item in response:
             full_response += item
-            yield full_response
-        self.semantics_scraper(input_value, history)  # Only call after the visible response has been generated
-        yield full_response
-        # full_response = ''.join(response)
-        # self.semantics_scraper(input_value, history)
-        # yield full_response
+            yield full_response, None, None  # Add None for additional outputs
+
+        # Semantic scraping and returning results
+        feedback_chain = self.update_chain(glean_feed_back_chain)
+        semantic_response = feedback_chain.stream(
+            {"input_text": input_value},
+            config={"configurable": {"session_id": str(self.session_id)}},
+        )
+
+        semantic_full_response = ''.join(semantic_response)
+        yield full_response, None, semantic_full_response
 
     def score_explainer(self, breakdown):
         """Explains why a recommendation was made."""
@@ -151,7 +156,7 @@ with gr.Blocks(theme="Soft") as demo:
         editable=True,
         type="messages",
         additional_inputs=[session_id_num],
-        # additional_outputs=[recommendations],
+        additional_outputs=[recommendations, message_semantics],
         examples=[
             ["I love the Barbie film, I'm just Ken in a Barbie world"],
             ["I really like Eddie Murphy as Donkey in Shrek, really, it's my favourite film"],
