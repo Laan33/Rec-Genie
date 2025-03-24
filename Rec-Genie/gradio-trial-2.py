@@ -7,8 +7,9 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_community.chat_message_histories import SQLChatMessageHistory
 from sqlalchemy import create_engine
 
-# from rec_sys.rec_interface import RecInterface
-
+from rec_sys.rec_interface import RecInterface
+from chatbot.prompts import film_chat_explore_chain, explain_rec_chain, glean_feed_back_chain
+# from chatbot import
 
 sample_json = {
                     "id": 1,
@@ -29,21 +30,72 @@ sample_json = {
 }
 
 
-model_name = "llama3.2:latest"
+class GradioFilmRec:
+    def __init__(self):
+        self.model_name = model_name
+        self.rec_interface = RecInterface()
+        self.session_id = randint(1000000, 9999999)
+
+    def recommend_films(self):
+        # RecInterface.recommend(user_id=session_id_num.value)
+        print("Recommendations generated!!!!.")
+
+        breakdown = RecInterface.recommend(self.rec_interface, user_id=self.session_id)
+
+        score_explainer(breakdown)
+
+        return
+
+    def route(self, input_value, history, session_id):
+        semantics_scraper(input_value, history)
+        return custom_chatbot(input_value, history, session_id)
+
+    def custom_chatbot(self, input_value, history, session_id):
+        response = with_message_history.stream(
+            {"ability": "everything", "question": input_value},
+            config={"configurable": {"session_id": session_id}},
+        )
+        full_response = ''
+        for item in response:
+            full_response += item
+            yield full_response
+        semantics_scraper(input_value, history)
+        yield full_response
+
+
+
+
+
+
+# model_name = "llama3.2:latest"
+model_name = "llama3.2:3b-instruct-q4_K_M"
 
 llm = ChatOllama(model=model_name)
 
-prompt = ChatPromptTemplate.from_messages([
-    ("system",
-     "You're an assistant who's good at talking to users to find out about their film interests and what matters to them in a film"),
-    MessagesPlaceholder(variable_name="history"),
-    ("human", "{question}"),
-])
+# Deprecated - film_chat_explore_chain replaces this
+# prompt = ChatPromptTemplate.from_messages([
+#     ("system",
+#      "You're an assistant who's good at talking to users to find out about their film interests and what matters to them in a film"),
+#     MessagesPlaceholder(variable_name="history"),
+#     ("human", "{question}"),
+# ])
 
-chain = prompt | llm.bind(stop=["<|eot_id|>"]) | StrOutputParser()
+# chain = film_chat_explore_chain | llm.bind(stop=["<|eot_id|>"]) | StrOutputParser()
 
 # Create a connection using SQLAlchemy
 engine = create_engine("sqlite:///sqlite.db")
+
+def update_chain(chain, session_id):
+    chain = chain | llm.bind(stop=["<|eot_id|>"]) | StrOutputParser()
+    return RunnableWithMessageHistory(
+        chain,
+        lambda session_id: SQLChatMessageHistory(
+            session_id=session_id, connection=engine
+        ),
+        input_messages_key="question",
+        output_messages_key="output",
+        history_messages_key="history"
+    )
 
 with_message_history = RunnableWithMessageHistory(
     chain,
@@ -55,22 +107,15 @@ with_message_history = RunnableWithMessageHistory(
     history_messages_key="history"
 )
 
-def recommend_films():
+def recommend_films(self, num_recommendations=5):
     # RecInterface.recommend(user_id=session_id_num.value)
     print("Recommendations generated!!!!.")
 
-    return
+    breakdown = RecInterface.recommend(self.rec_interface, user_id=session_id_num.value)
 
-# def route(input_value, history, session_id):
-#
-#     semantics_scraper(input_value, history, session_id_num)
-#     return custom_chatbot(input_value, history, session_id)
-#
-#     # if "breakdown" or "explain" in input_value.lower():
-#     #     return score_explainer()
-#     if
-#
-#     else:
+    score_explainer(breakdown)
+
+    return n
 
 
 def custom_chatbot(input_value, history, session_id):
@@ -84,17 +129,28 @@ def custom_chatbot(input_value, history, session_id):
     for item in response:
         full_response += item
         yield full_response
+    print("Debug test (this happens once a response correct?)")
+    semantics_scraper(input_value, history) # Only call after the visible response has been generated
     yield full_response
 
-def score_explainer():
-    response = ""
+def score_explainer(self, breakdown):
+
+
+    response = with_message_history.stream(
+        {"ability": "everything", "score": breakdown},
+        config={"configurable": {"session_id": self.session_id}},
+    )
 
     yield response
 
 def semantics_scraper(input_value, history):
-    response = ""
+    """
+    Outputs the sentiment of the user's message for feature and item sentiment extraction.
+    """
+    history = history # Placeholder for now
 
-    yield response
+
+
 
 
 with gr.Blocks(theme="Soft") as demo:
@@ -106,7 +162,7 @@ with gr.Blocks(theme="Soft") as demo:
         with gr.Column(scale=1):
             gr.Markdown("### Session ID")
             session_id_num = gr.Number(
-                value=randint(200, 1000),
+                value=randint(1000000, 9999999), # Biggest User ID in the dataset is 999,999
                 label="Session ID",
                 interactive=True,
                 info="Session ID to use for chat history",
@@ -139,8 +195,8 @@ with gr.Blocks(theme="Soft") as demo:
         type="messages",
         additional_inputs=[session_id_num],
         examples=[
-            ["I love the Barbie film"],
-            ["I really like Eddie Murphy in Shrek, and it's my favourite film"],
+            ["I love the Barbie film, I'm just Ken in a Barbie world"],
+            ["I really like Eddie Murphy as Donkey in Shrek, really, it's my favourite film"],
             ["I think the director is really important in making or breaking a film"],
             ["I liked the cast in the last film I saw, but they the casting didn't make the film for me"],
         ]
@@ -150,12 +206,6 @@ with gr.Blocks(theme="Soft") as demo:
         inputs=[],
         outputs=[]
     )
-
-    # gr.on(
-    #     triggers=[generate_recommendations.click()],
-    #     fn=recommend_films
-    #
-    # )
 
 
 
