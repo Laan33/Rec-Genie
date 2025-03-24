@@ -63,7 +63,8 @@ class GradioFilmRec:
         """Generates film recommendations based on user history."""
         print("Generating recommendations...")
         recommendations = self.rec_interface.recommend(num_recommendations=5)
-        return recommendations, self.score_explainer(recommendations)
+        # return recommendations, self.score_explainer(recommendations)
+        return recommendations
 
     def custom_chatbot(self, input_value, history, session_id):
         """Handles user queries with persistent chat history."""
@@ -131,9 +132,13 @@ with gr.Blocks(theme="Soft") as demo:
             gr.Markdown("### Generate Recommendations")
             generate_recommendations = gr.Button(value="Generate Recommendations")
 
+        # with gr.Column(scale=2):
+        #     gr.Markdown("### User Profile")
+        #     user_profile = gr.JSON(value=[sample_json], label="User Profile")
+
         with gr.Column(scale=2):
-            gr.Markdown("### User Profile")
-            user_profile = gr.JSON(value=[sample_json], label="User Profile")
+            gr.Markdown("### Recommendations")
+            recommendations = gr.JSON(label="recommendations")
 
         with gr.Column(scale=2):
             gr.Markdown("### Message Semantics")
@@ -146,6 +151,7 @@ with gr.Blocks(theme="Soft") as demo:
         editable=True,
         type="messages",
         additional_inputs=[session_id_num],
+        additional_outputs=[recommendations],
         examples=[
             ["I love the Barbie film, I'm just Ken in a Barbie world"],
             ["I really like Eddie Murphy as Donkey in Shrek, really, it's my favourite film"],
