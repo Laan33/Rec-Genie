@@ -63,24 +63,25 @@ explain_rec_chain = ChatPromptTemplate.from_messages([
     # MessagesPlaceholder(variable_name="history")
 ])
 
-glean_feed_back_chain = ChatPromptTemplate.from_messages([
-    ("system",
-     "Analyze the sentiment of the following sentence. "
-     "Provide sentiment scores on the importance of the following features followed with the sentiment scores for items within these features: "
-     "- Films "
-     "- Actors "
-     "- Directors "
-     "- Genres "
-     "Add a `\n` before each feature, and a `,` between each item rating. "
-     "Don't be verbose, just provide the scores with no other info. "
-     "- For item ratings, just write i: score, e.g. 'item1: 0.5'. "
-     "- For feature importance, just write f; score, e.g. 'feature1; 0.5'. "
-     "For example: "
-     "\n Films; 0.5 item1: 0.9, item2: 0.2 \n Actors; 0.3 item1: 0.5, item2: 0.1 "
-     "Sentence: {input_text} "
-     ),
-    ("human", "{question}"),
-])
+glean_feed_back_chain = PromptTemplate(
+    input_variables=["input_text"],
+    template=(
+        "Analyze the sentiment of the following sentence. "
+        "Provide sentiment scores on the importance of the following features followed with the sentiment scores for items within these features: "
+        "- Films "
+        "- Actors "
+        "- Directors "
+        "- Genres "
+        "Add a `\n` before each feature, and a `,` between each item rating. "
+        
+        "- For item ratings, just write i: score, e.g. 'item1: 0.5'. "
+        "- For feature importance, just write f; score, e.g. 'feature1; 0.5'. "
+        "For example: "
+        "\n Films; 0.5 item1: 0.9, item2: 0.2 \n Actors; 0.3 item1: 0.5, item2: 0.1 "
+        "ONLY provide the scores, no other chat. "
+        "Sentence: {input_text}"
+    )
+)
 
 DEPRECATED_glean_feed_back_chain = PromptTemplate.from_template(
     """

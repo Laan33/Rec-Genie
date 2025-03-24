@@ -104,7 +104,7 @@ class GradioFilmRec:
         """Extracts sentiment & features from user messages."""
         feedback_chain = self.update_chain(glean_feed_back_chain)
         response = feedback_chain.stream(
-            {"ability": "everything", "input_text": input_value},
+            {"input_text": input_value},  # Remove 'ability' and 'question'
             config={"configurable": {"session_id": str(self.session_id)}},
         )
         print("Semantic Analysis:", ''.join(response))
@@ -142,7 +142,7 @@ with gr.Blocks(theme="Soft") as demo:
 
         with gr.Column(scale=2):
             gr.Markdown("### Message Semantics")
-            message_semantics = gr.JSON(value=[], label="Extracted Insights")
+            message_semantics = gr.Text(label="Extracted Insights")
 
     # Chat Interface
     chatbot_interface = gr.ChatInterface(
@@ -151,7 +151,7 @@ with gr.Blocks(theme="Soft") as demo:
         editable=True,
         type="messages",
         additional_inputs=[session_id_num],
-        additional_outputs=[recommendations],
+        # additional_outputs=[recommendations],
         examples=[
             ["I love the Barbie film, I'm just Ken in a Barbie world"],
             ["I really like Eddie Murphy as Donkey in Shrek, really, it's my favourite film"],
@@ -164,7 +164,7 @@ with gr.Blocks(theme="Soft") as demo:
     generate_recommendations.click(
         fn=film_rec_bot.recommend_films,
         inputs=[],
-        outputs=[]
+        outputs=[recommendations]
     )
 
 # Launch app
