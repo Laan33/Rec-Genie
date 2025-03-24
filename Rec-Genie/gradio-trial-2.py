@@ -1,5 +1,5 @@
-from random import randint
 import gradio as gr
+from random import randint
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
@@ -7,174 +7,141 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_community.chat_message_histories import SQLChatMessageHistory
 from sqlalchemy import create_engine
 
-from rec_sys.rec_interface import RecInterface
+from rec_sys import rec_interface
 from chatbot.prompts import film_chat_explore_chain, explain_rec_chain, glean_feed_back_chain
-# from chatbot import
 
+# Initialize database connection
+engine = create_engine("sqlite:///sqlite.db")
+
+# Sample user profile (for testing UI)
 sample_json = {
-                    "id": 1,
-                    "feature_profile": {
-                        "cast": ["Tom Cruise", "Nicole Kidman"],
-                        "director": ["Steven Spielberg"],
-                        "genre": ["Action", "Adventure"]
-                    },
-                    "weights": {
-                        "cast_ft_weight": 0.3,
-                        "director_ft_weight": 0.4,
-                        "genre_ft_weight": 0.4,
-                        "content_weight": 0.7,
-                        "collab_weight": 1,
-                        "genre_normalisation": 0.12,
-                        "average_rating_weight": 0.3
-                    }
+    "id": 1,
+    "feature_profile": {
+        "cast": ["Tom Cruise", "Nicole Kidman"],
+        "director": ["Steven Spielberg"],
+        "genre": ["Action", "Adventure"]
+    },
+    "weights": {
+        "cast_ft_weight": 0.3,
+        "director_ft_weight": 0.4,
+        "genre_ft_weight": 0.4,
+        "content_weight": 0.7,
+        "collab_weight": 1,
+        "genre_normalisation": 0.12,
+        "average_rating_weight": 0.3
+    }
 }
 
-# model_name = "llama3.2:latest"
-model_name = "llama3.2:3b-instruct-q4_K_M"
-
-llm = ChatOllama(model=model_name)
+# Define LLM model
+MODEL_NAME = "llama3.2:3b-instruct-q4_K_M"
+llm = ChatOllama(model=MODEL_NAME)
 
 
 class GradioFilmRec:
     def __init__(self):
-        self.model_name = model_name
-        self.rec_interface = RecInterface()
-        self.session_id = randint(1000000, 9999999)
+        self.model_name = MODEL_NAME
+        print(f"Using model: {self.model_name}")
+        self.rec_interface = rec_interface.RecInterface()
+        self.session_id = randint(1000000, 9999999)  # Random unique session ID
+
+    def get_message_history(self):
+        """Retrieve or initialise message history for this session."""
+        return SQLChatMessageHistory(session_id=str(self.session_id), connection=engine)
+
+    def update_chain(self, chain):
+        """Wraps a LangChain pipeline with message history tracking."""
+        chain = chain | llm.bind(stop=["<|eot_id|>"]) | StrOutputParser()
+        return RunnableWithMessageHistory(
+            chain,
+            lambda _: self.get_message_history(),
+            input_messages_key="question",
+            output_messages_key="output",
+            history_messages_key="history"
+        )
 
     def recommend_films(self):
-        # RecInterface.recommend(user_id=session_id_num.value)
-        print("Recommendations generated!!!!.")
-
-        recommendations = RecInterface.recommend(self.rec_interface, user_id=self.session_id, num_recommendations=5)
-
-        return recommendations, score_explainer(self, recommendations)
-
+        """Generates film recommendations based on user history."""
+        print("Generating recommendations...")
+        recommendations = self.rec_interface.recommend(num_recommendations=5)
+        return recommendations, self.score_explainer(recommendations)
 
     def custom_chatbot(self, input_value, history, session_id):
-        with_message_history = update_chain(film_chat_explore_chain)
-        response = with_message_history.stream(
+        """Handles user queries with persistent chat history."""
+        self.session_id = session_id
+        chat_chain = self.update_chain(film_chat_explore_chain)
+        response = chat_chain.stream(
             {"ability": "everything", "question": input_value},
-            config={"configurable": {"session_id": session_id}},
+            config={"configurable": {"session_id": str(self.session_id)}},
         )
+
         full_response = ''
         for item in response:
             full_response += item
             yield full_response
-        semantics_scraper(self, input_value, history)
+        self.semantics_scraper(input_value, history)  # Only call after the visible response has been generated
         yield full_response
-
-
-# Create a connection using SQLAlchemy
-engine = create_engine("sqlite:///sqlite.db")
-
-def update_chain(chain):
-    chain = chain | llm.bind(stop=["<|eot_id|>"]) | StrOutputParser()
-    return RunnableWithMessageHistory(
-        chain,
-        lambda session_id: SQLChatMessageHistory(
-            session_id=session_id, connection=engine
-        ),
-        input_messages_key="question",
-        output_messages_key="output",
-        history_messages_key="history"
-    )
-
-
-def recommend_films(self, num_recommendations=5):
-    # RecInterface.recommend(user_id=session_id_num.value)
-    print("Recommendations generated!!!!.")
-
-    scores = RecInterface.recommend(self.rec_interface, user_id=session_id_num.value)
-
-    return scores, score_explainer(self, scores)
-
-
-def custom_chatbot(self, input_value, history, session_id):
-    with_message_history = update_chain(film_chat_explore_chain)
-
-    response = with_message_history.stream(
-        {"ability": "everything", "question": input_value},
-        config={"configurable": {"session_id": session_id}},
-    )
-    full_response = ''
-    for item in response:
-        full_response += item
-        yield full_response
-    print("Debug test (this happens once a response correct?)")
-    semantics_scraper(self, input_value, history) # Only call after the visible response has been generated
-    yield full_response
-
-def score_explainer(self, breakdown):
-    with_message_history = update_chain(explain_rec_chain)
-
-    response = with_message_history.stream(
-        {"ability": "everything", "score": breakdown},
-        config={"configurable": {"session_id": self.session_id}},
-    )
-
-    yield response
-
-def semantics_scraper(self, input_value, history):
-    """
-    Outputs the sentiment of the user's message for feature and item sentiment extraction.
-    """
-    history = history # Placeholder for now
-
-    with_message_history = update_chain(glean_feed_back_chain)
-
-    response = with_message_history.stream(
-        {"ability": "everything", "input_text": input_value},
-        config={"configurable": {"session_id": self.session_id}},
-    )
-
-    full_response = ''
-    for item in response:
-        full_response += item
+        # full_response = ''.join(response)
+        # self.semantics_scraper(input_value, history)
         # yield full_response
-    print("Full response: ", full_response)
-    yield full_response
+
+    def score_explainer(self, breakdown):
+        """Explains why a recommendation was made."""
+        explain_chain = self.update_chain(explain_rec_chain)
+        response = explain_chain.stream(
+            {"ability": "everything", "score": breakdown},
+            config={"configurable": {"session_id": str(self.session_id)}},
+        )
+        full_response = ''
+        for item in response:
+            full_response += item
+            # yield full_response
+        # print("Full response: ", full_response)
+        yield full_response
+        # return ''.join(response)
+
+    def semantics_scraper(self, input_value, history):
+        """Extracts sentiment & features from user messages."""
+        feedback_chain = self.update_chain(glean_feed_back_chain)
+        response = feedback_chain.stream(
+            {"ability": "everything", "input_text": input_value},
+            config={"configurable": {"session_id": str(self.session_id)}},
+        )
+        print("Semantic Analysis:", ''.join(response))
 
 
+# Instantiate the chatbot system
+film_rec_bot = GradioFilmRec()
 
-
-
+# --- 🎨 Gradio UI ---
 with gr.Blocks(theme="Soft") as demo:
-    # user_profile = gr.Markdown()
-    with gr.Row():
-        gr.Markdown("# Film Recommendation Chatbot - Llama 3.2")
+    gr.Markdown("# 🎬 Film Recommendation Chatbot - Llama 3.2")
 
     with gr.Row():
         with gr.Column(scale=1):
             gr.Markdown("### Session ID")
             session_id_num = gr.Number(
-                value=randint(1000000, 9999999), # Biggest User ID in the dataset is 999,999
+                value=film_rec_bot.session_id,
                 label="Session ID",
                 interactive=True,
-                info="Session ID to use for chat history",
-                minimum=1,
-                maximum=1000000,
+                info="Unique session ID to maintain chat history",
+                minimum=999999,
+                maximum=10000000,
                 step=1
             )
-            gr.Markdown("Generate recommendations")
-            generate_recommendations = gr.Button(
-                value="Generate recommendations",
-                # label="Generate recommendations",
-            )
-        with gr.Column(scale=2):
-            gr.Markdown("### User profile")
-            user_profile = gr.JSON(
-                value=[sample_json],
-                label="User profile"
-            )
-        with gr.Column(scale=2):
-            gr.Markdown("### User profile")
-            message_semantics = gr.JSON(
-                value=[sample_json],
-                label="Message semantics"
-            )
+            gr.Markdown("### Generate Recommendations")
+            generate_recommendations = gr.Button(value="Generate Recommendations")
 
+        with gr.Column(scale=2):
+            gr.Markdown("### User Profile")
+            user_profile = gr.JSON(value=[sample_json], label="User Profile")
+
+        with gr.Column(scale=2):
+            gr.Markdown("### Message Semantics")
+            message_semantics = gr.JSON(value=[], label="Extracted Insights")
+
+    # Chat Interface
     chatbot_interface = gr.ChatInterface(
-        fn=custom_chatbot,
+        fn=film_rec_bot.custom_chatbot,
         chatbot=gr.Chatbot(type="messages", show_copy_button=True),
         editable=True,
         type="messages",
@@ -186,13 +153,13 @@ with gr.Blocks(theme="Soft") as demo:
             ["I liked the cast in the last film I saw, but they the casting didn't make the film for me"],
         ]
     )
+
+    # Link button to recommendation function
     generate_recommendations.click(
-        fn=recommend_films,
+        fn=film_rec_bot.recommend_films,
         inputs=[],
         outputs=[]
     )
 
-
-
+# Launch app
 demo.launch()
-

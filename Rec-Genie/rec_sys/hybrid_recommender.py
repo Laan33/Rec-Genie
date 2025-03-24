@@ -1,5 +1,7 @@
-from collaborative import get_user_user_recs
-from content_based import compute_content_scores
+from . import collaborative
+from . import content_based
+# from collaborative import get_user_user_recs
+# from content_based import compute_content_scores
 
 # Constants
 # weights = {
@@ -16,11 +18,11 @@ num_recs = 400 # Number of recommendations to return
 
 def hybrid_recommend(user_profile, films_df, credits_df, ratings_df, genre_list_mlb):
     weights = user_profile['weights']
-    content_scores = compute_content_scores(user_profile['id'], user_profile['feature_profile'], films_df, credits_df, ratings_df, weights, genre_list_mlb)
+    content_scores = content_based.compute_content_scores(user_profile['id'], user_profile['feature_profile'], films_df, credits_df, ratings_df, weights, genre_list_mlb)
     user_user_ratings = ratings_df.copy()
     user_user_ratings = remove_non_applicable_films(films_df, user_user_ratings)
 
-    collab_scores = get_user_user_recs(user_profile['id'], user_user_ratings)
+    collab_scores = collaborative.get_user_user_recs(user_profile['id'], user_user_ratings)
 
     collab_scores_covered = fill_in_collab_scores(films_df, collab_scores, weights)
 

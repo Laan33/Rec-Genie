@@ -4,27 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Docs">
-      <change afterPath="$PROJECT_DIR$/Rec-Genie/model-functions.py" afterDir="false" />
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="too many changes before a commit, I know it's not fully ported over, bad git practices bla bla bla.">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cold-start-poc/RecGenie.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/preliminary-code/cold-start-poc/RecGenie.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cold-start-poc/RecGenie.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/fyp/Project-Definition-Document/RecGenie.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cold-start-poc/cold-start-chat.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/preliminary-code/cold-start-poc/cold-start-chat.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cold-start-poc/mvp.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/preliminary-code/cold-start-poc/mvp.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cold-start-poc/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/preliminary-code/cold-start-poc/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pocs/gradio-trial.py" beforeDir="false" afterPath="$PROJECT_DIR$/preliminary-code/pocs/gradio-trial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/collaborative.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/collaborative.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/config.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/content_based.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/content_based.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/data_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/data_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/hybrid_recommender.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/hybrid_recommender.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/main.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/preprocessing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/user_profile.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/preliminary-code/pocs/test_playground.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/user_profile.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/user_profile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/user_ratings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/user_ratings.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rec-sys/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/chatbot/prompts.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/chatbot/prompts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/gradio-trial-2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/gradio-trial-2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/data_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/data_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/hybrid_recommender.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/hybrid_recommender.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/main.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/user_profile.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/user_profile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/preliminary-code/pocs/gradio-trial.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/preliminary-code/pocs/gradio-trial.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,37 +61,113 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.Gradio-Trial-2.executor": "Run",
     "Python.baseSystem.executor": "Run",
+    "Python.collaborative.executor": "Run",
     "Python.data_loader.executor": "Run",
+    "Python.gradio-trial (1).executor": "Run",
+    "Python.gradio-trial-2.executor": "Run",
     "Python.gradio-trial.executor": "Run",
+    "Python.hybrid_recommender.executor": "Run",
     "Python.main.executor": "Run",
     "Python.rec_interface.executor": "Run",
     "Python.simpleRec.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/Cathal/Rec-Genie/cold-start-poc",
+    "last_opened_file_path": "/Users/Cathal/Rec-Genie/Rec-Genie/chatbot",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Rec-Genie/chatbot" />
       <recent name="$PROJECT_DIR$/cold-start-poc" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Rec-Genie/rec_sys" />
       <recent name="$PROJECT_DIR$/Rec-Genie" />
+      <recent name="$PROJECT_DIR$/Rec-Genie/chatbot" />
+      <recent name="$PROJECT_DIR$/Rec-Genie/rec_sys" />
       <recent name="$PROJECT_DIR$/preliminary-code" />
       <recent name="$PROJECT_DIR$/fyp/Project-Definition-Document" />
-      <recent name="$PROJECT_DIR$/fyp" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.rec_interface">
+  <component name="RunManager" selected="Python.Gradio-Trial-2">
+    <configuration name="Gradio-Trial-2" type="PythonConfigurationType" factoryName="Python">
+      <module name="Rec-Genie" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.10 (Rec-Genie)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Rec-Genie" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Rec-Genie/gradio-trial-2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="collaborative" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Rec-Genie" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Rec-Genie/rec_sys" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Rec-Genie/rec_sys/collaborative.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="gradio-trial (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Rec-Genie" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/preliminary-code/pocs" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/preliminary-code/pocs/gradio-trial.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="gradio-trial" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Rec-Genie" />
       <option name="ENV_FILES" value="" />
@@ -117,29 +183,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pocs/gradio-trial.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Rec-Genie" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/rec-sys" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rec-sys/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -171,11 +214,19 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.Gradio-Trial-2" />
+      <item itemvalue="Python.collaborative" />
+      <item itemvalue="Python.gradio-trial" />
+      <item itemvalue="Python.gradio-trial (1)" />
+      <item itemvalue="Python.rec_interface" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.collaborative" />
+        <item itemvalue="Python.gradio-trial (1)" />
         <item itemvalue="Python.rec_interface" />
         <item itemvalue="Python.gradio-trial" />
-        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
@@ -238,214 +289,14 @@
       <workItem from="1742392828271" duration="14264000" />
       <workItem from="1742413683165" duration="3858000" />
       <workItem from="1742477483452" duration="9943000" />
-    </task>
-    <task id="LOCAL-00003" summary="Added gitignore">
-      <option name="closed" value="true" />
-      <created>1731503199786</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1731503199786</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Added description and references">
-      <option name="closed" value="true" />
-      <created>1731503234080</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1731503234080</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Basic testing">
-      <option name="closed" value="true" />
-      <created>1731520097710</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1731520097710</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Basic testing no.2">
-      <option name="closed" value="true" />
-      <created>1731534409316</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1731534409316</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Updated log book">
-      <option name="closed" value="true" />
-      <created>1731863227058</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1731863227058</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Started coldstart">
-      <option name="closed" value="true" />
-      <created>1731863234723</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1731863234723</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Coldstart basic parsing">
-      <option name="closed" value="true" />
-      <created>1731865204196</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1731865204196</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Changed to &#10;twitter-roberta-base-sentiment-latest">
-      <option name="closed" value="true" />
-      <created>1731866403161</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1731866403161</updated>
-    </task>
-    <task id="LOCAL-00011" summary="before switch to 'The Movies Dataset'">
-      <option name="closed" value="true" />
-      <created>1731957946614</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1731957946614</updated>
-    </task>
-    <task id="LOCAL-00012" summary="MVP desc">
-      <option name="closed" value="true" />
-      <created>1736452364494</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1736452364494</updated>
-    </task>
-    <task id="LOCAL-00013" summary="MVP LLM time">
-      <option name="closed" value="true" />
-      <created>1736457588187</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1736457588187</updated>
-    </task>
-    <task id="LOCAL-00014" summary="MVP is giving out perfect json">
-      <option name="closed" value="true" />
-      <created>1736459569044</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1736459569045</updated>
-    </task>
-    <task id="LOCAL-00015" summary="MVP before splitting into two queries">
-      <option name="closed" value="true" />
-      <created>1736613045466</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1736613045466</updated>
-    </task>
-    <task id="LOCAL-00016" summary="mvp not really working">
-      <option name="closed" value="true" />
-      <created>1736614709264</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1736614709264</updated>
-    </task>
-    <task id="LOCAL-00017" summary="MVP's base stage">
-      <option name="closed" value="true" />
-      <created>1736621011046</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1736621011046</updated>
-    </task>
-    <task id="LOCAL-00018" summary="base recommender">
-      <option name="closed" value="true" />
-      <created>1736710495109</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1736710495109</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Adding a director based recommender">
-      <option name="closed" value="true" />
-      <created>1736710978503</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1736710978503</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Added somewhat progress colab">
-      <option name="closed" value="true" />
-      <created>1740838377456</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1740838377456</updated>
-    </task>
-    <task id="LOCAL-00021" summary="ONE hot encoding the genres!">
-      <option name="closed" value="true" />
-      <created>1740843567951</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1740843567951</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Ok, acutally nice">
-      <option name="closed" value="true" />
-      <created>1740851513834</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1740851513834</updated>
-    </task>
-    <task id="LOCAL-00023" summary="IT REALLY WORKS???">
-      <option name="closed" value="true" />
-      <created>1740862504030</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1740862504030</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Saving things">
-      <option name="closed" value="true" />
-      <created>1741093208612</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1741093208612</updated>
-    </task>
-    <task id="LOCAL-00025" summary="I'm back again">
-      <option name="closed" value="true" />
-      <created>1742046701481</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1742046701481</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Working rec, weightings">
-      <option name="closed" value="true" />
-      <created>1742057868567</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1742057868567</updated>
-    </task>
-    <task id="LOCAL-00027" summary="misc">
-      <option name="closed" value="true" />
-      <created>1742058881474</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1742058881474</updated>
-    </task>
-    <task id="LOCAL-00028" summary="small name changes">
-      <option name="closed" value="true" />
-      <created>1742058907525</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1742058907525</updated>
+      <workItem from="1742553762191" duration="3522000" />
+      <workItem from="1742574237385" duration="10643000" />
+      <workItem from="1742658341709" duration="5460000" />
+      <workItem from="1742666912757" duration="1493000" />
+      <workItem from="1742671438313" duration="11570000" />
+      <workItem from="1742740057231" duration="9080000" />
+      <workItem from="1742756367164" duration="10545000" />
+      <workItem from="1742830462594" duration="12114000" />
     </task>
     <task id="LOCAL-00029" summary="adding old poc file">
       <option name="closed" value="true" />
@@ -631,7 +482,215 @@
       <option name="project" value="LOCAL" />
       <updated>1742413390997</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="Tidying up again">
+      <option name="closed" value="true" />
+      <created>1742553819510</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1742553819510</updated>
+    </task>
+    <task id="LOCAL-00053" summary="getting something?">
+      <option name="closed" value="true" />
+      <created>1742596972033</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1742596972033</updated>
+    </task>
+    <task id="LOCAL-00054" summary="writing intro">
+      <option name="closed" value="true" />
+      <created>1742596980423</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1742596980423</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Arght">
+      <option name="closed" value="true" />
+      <created>1742657005994</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1742657005994</updated>
+    </task>
+    <task id="LOCAL-00056" summary="Chat is working">
+      <option name="closed" value="true" />
+      <created>1742657517156</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1742657517156</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Added history">
+      <option name="closed" value="true" />
+      <created>1742659197363</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1742659197366</updated>
+    </task>
+    <task id="LOCAL-00058" summary="New chatbot">
+      <option name="closed" value="true" />
+      <created>1742661300675</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1742661300676</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Chatting about films">
+      <option name="closed" value="true" />
+      <created>1742662953437</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1742662953437</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Rand sessions">
+      <option name="closed" value="true" />
+      <created>1742667213599</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1742667213600</updated>
+    </task>
+    <task id="LOCAL-00061" summary="Rand sessions">
+      <option name="closed" value="true" />
+      <created>1742667235792</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1742667235792</updated>
+    </task>
+    <task id="LOCAL-00062" summary="Starting routing on gradio">
+      <option name="closed" value="true" />
+      <created>1742674351603</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1742674351604</updated>
+    </task>
+    <task id="LOCAL-00063" summary="Starting routing on gradio">
+      <option name="closed" value="true" />
+      <created>1742676397830</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1742676397830</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Getting nowhere is a banger">
+      <option name="closed" value="true" />
+      <created>1742732816624</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1742732816624</updated>
+    </task>
+    <task id="LOCAL-00065" summary="trying to format the page">
+      <option name="closed" value="true" />
+      <created>1742735473961</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1742735473961</updated>
+    </task>
+    <task id="LOCAL-00066" summary="not working but fixed that langchain warning">
+      <option name="closed" value="true" />
+      <created>1742735698564</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1742735698565</updated>
+    </task>
+    <task id="LOCAL-00067" summary="not working but fixed that langchain warning">
+      <option name="closed" value="true" />
+      <created>1742736409640</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1742736409640</updated>
+    </task>
+    <task id="LOCAL-00068" summary="not working but fixed that langchain warning">
+      <option name="closed" value="true" />
+      <created>1742736417416</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1742736417416</updated>
+    </task>
+    <task id="LOCAL-00069" summary="For god sake that was so simple">
+      <option name="closed" value="true" />
+      <created>1742737012658</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1742737012658</updated>
+    </task>
+    <task id="LOCAL-00070" summary="starting routing">
+      <option name="closed" value="true" />
+      <created>1742745906850</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1742745906851</updated>
+    </task>
+    <task id="LOCAL-00071" summary="getting somewhere">
+      <option name="closed" value="true" />
+      <created>1742748081749</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1742748081749</updated>
+    </task>
+    <task id="LOCAL-00072" summary="getting somewhere2">
+      <option name="closed" value="true" />
+      <created>1742757943905</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1742757943906</updated>
+    </task>
+    <task id="LOCAL-00073" summary="ok python3.10 now works everyone happy la dee daa">
+      <option name="closed" value="true" />
+      <created>1742759585836</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1742759585836</updated>
+    </task>
+    <task id="LOCAL-00074" summary="OM NOM NOM NOM">
+      <option name="closed" value="true" />
+      <created>1742765327186</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1742765327186</updated>
+    </task>
+    <task id="LOCAL-00075" summary="BUTTON CLIKC">
+      <option name="closed" value="true" />
+      <created>1742767271047</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1742767271047</updated>
+    </task>
+    <task id="LOCAL-00076" summary="too many changes before a commit, I know it's not fully ported over, bad git practices bla bla bla.">
+      <option name="closed" value="true" />
+      <created>1742840368473</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1742840368474</updated>
+    </task>
+    <task id="LOCAL-00077" summary="too many changes before a commit, I know it's not fully ported over, bad git practices bla bla bla.">
+      <option name="closed" value="true" />
+      <created>1742842376523</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1742842376523</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -658,6 +717,11 @@
     </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="f27ff102-bfce-494b-83b9-25ba4ae4ca9c" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -677,36 +741,41 @@
             </State>
           </value>
         </entry>
+        <entry key="f27ff102-bfce-494b-83b9-25ba4ae4ca9c">
+          <value>
+            <State />
+          </value>
+        </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Saving things" />
-    <MESSAGE value="I'm back again" />
-    <MESSAGE value="Working rec, weightings" />
-    <MESSAGE value="misc" />
-    <MESSAGE value="small name changes" />
-    <MESSAGE value="adding old poc file" />
-    <MESSAGE value="Added credentials" />
-    <MESSAGE value="User-user and directors are working" />
-    <MESSAGE value="Tidied up RecGenie.ipynb" />
-    <MESSAGE value="If I want to use an api look HERE!" />
-    <MESSAGE value="Starting to break it up" />
-    <MESSAGE value="Going somewhere" />
-    <MESSAGE value="Going somewhereTIDY" />
-    <MESSAGE value="I'm moving the ml-32m ratings to films/. Credits from movies/7/ to films/. same with movies_metadata" />
-    <MESSAGE value="AASHHGH" />
-    <MESSAGE value="Fixed user_profile.py, and ratings dropping timestamps" />
-    <MESSAGE value="Score breakdown is working ? before collab fix" />
-    <MESSAGE value="Seemingly working!" />
-    <MESSAGE value="Working before LLM OR BIG DATA" />
-    <MESSAGE value="big data getting" />
-    <MESSAGE value="big WORKING???" />
-    <MESSAGE value="Tidying!!" />
-    <MESSAGE value="Adjusting for the aul LLM time" />
     <MESSAGE value="Optimisations" />
     <MESSAGE value="ah man this is hard" />
-    <option name="LAST_COMMIT_MESSAGE" value="ah man this is hard" />
+    <MESSAGE value="Tidying up again" />
+    <MESSAGE value="getting something?" />
+    <MESSAGE value="writing intro" />
+    <MESSAGE value="Arght" />
+    <MESSAGE value="Chat is working" />
+    <MESSAGE value="Chat history ?" />
+    <MESSAGE value="Added history" />
+    <MESSAGE value="New chatbot" />
+    <MESSAGE value="Chatting about films" />
+    <MESSAGE value="AGHHASA routing hard" />
+    <MESSAGE value="Rand sessions" />
+    <MESSAGE value="Starting routing on gradio" />
+    <MESSAGE value="Getting nowhere is a banger" />
+    <MESSAGE value="trying to format the page" />
+    <MESSAGE value="not working but fixed that langchain warning" />
+    <MESSAGE value="For god sake that was so simple" />
+    <MESSAGE value="starting routing" />
+    <MESSAGE value="getting somewhere" />
+    <MESSAGE value="getting somewhere2" />
+    <MESSAGE value="ok python3.10 now works everyone happy la dee daa" />
+    <MESSAGE value="OM NOM NOM NOM" />
+    <MESSAGE value="BUTTON CLIKC" />
+    <MESSAGE value="too many changes before a commit, I know it's not fully ported over, bad git practices bla bla bla." />
+    <option name="LAST_COMMIT_MESSAGE" value="too many changes before a commit, I know it's not fully ported over, bad git practices bla bla bla." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -716,20 +785,65 @@
           <line>390</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
+          <url>notebook:///Users/Cathal/Rec-Genie/Rec-Genie/chatbot/routing.ipynb</url>
+          <line>124</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
+          <url>notebook:///Users/Cathal/Rec-Genie/Rec-Genie/rec_sys/main.ipynb</url>
+          <line>1</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py</url>
-          <line>79</line>
+          <line>78</line>
           <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/preliminary-code/pocs/gradio-trial.py</url>
+          <line>17</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/preliminary-code/pocs/gradio-trial.py</url>
+          <line>15</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/venv_3.10/lib/python3.10/site-packages/gradio/components/button.py</url>
+          <line>18</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Rec-Genie/chatbot/prompts.py</url>
+          <line>37</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Rec-Genie/chatbot/prompts.py</url>
+          <line>54</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Rec-Genie/rec_sys/data_loader.py</url>
+          <line>18</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Rec_Genie$collaborative.coverage" NAME="collaborative Coverage Results" MODIFIED="1742759007789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$simpleRec.coverage" NAME="simpleRec Coverage Results" MODIFIED="1731520402730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Rec_Genie$rec_interface.coverage" NAME="rec_interface Coverage Results" MODIFIED="1742493961494" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$rec_interface.coverage" NAME="rec_interface Coverage Results" MODIFIED="1742843902819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$Gradio_Trial_2.coverage" NAME="Gradio-Trial-2 Coverage Results" MODIFIED="1742846544876" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial__1_.coverage" NAME="gradio-trial (1) Coverage Results" MODIFIED="1742659164439" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/preliminary-code/pocs" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial_2.coverage" NAME="gradio-trial-2 Coverage Results" MODIFIED="1742845208831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
     <SUITE FILE_PATH="coverage/Rec_Genie$main.coverage" NAME="main Coverage Results" MODIFIED="1742407746749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rec-sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial.coverage" NAME="gradio-trial Coverage Results" MODIFIED="1742427286732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pocs" />
     <SUITE FILE_PATH="coverage/Rec_Genie$baseSystem.coverage" NAME="baseSystem Coverage Results" MODIFIED="1731503707738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Rec_Genie$data_loader.coverage" NAME="data_loader Coverage Results" MODIFIED="1742333006709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rec-sys" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$hybrid_recommender.coverage" NAME="hybrid_recommender Coverage Results" MODIFIED="1742844282328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
   </component>
 </project>

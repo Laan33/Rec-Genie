@@ -122,6 +122,9 @@ def user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb):
 
     return features_profile
 
+def empty_user_profile(user_id):
+    """Creates an empty user profile."""
+    return {'id': user_id, 'weights': standard_weights, 'feature_profile': {'user_id': user_id}}
 
 def load_or_create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
     """Loads the user profile from a CSV file or creates it if it doesn't exist."""
@@ -129,6 +132,9 @@ def load_or_create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
         profile = load_user_profile(user_id)
         return profile
     except FileNotFoundError:
+        print("user ratings: ", usr_ratings)
+        if usr_ratings.empty:
+            return empty_user_profile(user_id)
         profile = {'id': user_id, 'weights': standard_weights,
                    'feature_profile': user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb)}
 
