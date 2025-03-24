@@ -20,7 +20,7 @@ class RecInterface:
 
 
 
-    def recommend(self, user_id):
+    def recommend(self, user_id, num_recommendations=5):
         recommendations = recommend(self.user_profile, self.films_df, self.credits_df, self.ratings_df, self.genre_list_mlb)
 
 

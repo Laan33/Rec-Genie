@@ -29,6 +29,11 @@ sample_json = {
                     }
 }
 
+# model_name = "llama3.2:latest"
+model_name = "llama3.2:3b-instruct-q4_K_M"
+
+llm = ChatOllama(model=model_name)
+
 
 class GradioFilmRec:
     def __init__(self):
@@ -40,17 +45,13 @@ class GradioFilmRec:
         # RecInterface.recommend(user_id=session_id_num.value)
         print("Recommendations generated!!!!.")
 
-        breakdown = RecInterface.recommend(self.rec_interface, user_id=self.session_id)
+        recommendations = RecInterface.recommend(self.rec_interface, user_id=self.session_id, num_recommendations=5)
 
-        score_explainer(breakdown)
+        return recommendations, score_explainer(self, recommendations)
 
-        return
-
-    def route(self, input_value, history, session_id):
-        semantics_scraper(input_value, history)
-        return custom_chatbot(input_value, history, session_id)
 
     def custom_chatbot(self, input_value, history, session_id):
+        with_message_history = update_chain(film_chat_explore_chain)
         response = with_message_history.stream(
             {"ability": "everything", "question": input_value},
             config={"configurable": {"session_id": session_id}},
@@ -59,33 +60,14 @@ class GradioFilmRec:
         for item in response:
             full_response += item
             yield full_response
-        semantics_scraper(input_value, history)
+        semantics_scraper(self, input_value, history)
         yield full_response
 
-
-
-
-
-
-# model_name = "llama3.2:latest"
-model_name = "llama3.2:3b-instruct-q4_K_M"
-
-llm = ChatOllama(model=model_name)
-
-# Deprecated - film_chat_explore_chain replaces this
-# prompt = ChatPromptTemplate.from_messages([
-#     ("system",
-#      "You're an assistant who's good at talking to users to find out about their film interests and what matters to them in a film"),
-#     MessagesPlaceholder(variable_name="history"),
-#     ("human", "{question}"),
-# ])
-
-# chain = film_chat_explore_chain | llm.bind(stop=["<|eot_id|>"]) | StrOutputParser()
 
 # Create a connection using SQLAlchemy
 engine = create_engine("sqlite:///sqlite.db")
 
-def update_chain(chain, session_id):
+def update_chain(chain):
     chain = chain | llm.bind(stop=["<|eot_id|>"]) | StrOutputParser()
     return RunnableWithMessageHistory(
         chain,
@@ -97,29 +79,18 @@ def update_chain(chain, session_id):
         history_messages_key="history"
     )
 
-with_message_history = RunnableWithMessageHistory(
-    chain,
-    lambda session_id: SQLChatMessageHistory(
-        session_id=session_id, connection=engine
-    ),
-    input_messages_key="question",
-    output_messages_key="output",
-    history_messages_key="history"
-)
 
 def recommend_films(self, num_recommendations=5):
     # RecInterface.recommend(user_id=session_id_num.value)
     print("Recommendations generated!!!!.")
 
-    breakdown = RecInterface.recommend(self.rec_interface, user_id=session_id_num.value)
+    scores = RecInterface.recommend(self.rec_interface, user_id=session_id_num.value)
 
-    score_explainer(breakdown)
-
-    return n
+    return scores, score_explainer(self, scores)
 
 
-def custom_chatbot(input_value, history, session_id):
-    # session_id_num.
+def custom_chatbot(self, input_value, history, session_id):
+    with_message_history = update_chain(film_chat_explore_chain)
 
     response = with_message_history.stream(
         {"ability": "everything", "question": input_value},
@@ -130,11 +101,11 @@ def custom_chatbot(input_value, history, session_id):
         full_response += item
         yield full_response
     print("Debug test (this happens once a response correct?)")
-    semantics_scraper(input_value, history) # Only call after the visible response has been generated
+    semantics_scraper(self, input_value, history) # Only call after the visible response has been generated
     yield full_response
 
 def score_explainer(self, breakdown):
-
+    with_message_history = update_chain(explain_rec_chain)
 
     response = with_message_history.stream(
         {"ability": "everything", "score": breakdown},
@@ -143,11 +114,25 @@ def score_explainer(self, breakdown):
 
     yield response
 
-def semantics_scraper(input_value, history):
+def semantics_scraper(self, input_value, history):
     """
     Outputs the sentiment of the user's message for feature and item sentiment extraction.
     """
     history = history # Placeholder for now
+
+    with_message_history = update_chain(glean_feed_back_chain)
+
+    response = with_message_history.stream(
+        {"ability": "everything", "input_text": input_value},
+        config={"configurable": {"session_id": self.session_id}},
+    )
+
+    full_response = ''
+    for item in response:
+        full_response += item
+        # yield full_response
+    print("Full response: ", full_response)
+    yield full_response
 
 
 
