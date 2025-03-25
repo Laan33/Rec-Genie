@@ -39,13 +39,16 @@ llm = ChatOllama(model=MODEL_NAME)
 
 class GradioFilmRec:
     def __init__(self):
-        self.model_name = MODEL_NAME
-        self.current_recommendations = None
+        self.current_recommendations, self.scores = None, None
         self.semantic_full_response = None
-        print(f"Using model: {self.model_name}")
-        self.session_id = 999999
-        self.rec_interface = rec_interface.RecInterface(user_id=self.session_id)
+
+
         # self.session_id = randint(1000000, 9999999)  # Random unique session ID
+        self.session_id = 999999
+
+        self.model_name = MODEL_NAME
+        print(f"Using model: {self.model_name}")
+        self.rec_interface = rec_interface.RecInterface(user_id=self.session_id)
 
     def get_message_history(self):
         """Retrieve or initialise message history for this session."""
@@ -65,10 +68,12 @@ class GradioFilmRec:
     def recommend_films(self):
         """Generates film recommendations based on user history."""
         print("Generating recommendations...")
-        recommendations = self.rec_interface.recommend(num_recommendations=5)
+        recs = self.rec_interface.recommend(num_recommendations=5)
+        scores = self.rec_interface.score_breakdown(recs)
         # return recommendations, self.score_explainer(recommendations)
-        self.current_recommendations = recommendations
-        return recommendations
+        self.current_recommendations = recs
+        self.scores = scores
+        return recs
 
     def custom_chatbot(self, input_value, history, session_id):
         """Handles user queries with persistent chat history."""
@@ -79,10 +84,7 @@ class GradioFilmRec:
             config={"configurable": {"session_id": str(self.session_id)}},
         )
 
-        # Retrieve current recommendations to preserve them
-        current_recommendations = self.recommend_films()
-
-        full_response = ''
+        full_response = ""
         for item in response:
             full_response += item
             yield full_response, self.current_recommendations, self.semantic_full_response  # Add None for additional outputs

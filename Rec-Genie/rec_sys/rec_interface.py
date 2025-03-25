@@ -41,15 +41,14 @@ class RecInterface:
     def __init__(self, user_id):# placeholder for testing - no need to load everything
         self.user_ratings_df = None
         self.user_id = user_id
-        self.films_df, self.ratings_df, self.credits_df = load_data()
+        # self.films_df, self.ratings_df, self.credits_df = load_data()
+        self.films_df, self.ratings_df, self.credits_df = load_data(num_lines=None)
         # self.attribute_search = AttributeSearch('path/to/films.csv', 'path/to/credits.csv')
         self.films_df, self.credits_df, self.genre_list_mlb = self.process_data()
         print("User ID:", user_id)
 
         self.update_user_profile(user_id)
         print("User profile user_id:", self.user_profile['id'])
-        print("User profile ratings:", self.user_ratings_df.shape)
-        print("user profile head:", self.user_ratings_df.head())
         # self.user_ratings_df = self.update_user_profile()
         # self.user_ratings_df = self.ratings_df[self.ratings_df['userId'] == user_id]
 
@@ -83,6 +82,8 @@ class RecInterface:
         recommendations = hyb.hybrid_recommend(self.user_profile, self.films_df, self.credits_df, self.ratings_df, self.genre_list_mlb)
         return recommendations[:num_recommendations]
 
+    def score_breakdown(self, recommendations):
+        return hyb.score_breakdown(self.films_df, recommendations)
 
 
 # def main():

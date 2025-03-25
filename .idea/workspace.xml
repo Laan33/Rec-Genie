@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Agh we have recs!!!" />
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="rounding rec scores?">
+      <change afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/search_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/gradio-trial-2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/gradio-trial-2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fyp/CL-FYP-Report/sections/implementation.tex" beforeDir="false" afterPath="$PROJECT_DIR$/fyp/CL-FYP-Report/sections/implementation.tex" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,7 +76,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -311,15 +317,7 @@
       <workItem from="1742671438313" duration="11570000" />
       <workItem from="1742740057231" duration="9080000" />
       <workItem from="1742756367164" duration="10545000" />
-      <workItem from="1742830462594" duration="22722000" />
-    </task>
-    <task id="LOCAL-00035" summary="Going somewhere">
-      <option name="closed" value="true" />
-      <created>1742329497742</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1742329497742</updated>
+      <workItem from="1742830462594" duration="27049000" />
     </task>
     <task id="LOCAL-00036" summary="Going somewhereTIDY">
       <option name="closed" value="true" />
@@ -705,7 +703,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742864430528</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="rounding rec scores?">
+      <option name="closed" value="true" />
+      <created>1742864665393</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1742864665393</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -765,7 +771,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Arght" />
     <MESSAGE value="Chat is working" />
     <MESSAGE value="Chat history ?" />
     <MESSAGE value="Added history" />
@@ -790,7 +795,8 @@
     <MESSAGE value="ADHUAIBUDABISDBHIAS IT&quot;S NEARLY" />
     <MESSAGE value="IT&quot;S ALVIE AISJDNAOISDNASDNANOSI" />
     <MESSAGE value="Agh we have recs!!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Agh we have recs!!!" />
+    <MESSAGE value="rounding rec scores?" />
+    <option name="LAST_COMMIT_MESSAGE" value="rounding rec scores?" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
