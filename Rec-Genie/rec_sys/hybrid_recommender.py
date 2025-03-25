@@ -104,5 +104,5 @@ def remove_non_applicable_films(films_df, ratings_df):
     # Remove ratings that have film ids not in films_df
     valid_ids = films_df['id']
     ratings_df = ratings_df[ratings_df['movieId'].isin(valid_ids)]
-
+    print("Ratings after removing non-applicable films:", ratings_df.shape)
     return ratings_df

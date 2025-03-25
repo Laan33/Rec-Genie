@@ -1,5 +1,24 @@
+import os
+
 import pandas as pd
 from io import StringIO
+# import data_loader
+
+# # TODO - burn once tested
+# def load_data(num_lines=None):
+#     if num_lines is not None:
+#         data_loader.set_num_lines(num_lines)
+#     films_df = data_loader.load_movies()
+#     ratings_df = data_loader.load_ratings()
+#     credits_df = data_loader.load_credits(True)
+#
+#     print("Data dimensions:")
+#     print("films_df:", films_df.shape)
+#     print("ratings_df:", ratings_df.shape)
+#     print("credits_df:", credits_df.shape)
+#
+#     return films_df, ratings_df, credits_df
+
 
 user_ratings = """
 710,golden eye, 4
@@ -120,16 +139,20 @@ def user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb):
 
         features_profile['user_id'] = user_id
 
+    print("features_profile type (before): ", type(features_profile))
     return features_profile
 
 def empty_user_profile(user_id):
     """Creates an empty user profile."""
     return {'id': user_id, 'weights': standard_weights, 'feature_profile': {'user_id': user_id}}
 
+# TODO - fix this problem child, turned features into a string
 def load_or_create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
     """Loads the user profile from a CSV file or creates it if it doesn't exist."""
+    profiles_dir = os.path.join(os.path.dirname(__file__), '..', 'userProfiles')
+    os.makedirs(profiles_dir, exist_ok=True)
     try:
-        profile = load_user_profile(user_id)
+        profile = load_user_profile(user_id, profiles_dir)
         return profile
     except FileNotFoundError:
         print("user ratings: ", usr_ratings)
@@ -138,25 +161,35 @@ def load_or_create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
         profile = {'id': user_id, 'weights': standard_weights,
                    'feature_profile': user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb)}
 
+        print("features_profile type (after0): ", type(profile['feature_profile']))
         # Save the user profile to a CSV file
-        save_user_profile(profile)
+        save_user_profile(profile, profiles_dir)
 
         return profile
 
 
 def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
+    # Create the directory relative to the current script
+    profiles_dir = os.path.join(os.path.dirname(__file__), '..', 'userProfiles')
+    os.makedirs(profiles_dir, exist_ok=True)
+
     profile = {'id': user_id, 'weights': standard_weights,
                'feature_profile': user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb)}
 
+    print("features_profile type (after2): ", type(profile['feature_profile']))
+
     # Save the user profile to a CSV file
     profile_df = pd.DataFrame([profile])
-    profile_df.to_csv(f'/userProfiles/user_profile_{user_id}.csv', index=False)
+    profile_df.to_csv(os.path.join(profiles_dir, f'user_profile_{user_id}.csv'), index=False)
+
+    print("features_profile type (after3): ", type(profile_df['feature_profile'])) # this was a series?
 
     return profile
 
-def load_user_profile(user_id):
+def load_user_profile(user_id, profiles_dir):
     """Loads the user profile from a CSV file."""
-    profile_df = pd.read_csv(f'/userProfiles/user_profile_{user_id}.csv')
+    profile_df = pd.read_csv(os.path.join(profiles_dir, f'user_profile_{user_id}.csv'))
+    # profile_df = pd.read_csv(f'/userProfiles/user_profile_{user_id}.csv')
     return profile_df.to_dict(orient='records')[0]
 
 def adjust_user_profile(user_profile, user_weights, feedback):
@@ -170,10 +203,24 @@ def adjust_user_profile(user_profile, user_weights, feedback):
     user_profile = load_user_profile(user_profile['id'])
 
 
-def save_user_profile(user_profile):
+def save_user_profile(user_profile, profiles_dir):
     # Save the user profile to a CSV file
     profile_df = pd.DataFrame([user_profile])
-    profile_df.to_csv(f'/userProfiles/user_profile_{user_profile["id"]}.csv', index=False)
+    # profile_df.to_csv(f'/userProfiles/user_profile_{user_profile["id"]}.csv', index=False)
+    profile_df.to_csv(os.path.join(profiles_dir, f'user_profile_{user_profile["id"]}.csv'), index=False)
 
 
     return user_profile
+#
+#
+# def main():
+#     user_id = 999999
+#     films_df, _, _ = load_data(num_lines=5000)
+#     # films_df = pd.DataFrame()  # Replace with actual DataFrame loading
+#     usr_ratings = load_user_ratings()
+#     genre_list_mlb = []  # Replace with actual genre list
+#     profile = create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb)
+#     print(profile)
+#
+# if __name__ == "__main__":
+#     main()

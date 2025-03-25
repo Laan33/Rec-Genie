@@ -9,8 +9,26 @@ from . import hybrid_recommender as hyb
 
 # Configuration
 RUNNING_ON_COLAB = False
-USER_ID = 999999
+# USER_ID = 999999
 load_original_credits = True
+
+
+def load_data(num_lines=None):
+    if RUNNING_ON_COLAB:
+        data_loader.mount_drive()
+    if num_lines is not None:
+        data_loader.set_num_lines(num_lines)
+    films_df = data_loader.load_movies()
+    ratings_df = data_loader.load_ratings()
+    credits_df = data_loader.load_credits(load_original_credits)
+
+    print("Data dimensions:")
+    print("films_df:", films_df.shape)
+    print("ratings_df:", ratings_df.shape)
+    print("credits_df:", credits_df.shape)
+
+    return films_df, ratings_df, credits_df
+
 
 class RecInterface:
     # def __init__(self):
@@ -20,31 +38,25 @@ class RecInterface:
     #     self.user_profile = user_pf.load_or_create_user_profile(USER_ID, self.films_df, self.ratings_df, self.genre_list_mlb)
     #     print("RecInterface initialized")
 
-    def __init__(self):# placeholder for testing - no need to load everything
-        self.films_df, self.ratings_df, self.credits_df = self.load_data(num_lines=5000)
+    def __init__(self, user_id):# placeholder for testing - no need to load everything
+        self.user_ratings_df = None
+        self.user_id = user_id
+        self.films_df, self.ratings_df, self.credits_df = load_data()
         # self.attribute_search = AttributeSearch('path/to/films.csv', 'path/to/credits.csv')
         self.films_df, self.credits_df, self.genre_list_mlb = self.process_data()
+        print("User ID:", user_id)
 
-        self.user_ratings_df = self.ratings_df[self.ratings_df['userId'] == USER_ID]
+        self.update_user_profile(user_id)
+        print("User profile user_id:", self.user_profile['id'])
+        print("User profile ratings:", self.user_ratings_df.shape)
+        print("user profile head:", self.user_ratings_df.head())
+        # self.user_ratings_df = self.update_user_profile()
+        # self.user_ratings_df = self.ratings_df[self.ratings_df['userId'] == user_id]
 
-        self.user_profile = user_pf.load_or_create_user_profile(USER_ID, self.films_df, self.user_ratings_df, self.genre_list_mlb)
+
+        # self.user_profile = user_pf.load_or_create_user_profile(user_id, self.films_df, self.user_ratings_df, self.genre_list_mlb)
+        print("User profile user_id:", self.user_profile['id'])
         print("RecInterface initialized")
-
-    def load_data(self, num_lines=None):
-        if RUNNING_ON_COLAB:
-            data_loader.mount_drive()
-        if num_lines is not None:
-            data_loader.set_num_lines(num_lines)
-        films_df = data_loader.load_movies()
-        ratings_df = data_loader.load_ratings()
-        credits_df = data_loader.load_credits(load_original_credits)
-
-        print("Data dimensions:")
-        print("films_df:", films_df.shape)
-        print("ratings_df:", ratings_df.shape)
-        print("credits_df:", credits_df.shape)
-
-        return films_df, ratings_df, credits_df
 
     def process_data(self):
         films_df = pre.filter_films(self.films_df)
@@ -57,12 +69,15 @@ class RecInterface:
         return films_df, self.credits_df, genre_list_mlb
 
     def update_user_profile(self, user_id):
-        user_ratings_df = user_pf.load_user_ratings()
-        self.ratings_df = pd.concat([self.ratings_df, user_ratings_df], ignore_index=True)
+        self.user_ratings_df = user_pf.load_user_ratings()
+        self.ratings_df = pd.concat([self.ratings_df, self.user_ratings_df], ignore_index=True)
         self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
-        self.user_profile = user_pf.create_user_profile(user_id, self.films_df, user_ratings_df, self.genre_list_mlb)
+        self.user_profile = user_pf.create_user_profile(user_id, self.films_df, self.user_ratings_df, self.genre_list_mlb)
+        print("Feature user profile type4: ", type(self.user_profile['feature_profile'])) # this is a dict
+        print("Feature user profile: ", self.user_profile['feature_profile'])
 
     def recommend(self, num_recommendations=5):
+        print("Generating recommendations for user ID:", self.user_id)
         if self.user_profile is None:
             raise ValueError("User profile not initialized. Call update_user_profile() first.")
         recommendations = hyb.hybrid_recommend(self.user_profile, self.films_df, self.credits_df, self.ratings_df, self.genre_list_mlb)

@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="wutwututuwut">
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="IT&quot;S ALVIE AISJDNAOISDNASDNANOSI">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Rec-Genie/chatbot/prompts.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/chatbot/prompts.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Rec-Genie/gradio-trial-2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/gradio-trial-2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/content_based.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/content_based.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/user_profile.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/user_profile.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +68,7 @@
     "Python.main.executor": "Run",
     "Python.rec_interface.executor": "Run",
     "Python.simpleRec.executor": "Run",
+    "Python.user_profile.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
@@ -207,8 +211,32 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="user_profile" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Rec-Genie" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Rec-Genie/rec_sys" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Rec-Genie/rec_sys/user_profile.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.Gradio-Trial-2" />
+      <item itemvalue="Python.user_profile" />
       <item itemvalue="Python.collaborative" />
       <item itemvalue="Python.gradio-trial" />
       <item itemvalue="Python.gradio-trial (1)" />
@@ -216,6 +244,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.user_profile" />
         <item itemvalue="Python.collaborative" />
         <item itemvalue="Python.gradio-trial (1)" />
         <item itemvalue="Python.rec_interface" />
@@ -289,31 +318,7 @@
       <workItem from="1742671438313" duration="11570000" />
       <workItem from="1742740057231" duration="9080000" />
       <workItem from="1742756367164" duration="10545000" />
-      <workItem from="1742830462594" duration="14452000" />
-    </task>
-    <task id="LOCAL-00031" summary="User-user and directors are working">
-      <option name="closed" value="true" />
-      <created>1742320082722</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1742320082722</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Tidied up RecGenie.ipynb">
-      <option name="closed" value="true" />
-      <created>1742322040175</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1742322040175</updated>
-    </task>
-    <task id="LOCAL-00033" summary="If I want to use an api look HERE!">
-      <option name="closed" value="true" />
-      <created>1742324148586</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1742324148587</updated>
+      <workItem from="1742830462594" duration="22421000" />
     </task>
     <task id="LOCAL-00034" summary="Starting to break it up">
       <option name="closed" value="true" />
@@ -683,7 +688,31 @@
       <option name="project" value="LOCAL" />
       <updated>1742846947145</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="ADHUAIBUDABISDBHIAS IT&quot;S NEARLY">
+      <option name="closed" value="true" />
+      <created>1742849293634</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1742849293634</updated>
+    </task>
+    <task id="LOCAL-00081" summary="ADHUAIBUDABISDBHIAS IT&quot;S NEARLY">
+      <option name="closed" value="true" />
+      <created>1742849453393</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1742849453394</updated>
+    </task>
+    <task id="LOCAL-00082" summary="IT&quot;S ALVIE AISJDNAOISDNASDNANOSI">
+      <option name="closed" value="true" />
+      <created>1742850175049</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1742850175049</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -743,8 +772,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Tidying up again" />
-    <MESSAGE value="getting something?" />
     <MESSAGE value="writing intro" />
     <MESSAGE value="Arght" />
     <MESSAGE value="Chat is working" />
@@ -768,7 +795,9 @@
     <MESSAGE value="too many changes before a commit, I know it's not fully ported over, bad git practices bla bla bla." />
     <MESSAGE value="We're getting there!!!!" />
     <MESSAGE value="wutwututuwut" />
-    <option name="LAST_COMMIT_MESSAGE" value="wutwututuwut" />
+    <MESSAGE value="ADHUAIBUDABISDBHIAS IT&quot;S NEARLY" />
+    <MESSAGE value="IT&quot;S ALVIE AISJDNAOISDNASDNANOSI" />
+    <option name="LAST_COMMIT_MESSAGE" value="IT&quot;S ALVIE AISJDNAOISDNASDNANOSI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -790,7 +819,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py</url>
-          <line>78</line>
+          <line>93</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -823,20 +852,26 @@
           <line>18</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Rec-Genie/rec_sys/user_profile.py</url>
+          <line>22</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Rec_Genie$collaborative.coverage" NAME="collaborative Coverage Results" MODIFIED="1742759007789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$simpleRec.coverage" NAME="simpleRec Coverage Results" MODIFIED="1731520402730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Rec_Genie$rec_interface.coverage" NAME="rec_interface Coverage Results" MODIFIED="1742843902819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
-    <SUITE FILE_PATH="coverage/Rec_Genie$Gradio_Trial_2.coverage" NAME="Gradio-Trial-2 Coverage Results" MODIFIED="1742848413076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
-    <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial__1_.coverage" NAME="gradio-trial (1) Coverage Results" MODIFIED="1742659164439" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/preliminary-code/pocs" />
-    <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial_2.coverage" NAME="gradio-trial-2 Coverage Results" MODIFIED="1742845208831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$Gradio_Trial_2.coverage" NAME="Gradio-Trial-2 Coverage Results" MODIFIED="1742864212720" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
     <SUITE FILE_PATH="coverage/Rec_Genie$main.coverage" NAME="main Coverage Results" MODIFIED="1742407746749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rec-sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial.coverage" NAME="gradio-trial Coverage Results" MODIFIED="1742427286732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pocs" />
     <SUITE FILE_PATH="coverage/Rec_Genie$baseSystem.coverage" NAME="baseSystem Coverage Results" MODIFIED="1731503707738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Rec_Genie$data_loader.coverage" NAME="data_loader Coverage Results" MODIFIED="1742333006709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rec-sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$hybrid_recommender.coverage" NAME="hybrid_recommender Coverage Results" MODIFIED="1742844282328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$collaborative.coverage" NAME="collaborative Coverage Results" MODIFIED="1742759007789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$rec_interface.coverage" NAME="rec_interface Coverage Results" MODIFIED="1742843902819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$user_profile.coverage" NAME="user_profile Coverage Results" MODIFIED="1742862213265" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial__1_.coverage" NAME="gradio-trial (1) Coverage Results" MODIFIED="1742659164439" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/preliminary-code/pocs" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial_2.coverage" NAME="gradio-trial-2 Coverage Results" MODIFIED="1742845208831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$data_loader.coverage" NAME="data_loader Coverage Results" MODIFIED="1742333006709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rec-sys" />
   </component>
 </project>

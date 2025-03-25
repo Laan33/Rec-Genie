@@ -78,7 +78,7 @@ glean_feed_back_chain = PromptTemplate(
         "- For feature importance, just write f; score, e.g. 'feature1; 0.5'. "
         "For example: "
         "\n Films; 0.5 item1: 0.9, item2: 0.2 \n Actors; 0.3 item1: 0.5, item2: 0.1 "
-        "ONLY provide the scores, no other chat. "
+        "ONLY provide the item names and associated scores, no other chit chat. "
         "Sentence: {input_text}"
     )
 )

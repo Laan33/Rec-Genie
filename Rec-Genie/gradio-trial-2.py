@@ -40,9 +40,12 @@ llm = ChatOllama(model=MODEL_NAME)
 class GradioFilmRec:
     def __init__(self):
         self.model_name = MODEL_NAME
+        self.current_recommendations = None
+        self.semantic_full_response = None
         print(f"Using model: {self.model_name}")
-        self.rec_interface = rec_interface.RecInterface()
-        self.session_id = randint(1000000, 9999999)  # Random unique session ID
+        self.session_id = 999999
+        self.rec_interface = rec_interface.RecInterface(user_id=self.session_id)
+        # self.session_id = randint(1000000, 9999999)  # Random unique session ID
 
     def get_message_history(self):
         """Retrieve or initialise message history for this session."""
@@ -64,6 +67,7 @@ class GradioFilmRec:
         print("Generating recommendations...")
         recommendations = self.rec_interface.recommend(num_recommendations=5)
         # return recommendations, self.score_explainer(recommendations)
+        self.current_recommendations = recommendations
         return recommendations
 
     def custom_chatbot(self, input_value, history, session_id):
@@ -75,20 +79,32 @@ class GradioFilmRec:
             config={"configurable": {"session_id": str(self.session_id)}},
         )
 
+        # Retrieve current recommendations to preserve them
+        current_recommendations = self.recommend_films()
+
         full_response = ''
         for item in response:
             full_response += item
-            yield full_response, None, None  # Add None for additional outputs
+            yield full_response, self.current_recommendations, self.semantic_full_response  # Add None for additional outputs
 
         # Semantic scraping and returning results
-        feedback_chain = self.update_chain(glean_feed_back_chain)
+        # feedback_chain = self.update_chain(glean_feed_back_chain)
+        feedback_chain =  glean_feed_back_chain | llm.bind(stop=["<|eot_id|>"]) | StrOutputParser()
+        feedback_chain = RunnableWithMessageHistory(
+            feedback_chain,
+            lambda _: self.get_message_history(),
+            input_messages_key="question",
+            output_messages_key="output",
+            history_messages_key="history"
+        )
+
         semantic_response = feedback_chain.stream(
             {"input_text": input_value},
             config={"configurable": {"session_id": str(self.session_id)}},
         )
 
-        semantic_full_response = ''.join(semantic_response)
-        yield full_response, None, semantic_full_response
+        self.semantic_full_response = ''.join(semantic_response)
+        yield full_response, self.current_recommendations, self.semantic_full_response
 
     def score_explainer(self, breakdown):
         """Explains why a recommendation was made."""
@@ -126,11 +142,12 @@ with gr.Blocks(theme="Soft") as demo:
         with gr.Column(scale=1):
             gr.Markdown("### Session ID")
             session_id_num = gr.Number(
-                value=film_rec_bot.session_id,
+                # value=film_rec_bot.session_id,
+                value=999999,
                 label="Session ID",
                 interactive=True,
                 info="Unique session ID to maintain chat history",
-                minimum=999999,
+                minimum=999998,
                 maximum=10000000,
                 step=1
             )
