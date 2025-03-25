@@ -73,7 +73,7 @@ class GradioFilmRec:
         # return recommendations, self.score_explainer(recommendations)
         self.current_recommendations = recs
         self.scores = scores
-        return recs
+        return scores
 
     def custom_chatbot(self, input_value, history, session_id):
         """Handles user queries with persistent chat history."""
@@ -118,10 +118,7 @@ class GradioFilmRec:
         full_response = ''
         for item in response:
             full_response += item
-            # yield full_response
-        # print("Full response: ", full_response)
         yield full_response
-        # return ''.join(response)
 
     def semantics_scraper(self, input_value, history):
         """Extracts sentiment & features from user messages."""

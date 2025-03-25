@@ -31,12 +31,6 @@ def load_data(num_lines=None):
 
 
 class RecInterface:
-    # def __init__(self):
-    #     self.films_df, self.ratings_df, self.credits_df = self.load_data()
-    #     # self.attribute_search = AttributeSearch('path/to/films.csv', 'path/to/credits.csv')
-    #     self.films_df, self.credits_df, self.genre_list_mlb = self.process_data()
-    #     self.user_profile = user_pf.load_or_create_user_profile(USER_ID, self.films_df, self.ratings_df, self.genre_list_mlb)
-    #     print("RecInterface initialized")
 
     def __init__(self, user_id):# placeholder for testing - no need to load everything
         self.user_ratings_df = None
