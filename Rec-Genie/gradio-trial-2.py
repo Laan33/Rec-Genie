@@ -41,6 +41,7 @@ class GradioFilmRec:
     def __init__(self):
         self.current_recommendations, self.scores = None, None
         self.semantic_full_response = None
+        self.score_explanation = None
 
 
         # self.session_id = randint(1000000, 9999999)  # Random unique session ID
@@ -70,14 +71,34 @@ class GradioFilmRec:
         print("Generating recommendations...")
         recs = self.rec_interface.recommend(num_recommendations=5)
         scores = self.rec_interface.score_breakdown(recs)
-        # return recommendations, self.score_explainer(recommendations)
         self.current_recommendations = recs
         self.scores = scores
+        self.score_explanation = None  # Reset score explanation
         return scores
 
     def custom_chatbot(self, input_value, history, session_id):
         """Handles user queries with persistent chat history."""
         self.session_id = session_id
+
+        # Check if user wants score explanation
+        if input_value.lower() in ['yes', 'y', 'Yes, I would like to know about the recommendation scores']:
+            if self.scores:
+                # Generate score explanation
+                explain_generator = self.score_explainer(self.scores)
+                self.score_explanation = next(explain_generator)
+                return (
+                    f"Here's a breakdown of the recommendation scores:\n\n{self.score_explanation}",
+                    self.current_recommendations,
+                    self.semantic_full_response
+                )
+            else:
+                return (
+                    "Sorry, there are no recent recommendations to explain.",
+                    self.current_recommendations,
+                    self.semantic_full_response
+                )
+
+        # Regular chat handling
         chat_chain = self.update_chain(film_chat_explore_chain)
         response = chat_chain.stream(
             {"ability": "everything", "question": input_value},
@@ -87,11 +108,10 @@ class GradioFilmRec:
         full_response = ""
         for item in response:
             full_response += item
-            yield full_response, self.current_recommendations, self.semantic_full_response  # Add None for additional outputs
+            yield full_response, self.current_recommendations, self.semantic_full_response
 
-        # Semantic scraping and returning results
-        # feedback_chain = self.update_chain(glean_feed_back_chain)
-        feedback_chain =  glean_feed_back_chain | llm.bind(stop=["<|eot_id|>"]) | StrOutputParser()
+        # Semantic scraping
+        feedback_chain = glean_feed_back_chain | llm.bind(stop=["<|eot_id|>"]) | StrOutputParser()
         feedback_chain = RunnableWithMessageHistory(
             feedback_chain,
             lambda _: self.get_message_history(),
@@ -118,17 +138,16 @@ class GradioFilmRec:
         full_response = ''
         for item in response:
             full_response += item
-        yield full_response
+        return full_response
 
     def semantics_scraper(self, input_value, history):
         """Extracts sentiment & features from user messages."""
         feedback_chain = self.update_chain(glean_feed_back_chain)
         response = feedback_chain.stream(
-            {"input_text": input_value},  # Remove 'ability' and 'question'
+            {"input_text": input_value},
             config={"configurable": {"session_id": str(self.session_id)}},
         )
         print("Semantic Analysis:", ''.join(response))
-
 
 # Instantiate the chatbot system
 film_rec_bot = GradioFilmRec()
@@ -163,7 +182,7 @@ with gr.Blocks(theme="Soft") as demo:
 
         with gr.Column(scale=2):
             gr.Markdown("### Message Semantics")
-            message_semantics = gr.Text(label="Extracted Insights")
+            message_semantics = gr.Text(label="Extracted Message Semantics", placeholder="No message semantics yet")
 
     # Chat Interface
     chatbot_interface = gr.ChatInterface(
@@ -178,6 +197,11 @@ with gr.Blocks(theme="Soft") as demo:
             ["I really like Eddie Murphy as Donkey in Shrek, really, it's my favourite film"],
             ["I think the director is really important in making or breaking a film"],
             ["I liked the cast in the last film I saw, but they the casting didn't make the film for me"],
+        ],
+        # Add suggested answers for score explanation
+        additional_suggestions=[
+            "Yes, I would like to know about the recommendation scores",
+            "No, continue our conversation"
         ]
     )
 
