@@ -46,8 +46,7 @@ def compute_content_scores(user_id, user_profile, films, credits_df, ratings_df,
         score += genre_score * weights["genre_ft_weight"]
 
         score = score * weights["content_weight"]
-        recommendations.append((film_id, score, cast_score, director_score, genre_score))
-
+        recommendations.append((film_id, round(score, 3), round(cast_score, 3), round(director_score, 3), round(genre_score, 3)))
 
     recommendations.sort(key=lambda x: x[1], reverse=True)  # Sort by score
     top_recommendations = recommendations
