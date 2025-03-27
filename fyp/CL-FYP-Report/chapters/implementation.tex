@@ -13,13 +13,21 @@
 I spoke to a former colleague of mine from Genesys, to consult on my planned implementation.
 He works on a data science team team in Genesys, with a primary focus on Large Language Models.
 
-On his advice, I decided to pivot the project objective to focus more on using a single quantized instruct based model, rather than a multi-model approach.
+On his advice, I decided to pivot the planned implementation to utilise a single large language model, rather than a multi-model approach.
+The model I chose to use was the Llama3.2 model, specifically the \texttt{llama3.2:3b-instruct-q4\_K\_M} model\cite{grattafiori2024llama3herdmodels}, which is a quantized instruct based model.
+
+This design decision was made to achieve a goal of the project, being that the system was to be as lightweight as possible, where it could be feasibly deployed on a local machine.
+\\\\
+This model has also been trained on
+
 This would help allow for the system to be more easily deployed and maintained, as well as reduce the complexity of the system.
 
 Primarily, it reduced the memory needed for the system.
 
 For this I experimented with De
 
+
+\begin{comment}
 
 
 sessions-
@@ -82,3 +90,5 @@ I like fast and furious 2,3,6
 I love this slasher horror, sound of music, what 
 
 
+    
+\end{comment}
