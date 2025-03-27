@@ -10,22 +10,29 @@
 % Lay out of report
 
 
-
 \section{Acknowledgements}
 \label{sec:acknowledgements}
 I would like to express my sincere gratitude to my supervisor, Dr. Colm O'Riordan, for his guidance and support throughout this project. 
 I am also grateful to Pearse Carroll and Joe O'Connell from the technical support staff for their assistance in providing access to the necessary resources. Additionally, I would like to extend my thanks to Gregerly Toth for his insights and expertise on the implementation of large language models in this project.
 
-
-
-
-
-
 \section{Abstract}
 \label{sec:abstract}
 \begin{itemize}
+    \item Purpose
     \item Area of Conversational recommendation systems (CRS) 
-    \item Explainable
+    \item Giving users an explanation for how the recommendation was made
+    \item Allowing the user to provide direct feedback on recommendations
+    \item Using Large Language Models (LLMs) to analyse text for attribute sentiment
+    \item User adjustable recommendation systems in a user friendly manner, that doesn't require a technical background
+    \item -
+    \item Design
+    \item -
+    \item Findings
+    \item Users 
+    \item -
+    \item Originality/Value
+    \item This research uses a novel approach on the use of conversational AI to improve on current reccomendation systems,
+    \item this research looks to investigate if using the capabilities of both LLMs alongside traditional recommendation systems can provide a more personalised and transparent recommendation system. 
 \end{itemize}
 
 % \begin{abstract}
@@ -51,8 +58,27 @@ It also had the aim of exploring the use of these models for explaining the reco
     \item Traditional recommendation systems - collaborative filtering, content-based filtering
     \item Limitations of traditional recommendation systems
     \item Conversational recommendation systems - 
+    \item Large Language Models (LLMs) - overview and background
+    \item Explainable AI and user trust
+    \item User feedback in recommendation systems
+    \item User control in recommendation systems
+    \item User adjustable recommendation systems
+    \item 
 \end{itemize}
 
+% Problem Statement
+\begin{itemize}
+    \item Traditional recommendation systems have limitations in terms of personalisation and transparency
+    \item Conversational recommendation systems aim to address these limitations
+    \item Large Language Models (LLMs) have shown promise in the area of conversational recommendation systems
+    \item LLMs don't have the capability to have a large context window for the size of data needed - or they require a huge model
+    \item Chatgpts memory is just key points from sessions. There's no fine grain memory of conversations (to hold speific information)
+    \item Building on that we can store information in a database of a user profile - e.g. films recommended, watched, etc
+    \item Existing recommendation systems don't allow for user feedback other than a rating.
+    \item Users feel frustrated and powerless when they want to change, correct or adjust the recommendations made to them.
+    \item Users want to feel heard, and they don't trust existing recommendation systems.
+    \item 
+\end{itemize}
 
 
 
@@ -74,7 +100,16 @@ Project Purpose
     \item Investigate the accuracy of quantized and intruct based LLMs in handling multiple tasks 
 \end{itemize}
 
-
+\section{Open Questions}
+\label{sec:open_questions}
+\begin{itemize}
+    \item How can we use large language models to improve conversational recommendation systems?
+    \item How can we use large language models to explain recommendations to users?
+    \item How can we allow users to provide feedback on recommendations in a conversational manner?
+    \item How can we implemnet user adjustable recommendation systems in a user friendly manner?
+    \item How can we implement a system that doesn't require a technical background?
+    \item How can we implement a system that can be feasibly scaled, efficient, effictive and user friendly?
+\end{itemize}
 
 
 
@@ -86,56 +121,64 @@ Project Purpose
 \section{Report Structure}
 \label{sec:report_structure}
 The report will be structured as follows:
+\\\\
+\textbf{Chapter One} provides an introduction to the project, outlining the aims and objectives of the project, the problem statement and domain background, and the structure of the report.
+\\\\
+\textbf{Chapter Two} provides a review of the literature in the area of conversational recommendation systems, large language models, and user feedback in recommendation systems.
+\\\\
+\textbf{Chapter Three} outlines the design of the system, including the system architecture, the design decisions made, and the data used in the project.
+\\\\
+\textbf{Chapter Four} details the implementation of the system, including the technologies and languages used, and the challenges faced during implementation.
+\\\\
+\textbf{Chapter Five} presents the results and evaluation of the system, including sample run-throughs with sample queries and recommendations, and the evaluation of the system.
+\\\\
+\textbf{Chapter Six} provides a conclusion to the project, summarising the main findings, reflecting on the project, and discussing future work.
+\\\\
+\textbf{Appendices} include additional information on the project, such as code snippets, data samples, and user feedback forms.
 
-\begin{itemize}
-    \item \textbf{Chapter 1: Introduction}
-    \begin{itemize}
-        \item Gentle introduction to the project – the field, the problem you are solving, etc.
-        \item Open questions to be tackled
-        \item Your aims/goals
-        \item Contributions
-        \item Layout of the report
-    \end{itemize}
+% \begin{itemize}
+    % \item \textbf{Chapter 1: Introduction}
+    % Beep boop talk talk talk talk
     
-    \item \textbf{Chapter 2: Related Work/Literature}
-    \begin{itemize}
-        \item Introduction
-        \item Recommender Systems – traditional approaches – collaborative filtering
-        \item Limitations/Issues
-        \item Large Language Models (LLMs) – overview and background
-        \item Use of LLMs in related domains – conversational IR, explanations, etc.
-    \end{itemize}
+    % \item \textbf{Chapter 2: Related Work/Literature}
+    % % \begin{itemize}
+    % %     \item Introduction
+    % %     \item Recommender Systems – traditional approaches – collaborative filtering
+    % %     \item Limitations/Issues
+    % %     \item Large Language Models (LLMs) – overview and background
+    % %     \item Use of LLMs in related domains – conversational IR, explanations, etc.
+    % % \end{itemize}
     
-    \item \textbf{Chapter 3: Design}
-    \begin{itemize}
-        \item Introduction – overview of the system
-        \item System architecture – include a diagram and discuss the main components in turn (choice of approaches here)
-        \item Discussion of design decisions
-        \item Discussion of the data being used
-    \end{itemize}
+    % \item \textbf{Chapter 3: Design}
+    % % \begin{itemize}
+    % %     \item Introduction – overview of the system
+    % %     \item System architecture – include a diagram and discuss the main components in turn (choice of approaches here)
+    % %     \item Discussion of design decisions
+    % %     \item Discussion of the data being used
+    % % \end{itemize}
     
-    \item \textbf{Chapter 4: Implementation}
-    \begin{itemize}
-        \item Technologies and Languages used
-        \item Issues when implementing; discuss challenges and solutions
-    \end{itemize}
+    % \item \textbf{Chapter 4: Implementation}
+    % % \begin{itemize}
+    % %     \item Technologies and Languages used
+    % %     \item Issues when implementing; discuss challenges and solutions
+    % % \end{itemize}
     
-    \item \textbf{Chapter 5: Results and Evaluation}
-    \begin{itemize}
-        \item Illustration of the system – few sample run-throughs with sample queries and recommendations, tying back to the design and the various components. This will show the reader how the system works.
-        \item Evaluation
-        \begin{itemize}
-            \item Talk about the classic metrics (can cover in Chapter 2) and their limitations in complex systems.
-            \item User evaluation – tasks for users to undertake. Questions asked – we need to design these; Objective measure of the recommendations; Subjective feedback.
-            \item Efficiency issues
-        \end{itemize}
-    \end{itemize}
+    % \item \textbf{Chapter 5: Results and Evaluation}
+    % % \begin{itemize}
+    % %     \item Illustration of the system – few sample run-throughs with sample queries and recommendations, tying back to the design and the various components. This will show the reader how the system works.
+    % %     \item Evaluation
+    % %     \begin{itemize}
+    % %         \item Talk about the classic metrics (can cover in Chapter 2) and their limitations in complex systems.
+    % %         \item User evaluation – tasks for users to undertake. Questions asked – we need to design these; Objective measure of the recommendations; Subjective feedback.
+    % %         \item Efficiency issues
+    % %     \end{itemize}
+    % % \end{itemize}
     
-    \item \textbf{Chapter 6: Conclusion}
-    \begin{itemize}
-        \item Summary – re-iterate what the project was
-        \item Conclusion – summarize main findings
-        \item Reflections/Discussion
-        \item Future Work
-    \end{itemize}
-\end{itemize}
+    % \item \textbf{Chapter 6: Conclusion}
+    % % \begin{itemize}
+    % %     \item Summary – re-iterate what the project was
+    % %     \item Conclusion – summarize main findings
+    % %     \item Reflections/Discussion
+    % %     \item Future Work
+    % % \end{itemize}
+% \end{itemize}
