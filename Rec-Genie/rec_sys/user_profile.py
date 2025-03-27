@@ -139,7 +139,10 @@ def user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb):
 
         features_profile['user_id'] = user_id
 
-    print("features_profile type (before): ", type(features_profile))
+        # Round all scores to 3 decimal places
+        # features_profile = {k: round(v, 3) if isinstance(v, (int, float)) else v for k, v in features_profile.items()}
+        features_profile = {k: round(v, 3) if isinstance(v, (int, float)) and v is not None else v for k, v in features_profile.items()}
+
     return features_profile
 
 def empty_user_profile(user_id):
@@ -176,13 +179,14 @@ def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
     profile = {'id': user_id, 'weights': standard_weights,
                'feature_profile': user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb)}
 
-    print("features_profile type (after2): ", type(profile['feature_profile']))
+    # print("features_profile type (after2): ", type(profile['feature_profile']))
 
     # Save the user profile to a CSV file
     profile_df = pd.DataFrame([profile])
     profile_df.to_csv(os.path.join(profiles_dir, f'user_profile_{user_id}.csv'), index=False)
 
-    print("features_profile type (after3): ", type(profile_df['feature_profile'])) # this was a series?
+
+    # print("features_profile type (after3): ", type(profile_df['feature_profile'])) # this was a series?
 
     return profile
 

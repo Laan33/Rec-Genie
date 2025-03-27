@@ -74,14 +74,32 @@ class GradioFilmRec:
         self.current_recommendations = recs
         self.scores = scores
         self.score_explanation = None  # Reset score explanation
+
+        # Call custom_chatbot to output "Do you want a breakdown of the recommendation scores?"
+        self.custom_chatbot("", None, self.session_id, scores=scores)
         return scores
 
-    def custom_chatbot(self, input_value, history, session_id):
+    def custom_chatbot(self, input_value, history, session_id, **kwargs):
         """Handles user queries with persistent chat history."""
         self.session_id = session_id
 
+        if kwargs.get("scores"):
+            print("Prompting for score explanation...")
+            # Output a prompt to the user to ask if they want a breakdown of the recommendation scores
+            self.scores = kwargs["scores"]
+            return (
+                "Would you like to know about the recommendation scores?",
+                self.current_recommendations,
+                self.semantic_full_response
+                # examples=[
+                #     ["Yes, I would like to know about the recommendation scores"],
+                #     ["No, I'm good"]
+                # ]
+            )
+
         # Check if user wants score explanation
         if input_value.lower() in ['yes', 'y', 'Yes, I would like to know about the recommendation scores']:
+            print("User wants score explanation...")
             if self.scores:
                 # Generate score explanation
                 explain_generator = self.score_explainer(self.scores)
@@ -197,11 +215,6 @@ with gr.Blocks(theme="Soft") as demo:
             ["I really like Eddie Murphy as Donkey in Shrek, really, it's my favourite film"],
             ["I think the director is really important in making or breaking a film"],
             ["I liked the cast in the last film I saw, but they the casting didn't make the film for me"],
-        ],
-        # Add suggested answers for score explanation
-        additional_suggestions=[
-            "Yes, I would like to know about the recommendation scores",
-            "No, continue our conversation"
         ]
     )
 

@@ -22,10 +22,11 @@ def load_data(num_lines=None):
     ratings_df = data_loader.load_ratings()
     credits_df = data_loader.load_credits(load_original_credits)
 
-    print("Data dimensions:")
+    print("-------\nData dimensions:")
     print("films_df:", films_df.shape)
     print("ratings_df:", ratings_df.shape)
     print("credits_df:", credits_df.shape)
+    print("-------\n")
 
     return films_df, ratings_df, credits_df
 
@@ -33,6 +34,7 @@ def load_data(num_lines=None):
 class RecInterface:
 
     def __init__(self, user_id):# placeholder for testing - no need to load everything
+        self.user_profile = None
         self.user_ratings_df = None
         self.user_id = user_id
         # self.films_df, self.ratings_df, self.credits_df = load_data()
@@ -42,13 +44,13 @@ class RecInterface:
         print("User ID:", user_id)
 
         self.update_user_profile(user_id)
-        print("User profile user_id:", self.user_profile['id'])
+        # print("User profile user_id:", self.user_profile['id'])
         # self.user_ratings_df = self.update_user_profile()
         # self.user_ratings_df = self.ratings_df[self.ratings_df['userId'] == user_id]
 
 
         # self.user_profile = user_pf.load_or_create_user_profile(user_id, self.films_df, self.user_ratings_df, self.genre_list_mlb)
-        print("User profile user_id:", self.user_profile['id'])
+        # print("User profile user_id:", self.user_profile['id'])
         print("RecInterface initialized")
 
     def process_data(self):
@@ -66,8 +68,8 @@ class RecInterface:
         self.ratings_df = pd.concat([self.ratings_df, self.user_ratings_df], ignore_index=True)
         self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
         self.user_profile = user_pf.create_user_profile(user_id, self.films_df, self.user_ratings_df, self.genre_list_mlb)
-        print("Feature user profile type4: ", type(self.user_profile['feature_profile'])) # this is a dict
-        print("Feature user profile: ", self.user_profile['feature_profile'])
+        # print("Feature user profile type4: ", type(self.user_profile['feature_profile'])) # this is a dict
+        # print("Feature user profile: ", self.user_profile['feature_profile'])
 
     def recommend(self, num_recommendations=5):
         print("Generating recommendations for user ID:", self.user_id)
