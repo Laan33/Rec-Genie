@@ -165,7 +165,6 @@ def load_or_create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
         profile = {'id': user_id, 'weights': standard_weights,
                    'feature_profile': user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb)}
 
-        print("features_profile type (after0): ", type(profile['feature_profile']))
         # Save the user profile to a CSV file
         save_user_profile(profile, profiles_dir)
 
@@ -194,22 +193,22 @@ def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
 def load_user_profile(user_id, profiles_dir):
     """Loads the user profile from a CSV file."""
     profile_df = pd.read_csv(os.path.join(profiles_dir, f'user_profile_{user_id}.csv'))
-    print("Profile_df type: ", type(profile_df))
-    print("Profile_df columns: ", profile_df.columns)
-    print("Profile_df", profile_df)
+    # print("Profile_df type: ", type(profile_df))
+    # print("Profile_df columns: ", profile_df.columns)
+    # print("Profile_df", profile_df)
     # Convert from string to dictionary
     # profile_df = profile_df.applymap(ast.literal_eval)
 
     # Convert feature_profile from string to dictionary
     profile_df['feature_profile'] = profile_df['feature_profile'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
+    profile_df['weights'] = profile_df['weights'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
 
-    print("Profile_df columns: ", profile_df.columns)
+    # print("Profile_df columns: ", profile_df.columns)
 
-    # print("features_profile type (after1): ", type(profile_df))
-
+    user_profile = profile_df.to_dict(orient='records')[0]
     # profile_df = pd.read_csv(f'/userProfiles/user_profile_{user_id}.csv')
     # return profile_df.to_dict(orient='records')[0]
-    return profile_df
+    return user_profile
 
 def adjust_user_profile(user_profile, user_weights, feedback):
     """Permanently adjusts the user profile based on feedback adjustments on the weighting.

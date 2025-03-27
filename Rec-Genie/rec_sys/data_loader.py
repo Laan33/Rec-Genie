@@ -30,16 +30,16 @@ def load_credits(load_original=False):
     if not load_original:
         print("Loading prev generated credits...")
         credits_df = pd.read_csv(dataset_path + "/gen_credits_df.csv", nrows=num_lines_to_load)
-        print("Credits_df columns:", credits_df.columns)
+        # print("Credits_df columns:", credits_df.columns)
         # Convert the string representation of lists to actual lists
         credits_df['cast_info'] = credits_df['cast_info'].apply(eval)
         credits_df['director_info'] = credits_df['director_info'].apply(eval)
         # Convert the info in those lists from strings to tuples
         credits_df['cast_info'] = credits_df['cast_info'].apply(lambda x: [(y[0], int(y[1])) for y in x])
         credits_df['director_info'] = credits_df['director_info'].apply(lambda x: (x[0], int(x[1])))
-        print("Credits_df head:", credits_df.head())
-        print("Credits cast type:", type(credits_df['cast_info'][0]))
-        print("Credits crew type:", type(credits_df['director_info'][0]))
+        # print("Credits_df head:", credits_df.head())
+        # print("Credits cast type:", type(credits_df['cast_info'][0]))
+        # print("Credits crew type:", type(credits_df['director_info'][0]))
         return credits_df
     else:
         return pd.read_csv(dataset_path + "/credits.csv", nrows=num_lines_to_load)

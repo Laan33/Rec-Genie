@@ -90,17 +90,19 @@ class GradioFilmRec:
         print("Current recommendations type:", type(self.current_recommendations))
         print("Current recommendations:", self.current_recommendations)
 
+        print("\n")
+
         convert_json_to_markdown = "\n".join([
-            f"{i + 1}. **{rec['title']}** (Released: {rec['release_date'].split()[0]}) - Score: {rec['score']:.2f}"
+            f"{i + 1}. **{rec['title']}** (Released: {rec['release_date']}) - Score: **{rec['score']:.2f}**"
             for i, rec in enumerate(recommendations_list)
         ])
-        print("Recommendations:", convert_json_to_markdown)
+        print("Recommendations: \n", convert_json_to_markdown)
         # self.basic_rec_list = basic_rec_list
 
         # Call custom_chatbot to output "Do you want a breakdown of the recommendation scores?"
-        self.custom_chatbot("", None, self.session_id, scores=convert_json_to_markdown)
+        self.custom_chatbot("", None, self.session_id, scores=recommendations_list)
 
-        return basic_rec_list
+        return convert_json_to_markdown
 
     def custom_chatbot(self, input_value, history, session_id, **kwargs):
         """Handles user queries with persistent chat history."""
