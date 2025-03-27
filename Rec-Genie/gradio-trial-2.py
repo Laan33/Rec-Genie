@@ -82,7 +82,7 @@ class GradioFilmRec:
 
         # Convert DataFrame to list of dictionaries for easy JSON rendering
         recommendations_list = scores.to_dict('records')
-        basic_rec_list = basic_rec_list.to_dict('records')
+        # basic_rec_list = basic_rec_list.to_dict('records')
         # self.recs  = recs
         self.current_recommendations = recommendations_list
         self.scores = scores
@@ -97,7 +97,6 @@ class GradioFilmRec:
             for i, rec in enumerate(recommendations_list)
         ])
         print("Recommendations: \n", convert_json_to_markdown)
-        # self.basic_rec_list = basic_rec_list
 
         # Call custom_chatbot to output "Do you want a breakdown of the recommendation scores?"
         self.custom_chatbot("", None, self.session_id, scores=recommendations_list)
@@ -108,6 +107,7 @@ class GradioFilmRec:
         """Handles user queries with persistent chat history."""
         self.session_id = session_id
 
+        print("Chatbot called, kwargs:", kwargs)
         if kwargs.get("scores"):
             print("Prompting for score explanation...")
             # Output a prompt to the user to ask if they want a breakdown of the recommendation scores
