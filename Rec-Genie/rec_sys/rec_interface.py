@@ -10,7 +10,8 @@ from . import hybrid_recommender as hyb
 # Configuration
 RUNNING_ON_COLAB = False
 # USER_ID = 999999
-load_original_credits = True
+# load_original_credits = True
+load_original_credits = False
 
 
 def load_data(num_lines=None):
@@ -33,7 +34,7 @@ def load_data(num_lines=None):
 
 class RecInterface:
 
-    def __init__(self, user_id):# placeholder for testing - no need to load everything
+    def __init__(self, user_id):
         self.user_profile = None
         self.user_ratings_df = None
         self.user_id = user_id
@@ -51,7 +52,7 @@ class RecInterface:
 
         # self.user_profile = user_pf.load_or_create_user_profile(user_id, self.films_df, self.user_ratings_df, self.genre_list_mlb)
         # print("User profile user_id:", self.user_profile['id'])
-        print("RecInterface initialized")
+        print("\nRecInterface initialized")
 
     def process_data(self):
         films_df = pre.filter_films(self.films_df)
@@ -64,12 +65,20 @@ class RecInterface:
         return films_df, self.credits_df, genre_list_mlb
 
     def update_user_profile(self, user_id):
-        self.user_ratings_df = user_pf.load_user_ratings()
-        self.ratings_df = pd.concat([self.ratings_df, self.user_ratings_df], ignore_index=True)
-        self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
-        self.user_profile = user_pf.create_user_profile(user_id, self.films_df, self.user_ratings_df, self.genre_list_mlb)
-        # print("Feature user profile type4: ", type(self.user_profile['feature_profile'])) # this is a dict
-        # print("Feature user profile: ", self.user_profile['feature_profile'])
+        if load_original_credits:
+            self.user_ratings_df = user_pf.load_user_ratings()
+            self.ratings_df = pd.concat([self.ratings_df, self.user_ratings_df], ignore_index=True)
+            self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
+            self.user_profile = user_pf.create_user_profile(user_id, self.films_df, self.user_ratings_df, self.genre_list_mlb)
+            # print("Feature user profile type4: ", type(self.user_profile['feature_profile'])) # this is a dict
+            # print("Feature user profile: ", self.user_profile['feature_profile'])
+        else:
+            print("Loading user ratings from file")
+            user_profile  = user_pf.load_or_create_user_profile(user_id, self.films_df, self.ratings_df, self.genre_list_mlb)
+            # Convert from a string
+            self.user_profile = user_pf.load_or_create_user_profile(user_id, self.films_df, self.ratings_df, self.genre_list_mlb)
+            # print("Feature user profile type4: ", type(self.user_profile['feature_profile'])) # this is a dict
+            # print("Feature user profile: ", self.user_profile['feature_profile'])
 
     def recommend(self, num_recommendations=5):
         print("Generating recommendations for user ID:", self.user_id)

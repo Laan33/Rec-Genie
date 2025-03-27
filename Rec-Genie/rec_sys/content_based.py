@@ -25,7 +25,18 @@ def compute_content_scores(user_id, user_profile, films, credits_df, ratings_df,
 
         # Calculate weighted score based on user profile and movie cast/director, genres,
         cast_ids = credits_df['cast_info'].iloc[movie_index]
+        print("Credits type: ", type(credits_df))
+        print("Credits head: ", credits_df.head())
+        print("Credits columns: ", credits_df.columns)
+
         for cast_member in cast_ids:
+            print("Cast ids: ", cast_ids)
+            print("Cast ids type: ", type(cast_ids))
+            print("Cast member: ", cast_member)
+            print("Cast member[1]: ", cast_member[1])
+            print("User profile type: ", type(user_profile))
+            print("User profile: ", user_profile)
+
             cast_score += user_profile.get(cast_member[1], 0) * weights["cast_ft_weight"]
         score += cast_score
 

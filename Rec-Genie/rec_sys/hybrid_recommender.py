@@ -18,6 +18,8 @@ num_recs = 400 # Number of recommendations to return
 
 def hybrid_recommend(user_profile, films_df, credits_df, ratings_df, genre_list_mlb):
     weights = user_profile['weights']
+    print("UserProfile type: ", type(user_profile))
+    print("Userprofile id: ", user_profile['id'])
     content_scores = content_based.compute_content_scores(user_profile['id'], user_profile['feature_profile'], films_df, credits_df, ratings_df, weights, genre_list_mlb)
     user_user_ratings = ratings_df.copy()
     user_user_ratings = remove_non_applicable_films(films_df, user_user_ratings)
@@ -51,6 +53,9 @@ def score_breakdown(films_df, recommended_movies):
     # Filter films_df to match the recommended IDs
     filtered_films = films_df[films_df['id'].isin(recommended_ids)][['id', 'title', 'release_date', 'vote_average', 'vote_count']]
 
+    # Change the release_date to just the year
+    filtered_films = filtered_films.assign(release_date=filtered_films['release_date'].dt.year)
+
     # Ensure that each movie_id appears only once
     filtered_films = filtered_films.drop_duplicates(subset=['id'])
 
@@ -59,23 +64,26 @@ def score_breakdown(films_df, recommended_movies):
 
     # Assign the scores to the filtered dataframe
     scored_films = filtered_films.assign(
-        score=[recommended_movies_dict[movie_id]['final_score'] for movie_id in filtered_films['id']],
+        score=[round(recommended_movies_dict[movie_id]['final_score'], 3) for movie_id in filtered_films['id']],
         cast_score=[recommended_movies_dict[movie_id]['cast_score'] for movie_id in filtered_films['id']],
         director_score=[recommended_movies_dict[movie_id]['director_score'] for movie_id in filtered_films['id']],
         genre_score=[recommended_movies_dict[movie_id]['genre_score'] for movie_id in filtered_films['id']],
-        user_user_score=[recommended_movies_dict[movie_id]['collab_score'] for movie_id in filtered_films['id']],
+        user_user_score=[round(recommended_movies_dict[movie_id]['collab_score'], 3) for movie_id in filtered_films['id']],
         cast_proportion=[round(float(recommended_movies_dict[movie_id]['cast_score'] / recommended_movies_dict[movie_id]['final_score']),2) for movie_id in filtered_films['id']],
         director_proportion=[round(recommended_movies_dict[movie_id]['director_score'] / recommended_movies_dict[movie_id]['final_score'],2) for movie_id in filtered_films['id']],
         genre_proportion=[round(recommended_movies_dict[movie_id]['genre_score'] / recommended_movies_dict[movie_id]['final_score'],2) for movie_id in filtered_films['id']],
         user_user_proportion=[round(recommended_movies_dict[movie_id]['collab_score'] / recommended_movies_dict[movie_id]['final_score'],2) for movie_id in filtered_films['id']]
     )
 
-    print("Scored films:", scored_films.shape)
-    print("Scored films columns:", scored_films.columns)
-    print("Scored films type: ", type(scored_films))
+    # Get a basic list with just the film name and it's score
+    basic_list = scored_films[['title', 'release_date', 'score']]
+
+    # print("Scored films:", scored_films.shape)
+    # print("Scored films columns:", scored_films.columns)
+    # print("Scored films type: ", type(scored_films))
     print("Scored films head:", scored_films.head())
     # Sort the DataFrame by the final_score in descending order
-    return scored_films.sort_values(by='score', ascending=False)
+    return scored_films.sort_values(by='score', ascending=False), basic_list.sort_values(by='score', ascending=False)
 
 def fill_in_collab_scores(films_df, collab_scores, weights):
     # Multiply the collaborative scores by the weight

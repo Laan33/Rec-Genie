@@ -1,3 +1,5 @@
+import time
+
 import gradio as gr
 from random import randint
 from langchain_ollama import ChatOllama
@@ -39,6 +41,8 @@ llm = ChatOllama(model=MODEL_NAME)
 
 class GradioFilmRec:
     def __init__(self):
+        self.basic_rec_list = None
+        # self.recs = None
         self.current_recommendations, self.scores = None, None
         self.semantic_full_response = None
         self.score_explanation = None
@@ -49,7 +53,11 @@ class GradioFilmRec:
 
         self.model_name = MODEL_NAME
         print(f"Using model: {self.model_name}")
+
+        # Timer to measure rec_interface initialisation time
+        start_time = time.time()
         self.rec_interface = rec_interface.RecInterface(user_id=self.session_id)
+        print("RecInterface initialised in", round((time.time() - start_time), 1), "seconds\n")
 
     def get_message_history(self):
         """Retrieve or initialise message history for this session."""
@@ -70,14 +78,29 @@ class GradioFilmRec:
         """Generates film recommendations based on user history."""
         print("Generating recommendations...")
         recs = self.rec_interface.recommend(num_recommendations=5)
-        scores = self.rec_interface.score_breakdown(recs)
-        self.current_recommendations = recs
+        scores, basic_rec_list = self.rec_interface.score_breakdown(recs)
+
+        # Convert DataFrame to list of dictionaries for easy JSON rendering
+        recommendations_list = scores.to_dict('records')
+        basic_rec_list = basic_rec_list.to_dict('records')
+        # self.recs  = recs
+        self.current_recommendations = recommendations_list
         self.scores = scores
         self.score_explanation = None  # Reset score explanation
+        print("Current recommendations type:", type(self.current_recommendations))
+        print("Current recommendations:", self.current_recommendations)
+
+        convert_json_to_markdown = "\n".join([
+            f"{i + 1}. **{rec['title']}** (Released: {rec['release_date'].split()[0]}) - Score: {rec['score']:.2f}"
+            for i, rec in enumerate(recommendations_list)
+        ])
+        print("Recommendations:", convert_json_to_markdown)
+        # self.basic_rec_list = basic_rec_list
 
         # Call custom_chatbot to output "Do you want a breakdown of the recommendation scores?"
-        self.custom_chatbot("", None, self.session_id, scores=scores)
-        return scores
+        self.custom_chatbot("", None, self.session_id, scores=convert_json_to_markdown)
+
+        return basic_rec_list
 
     def custom_chatbot(self, input_value, history, session_id, **kwargs):
         """Handles user queries with persistent chat history."""
@@ -196,7 +219,8 @@ with gr.Blocks(theme="Soft") as demo:
 
         with gr.Column(scale=2):
             gr.Markdown("### Recommendations")
-            recommendations = gr.JSON(label="recommendations")
+            # recommendations = gr.JSON(label="recommendations")
+            recommendations = gr.Markdown(label="recommendaitions", value="No recommendations generated, click the button to the left")
 
         with gr.Column(scale=2):
             gr.Markdown("### Message Semantics")
