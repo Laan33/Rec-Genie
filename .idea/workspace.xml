@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="kwaarrrgggsss">
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Mid using csvs, and also made recs simpler to output in md">
+      <change afterPath="$PROJECT_DIR$/Rec-Genie/chatbot/chatbot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Rec-Genie/gradio-trial-2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/gradio-trial-2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/hybrid_recommender.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/hybrid_recommender.py" afterDir="false" />
@@ -52,32 +53,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.Gradio-Trial-2.executor&quot;: &quot;Run&quot;,
-    &quot;Python.baseSystem.executor&quot;: &quot;Run&quot;,
-    &quot;Python.collaborative.executor&quot;: &quot;Run&quot;,
-    &quot;Python.data_loader.executor&quot;: &quot;Run&quot;,
-    &quot;Python.gradio-trial (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.gradio-trial-2.executor&quot;: &quot;Run&quot;,
-    &quot;Python.gradio-trial.executor&quot;: &quot;Run&quot;,
-    &quot;Python.hybrid_recommender.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.rec_interface.executor&quot;: &quot;Run&quot;,
-    &quot;Python.simpleRec.executor&quot;: &quot;Run&quot;,
-    &quot;Python.user_profile.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/Cathal/Rec-Genie/Rec-Genie/chatbot&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.Gradio-Trial-2.executor": "Run",
+    "Python.baseSystem.executor": "Run",
+    "Python.collaborative.executor": "Run",
+    "Python.data_loader.executor": "Run",
+    "Python.gradio-trial (1).executor": "Run",
+    "Python.gradio-trial-2.executor": "Run",
+    "Python.gradio-trial.executor": "Run",
+    "Python.hybrid_recommender.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.rec_interface.executor": "Run",
+    "Python.simpleRec.executor": "Run",
+    "Python.user_profile.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/Cathal/Rec-Genie/Rec-Genie/chatbot",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Rec-Genie/chatbot" />
@@ -317,7 +318,31 @@
       <workItem from="1742756367164" duration="10545000" />
       <workItem from="1742830462594" duration="27049000" />
       <workItem from="1742914361883" duration="1323000" />
-      <workItem from="1743088075971" duration="11255000" />
+      <workItem from="1743088075971" duration="7099000" />
+    </task>
+    <task id="LOCAL-00039" summary="AASHHGH">
+      <option name="closed" value="true" />
+      <created>1742336109502</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1742336109502</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Fixed user_profile.py, and ratings dropping timestamps">
+      <option name="closed" value="true" />
+      <created>1742380999154</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1742380999154</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Score breakdown is working ? before collab fix">
+      <option name="closed" value="true" />
+      <created>1742389161220</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1742389161220</updated>
     </task>
     <task id="LOCAL-00042" summary="Seemingly working!">
       <option name="closed" value="true" />
@@ -687,31 +712,7 @@
       <option name="project" value="LOCAL" />
       <updated>1743102273049</updated>
     </task>
-    <task id="LOCAL-00088" summary="Using csvs and now also simply rec display">
-      <option name="closed" value="true" />
-      <created>1743102973372</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1743102973372</updated>
-    </task>
-    <task id="LOCAL-00089" summary="User profile">
-      <option name="closed" value="true" />
-      <created>1743103028769</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1743103028769</updated>
-    </task>
-    <task id="LOCAL-00090" summary="kwaarrrgggsss">
-      <option name="closed" value="true" />
-      <created>1743103505312</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
-      <option name="project" value="LOCAL" />
-      <updated>1743103505312</updated>
-    </task>
-    <option name="localTasksCounter" value="91" />
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -781,6 +782,9 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="New chatbot" />
+    <MESSAGE value="Chatting about films" />
+    <MESSAGE value="AGHHASA routing hard" />
     <MESSAGE value="Rand sessions" />
     <MESSAGE value="Starting routing on gradio" />
     <MESSAGE value="Getting nowhere is a banger" />
@@ -803,10 +807,7 @@
     <MESSAGE value="Using Scores Breakdown rather than just Recs" />
     <MESSAGE value="More documentaiton, and now coding bits for breakdown and films" />
     <MESSAGE value="Mid using csvs, and also made recs simpler to output in md" />
-    <MESSAGE value="Using csvs and now also simply rec display" />
-    <MESSAGE value="User profile" />
-    <MESSAGE value="kwaarrrgggsss" />
-    <option name="LAST_COMMIT_MESSAGE" value="kwaarrrgggsss" />
+    <option name="LAST_COMMIT_MESSAGE" value="Mid using csvs, and also made recs simpler to output in md" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -861,21 +862,16 @@
           <line>23</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Rec-Genie/gradio-trial-2.py</url>
-          <line>291</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Rec_Genie$simpleRec.coverage" NAME="simpleRec Coverage Results" MODIFIED="1731520402730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Rec_Genie$Gradio_Trial_2.coverage" NAME="Gradio-Trial-2 Coverage Results" MODIFIED="1743110202757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$Gradio_Trial_2.coverage" NAME="Gradio-Trial-2 Coverage Results" MODIFIED="1743181497143" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
     <SUITE FILE_PATH="coverage/Rec_Genie$main.coverage" NAME="main Coverage Results" MODIFIED="1742407746749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rec-sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial.coverage" NAME="gradio-trial Coverage Results" MODIFIED="1742427286732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pocs" />
-    <SUITE FILE_PATH="coverage/Rec_Genie$hybrid_recommender.coverage" NAME="hybrid_recommender Coverage Results" MODIFIED="1742844282328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$baseSystem.coverage" NAME="baseSystem Coverage Results" MODIFIED="1731503707738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$hybrid_recommender.coverage" NAME="hybrid_recommender Coverage Results" MODIFIED="1742844282328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$collaborative.coverage" NAME="collaborative Coverage Results" MODIFIED="1742759007789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$rec_interface.coverage" NAME="rec_interface Coverage Results" MODIFIED="1742843902819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$user_profile.coverage" NAME="user_profile Coverage Results" MODIFIED="1742862213265" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />

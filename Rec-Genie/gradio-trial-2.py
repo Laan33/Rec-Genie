@@ -15,29 +15,10 @@ from chatbot.prompts import film_chat_explore_chain, explain_rec_chain, glean_fe
 # Initialize database connection
 engine = create_engine("sqlite:///sqlite.db")
 
-# Sample user profile (for testing UI)
-sample_json = {
-    "id": 1,
-    "feature_profile": {
-        "cast": ["Tom Cruise", "Nicole Kidman"],
-        "director": ["Steven Spielberg"],
-        "genre": ["Action", "Adventure"]
-    },
-    "weights": {
-        "cast_ft_weight": 0.3,
-        "director_ft_weight": 0.4,
-        "genre_ft_weight": 0.4,
-        "content_weight": 0.7,
-        "collab_weight": 1,
-        "genre_normalisation": 0.12,
-        "average_rating_weight": 0.3
-    }
-}
 
 # Define LLM model
 MODEL_NAME = "llama3.2:3b-instruct-q4_K_M"
 llm = ChatOllama(model=MODEL_NAME)
-
 
 def json_to_markdown(recommendations_list):
     """Converts a JSON object to a markdown list."""
@@ -47,7 +28,6 @@ def json_to_markdown(recommendations_list):
     ])
     print("Recommendations: \n", convert_json_to_markdown)
     return convert_json_to_markdown
-
 
 class GradioFilmRec:
     def __init__(self):
@@ -85,44 +65,43 @@ class GradioFilmRec:
         )
 
     def recommend_films(self):
+        """Generates film recommendations based on user history."""
         print("Generating recommendations...")
         recs = self.rec_interface.recommend(num_recommendations=5)
         scores, _ = self.rec_interface.score_breakdown(recs)
 
-        # Convert DataFrame to list of dictionaries for easy JSON rendering
+        # # Convert DataFrame to list of dictionaries for easy JSON rendering
         recommendations_list = scores.to_dict('records')
+        convert_json_to_markdown = json_to_markdown(recommendations_list)
+        # self.recs  = recs
+        self.current_recommendations = convert_json_to_markdown
+        self.scores = recommendations_list
+        self.score_explanation = None  # Reset score explanation
+        print("Current recommendations type:", type(self.current_recommendations))
+        print("Current recommendations:", self.current_recommendations)
 
-        # # Prepare a message for the chatbot in the correct format
-        # recommendation_message = {
-        #     'role': 'assistant',
-        #     'content': f"I've generated some recommendations:\n\n{convert_json_to_markdown}\n\nWould you like a detailed breakdown of these recommendation scores?\n\nYes / No"
-        # }
+        print("\n")
+        print("Recommendations: \n", convert_json_to_markdown)
 
-        # Return both the markdown and the message for the chatbot
-        # return convert_json_to_markdown, [recommendation_message]
-        self.custom_chatbot("", None, self.session_id, scores)
-        return recommendations_list
+        return convert_json_to_markdown
 
+    def custom_chatbot(self, input_value, history, session_id, **kwargs):
+        """Handles user queries with persistent chat history."""
+        self.session_id = session_id
 
-    def chatbot_routing(self, input_value, history, session_id, scores):
-        """Routes the user query to the correct chatbot function based on the flow"""
-
-        # If scores are passed, it means we just generated recommendations
-        if scores is not None:
-            # print("Recommendations received, scores:", scores)
-            print("Recommendations received, asking user if they want score explanation...")
-            self.scores = scores
-
-            # Ask the user do they want a score explanation
-            convert_json_to_markdown = json_to_markdown(scores)
-
-            # Prepare a message for the chatbot in the correct format
-            recommendation_message = {
-                'role': 'assistant',
-                'content': f"I've generated some recommendations:\n\n{convert_json_to_markdown}\n\nWould you like a detailed breakdown of these recommendation scores?\n\nYes / No"
-            }
-
-            yield recommendation_message
+        if kwargs.get("scores"):
+            print("Prompting for score explanation...")
+            # Output a prompt to the user to ask if they want a breakdown of the recommendation scores
+            self.scores = kwargs["scores"]
+            return (
+                "Would you like to know about the recommendation scores?",
+                self.current_recommendations,
+                self.semantic_full_response
+                # examples=[
+                #     ["Yes, I would like to know about the recommendation scores"],
+                #     ["No, I'm good"]
+                # ]
+            )
 
         # Check if user wants score explanation
         if input_value.lower() in ['yes', 'y', 'Yes, I would like to know about the recommendation scores']:
@@ -142,72 +121,6 @@ class GradioFilmRec:
                     self.current_recommendations,
                     self.semantic_full_response
                 )
-
-        return self.custom_chatbot(input_value, history, session_id)
-
-        #
-        # # Regular chat handling
-        # chat_chain = self.update_chain(film_chat_explore_chain)
-        # response = chat_chain.stream(
-        #     {"ability": "everything", "question": input_value},
-        #     config={"configurable": {"session_id": str(self.session_id)}},
-        # )
-        #
-        # full_response = ""
-        # for item in response:
-        #     full_response += item
-        #     yield full_response, self.current_recommendations, self.semantic_full_response
-        #
-        # # Semantic scraping
-        # feedback_chain = glean_feed_back_chain | llm.bind(stop=["<|eot_id|>"]) | StrOutputParser()
-        # feedback_chain = RunnableWithMessageHistory(
-        #     feedback_chain,
-        #     lambda _: self.get_message_history(),
-        #     input_messages_key="question",
-        #     output_messages_key="output",
-        #     history_messages_key="history"
-        # )
-        #
-        # semantic_response = feedback_chain.stream(
-        #     {"input_text": input_value},
-        #     config={"configurable": {"session_id": str(self.session_id)}},
-        # )
-        #
-        # self.semantic_full_response = ''.join(semantic_response)
-        # yield full_response, self.current_recommendations, self.semantic_full_response
-
-
-    def custom_chatbot(self, input_value, history, session_id):
-        print("general chatbot function")
-        """Handles user queries with persistent chat history."""
-        self.session_id = session_id
-
-        # # If scores are passed, it means we just generated recommendations
-        # if scores is not None:
-        #     print("Recommendations received, scores:", scores)
-        #     self.scores = scores
-        #
-        #     # Ask the user do they want a score explanation
-        #     return self.score_explainer(scores)
-
-        # # Check if user wants score explanation
-        # if input_value.lower() in ['yes', 'y', 'Yes, I would like to know about the recommendation scores']:
-        #     print("User wants score explanation...")
-        #     if self.scores:
-        #         # Generate score explanation
-        #         explain_generator = self.score_explainer(self.scores)
-        #         self.score_explanation = next(explain_generator)
-        #         return (
-        #             f"Here's a breakdown of the recommendation scores:\n\n{self.score_explanation}",
-        #             self.current_recommendations,
-        #             self.semantic_full_response
-        #         )
-        #     else:
-        #         return (
-        #             "Sorry, there are no recent recommendations to explain.",
-        #             self.current_recommendations,
-        #             self.semantic_full_response
-        #         )
 
         # Regular chat handling
         chat_chain = self.update_chain(film_chat_explore_chain)
@@ -240,7 +153,6 @@ class GradioFilmRec:
         yield full_response, self.current_recommendations, self.semantic_full_response
 
     def score_explainer(self, breakdown):
-        print("Explaining recommendation scores...")
         """Explains why a recommendation was made."""
         explain_chain = self.update_chain(explain_rec_chain)
         response = explain_chain.stream(
@@ -297,15 +209,13 @@ with gr.Blocks(theme="Soft") as demo:
             gr.Markdown("### Message Semantics")
             message_semantics = gr.Text(label="Extracted Message Semantics", placeholder="No message semantics yet")
 
-    scores = gr.JSON(label="Scores", value=None, visible=False)
-
     # Chat Interface
     chatbot_interface = gr.ChatInterface(
-        fn=film_rec_bot.chatbot_routing,
+        fn=film_rec_bot.custom_chatbot,
         chatbot=gr.Chatbot(type="messages", show_copy_button=True),
         editable=True,
         type="messages",
-        additional_inputs=[session_id_num, scores],
+        additional_inputs=[session_id_num],
         additional_outputs=[recommendations, message_semantics],
         examples=[
             ["I love the Barbie film, I'm just Ken in a Barbie world"],
@@ -319,8 +229,7 @@ with gr.Blocks(theme="Soft") as demo:
     generate_recommendations.click(
         fn=film_rec_bot.recommend_films,
         inputs=[],
-        outputs=[recommendations]  # Add chatbot as an output
-        # outputs=[recommendations, chatbot_interface.chatbot]  # Add chatbot as an output
+        outputs=[recommendations]
     )
 
 # Launch app

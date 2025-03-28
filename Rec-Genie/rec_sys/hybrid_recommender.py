@@ -18,8 +18,6 @@ num_recs = 400 # Number of recommendations to return
 
 def hybrid_recommend(user_profile, films_df, credits_df, ratings_df, genre_list_mlb):
     weights = user_profile['weights']
-    print("UserProfile type: ", type(user_profile))
-    print("Userprofile id: ", user_profile['id'])
     content_scores = content_based.compute_content_scores(user_profile['id'], user_profile['feature_profile'], films_df, credits_df, ratings_df, weights, genre_list_mlb)
     user_user_ratings = ratings_df.copy()
     user_user_ratings = remove_non_applicable_films(films_df, user_user_ratings)
