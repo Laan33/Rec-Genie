@@ -10,7 +10,7 @@ from langchain_community.chat_message_histories import SQLChatMessageHistory
 from sqlalchemy import create_engine
 
 from rec_sys import rec_interface
-from chatbot.prompts import film_chat_explore_chain, explain_rec_chain, glean_feed_back_chain
+from chatbot.prompts import film_chat_explore_chain, explain_rec_chain, glean_feed_back_chain, router_prompt
 
 # Initialize database connection
 engine = create_engine("sqlite:///sqlite.db")
@@ -30,7 +30,8 @@ def json_to_markdown(recommendations_list):
 
 class GradioFilmRec:
     def __init__(self):
-        self.current_recommendations, self.scores = None, None
+        self.current_recommendations = "No recommendations generated, click the button to the left"
+        self.scores = None
         self.semantic_full_response = None
 
         # self.session_id = randint(1000000, 9999999)  # Random unique session ID
@@ -71,7 +72,6 @@ class GradioFilmRec:
         # self.recs  = recs
         self.current_recommendations = convert_json_to_markdown
         self.scores = recommendations_list
-        self.score_explanation = None  # Reset score explanation
 
         # Add on the line: "\n you can ask in chat for an explanation of these recommendations"
         convert_json_to_markdown = convert_json_to_markdown + "\n Ask in the chat for an explanation of these recommendations!"
@@ -79,19 +79,46 @@ class GradioFilmRec:
         print("\n")
         print("Recommendations: \n", convert_json_to_markdown)
 
+        self.current_recommendations = convert_json_to_markdown
+
         return convert_json_to_markdown
 
     def router(self, input_value, history, session_id):
         """
-        Simply routes the input to the appropriate function.
-        - if the user is talking about films or actors, call the custom_chatbot function
-        - if the user asks for an explanation of the recommendation, call the score_explainer function
+        Routes the input to the appropriate function based on user query content.
+        - If the user is asking for recommendations: call the recommend_films function
+        - If the user is asking for an explanation: call the score_explainer function
+        - If the user is giving feedback or chatting: call the custom_chatbot function
+        - If none of the above: provide a default response
         """
         self.session_id = session_id
         print("Router session ID:", self.session_id)
 
-        # TODO - router llm to determine if the user is asking for a recommendation or an explanation
+        # # Check if the input is empty
+        # if not input_value:
+        #     return "Please enter a message."
 
+        # Create the routing chain
+        routing_chain = router_prompt | llm | StrOutputParser()
+
+        # Get the route category
+        route_category = routing_chain.invoke({"question": input_value}).strip().upper()
+        print(f"Router determined category: {route_category}")
+
+        # Route to the appropriate function based on the category
+        if "RECOMMEND" in route_category:
+            print("Routing to recommend_films")
+            return self.recommend_films()
+        elif "EXPLAIN" in route_category:
+            # If we have current recommendations to explain
+            if self.scores:
+                return self.score_explainer(self.scores)
+            else:
+                return "I don't have any recommendations to explain yet. Would you like me to recommend some films first?"
+        elif "FEEDBACK" in route_category:
+            return self.custom_chatbot(input_value, history, session_id)
+        else:
+            return "I'm not sure how to help with that. I can recommend films, explain recommendations, or chat about your film preferences."
 
     def custom_chatbot(self, input_value, history, session_id):
         """Handles user queries with persistent chat history."""
@@ -169,7 +196,7 @@ with gr.Blocks(theme="Soft") as demo:
         with gr.Column(scale=2):
             gr.Markdown("### Recommendations")
             # recommendations = gr.JSON(label="recommendations")
-            recommendations = gr.Markdown(label="recommendations", value="No recommendations generated, click the button to the left")
+            recommendations = gr.Markdown(label="recommendations", value=film_rec_bot.current_recommendations)
 
         with gr.Column(scale=2):
             gr.Markdown("### Message Semantics")
@@ -177,7 +204,7 @@ with gr.Blocks(theme="Soft") as demo:
 
     # Chat Interface
     chatbot_interface = gr.ChatInterface(
-        fn=film_rec_bot.custom_chatbot,
+        fn=film_rec_bot.router,
         chatbot=gr.Chatbot(type="messages", show_copy_button=True),
         editable=True,
         type="messages",
