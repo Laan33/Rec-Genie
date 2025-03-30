@@ -15,7 +15,6 @@ from chatbot.prompts import film_chat_explore_chain, explain_rec_chain, glean_fe
 # Initialize database connection
 engine = create_engine("sqlite:///sqlite.db")
 
-
 # Define LLM model
 MODEL_NAME = "llama3.2:3b-instruct-q4_K_M"
 llm = ChatOllama(model=MODEL_NAME)
@@ -31,12 +30,8 @@ def json_to_markdown(recommendations_list):
 
 class GradioFilmRec:
     def __init__(self):
-        self.basic_rec_list = None
-        # self.recs = None
         self.current_recommendations, self.scores = None, None
         self.semantic_full_response = None
-        self.score_explanation = None
-
 
         # self.session_id = randint(1000000, 9999999)  # Random unique session ID
         self.session_id = 999999
@@ -77,50 +72,31 @@ class GradioFilmRec:
         self.current_recommendations = convert_json_to_markdown
         self.scores = recommendations_list
         self.score_explanation = None  # Reset score explanation
-        print("Current recommendations type:", type(self.current_recommendations))
-        print("Current recommendations:", self.current_recommendations)
+
+        # Add on the line: "\n you can ask in chat for an explanation of these recommendations"
+        convert_json_to_markdown = convert_json_to_markdown + "\n Ask in the chat for an explanation of these recommendations!"
 
         print("\n")
         print("Recommendations: \n", convert_json_to_markdown)
 
         return convert_json_to_markdown
 
-    def custom_chatbot(self, input_value, history, session_id, **kwargs):
+    def router(self, input_value, history, session_id):
+        """
+        Simply routes the input to the appropriate function.
+        - if the user is talking about films or actors, call the custom_chatbot function
+        - if the user asks for an explanation of the recommendation, call the score_explainer function
+        """
+        self.session_id = session_id
+        print("Router session ID:", self.session_id)
+
+        # TODO - router llm to determine if the user is asking for a recommendation or an explanation
+
+
+    def custom_chatbot(self, input_value, history, session_id):
         """Handles user queries with persistent chat history."""
         self.session_id = session_id
 
-        if kwargs.get("scores"):
-            print("Prompting for score explanation...")
-            # Output a prompt to the user to ask if they want a breakdown of the recommendation scores
-            self.scores = kwargs["scores"]
-            return (
-                "Would you like to know about the recommendation scores?",
-                self.current_recommendations,
-                self.semantic_full_response
-                # examples=[
-                #     ["Yes, I would like to know about the recommendation scores"],
-                #     ["No, I'm good"]
-                # ]
-            )
-
-        # Check if user wants score explanation
-        if input_value.lower() in ['yes', 'y', 'Yes, I would like to know about the recommendation scores']:
-            print("User wants score explanation...")
-            if self.scores:
-                # Generate score explanation
-                explain_generator = self.score_explainer(self.scores)
-                self.score_explanation = next(explain_generator)
-                return (
-                    f"Here's a breakdown of the recommendation scores:\n\n{self.score_explanation}",
-                    self.current_recommendations,
-                    self.semantic_full_response
-                )
-            else:
-                return (
-                    "Sorry, there are no recent recommendations to explain.",
-                    self.current_recommendations,
-                    self.semantic_full_response
-                )
 
         # Regular chat handling
         chat_chain = self.update_chain(film_chat_explore_chain)
@@ -135,14 +111,7 @@ class GradioFilmRec:
             yield full_response, self.current_recommendations, self.semantic_full_response
 
         # Semantic scraping
-        feedback_chain = glean_feed_back_chain | llm.bind(stop=["<|eot_id|>"]) | StrOutputParser()
-        feedback_chain = RunnableWithMessageHistory(
-            feedback_chain,
-            lambda _: self.get_message_history(),
-            input_messages_key="question",
-            output_messages_key="output",
-            history_messages_key="history"
-        )
+        feedback_chain = self.update_chain(glean_feed_back_chain)
 
         semantic_response = feedback_chain.stream(
             {"input_text": input_value},
@@ -162,7 +131,8 @@ class GradioFilmRec:
         full_response = ''
         for item in response:
             full_response += item
-        return full_response
+            yield full_response, self.current_recommendations, self.semantic_full_response
+        yield full_response, self.current_recommendations, self.semantic_full_response
 
     def semantics_scraper(self, input_value, history):
         """Extracts sentiment & features from user messages."""
@@ -196,14 +166,10 @@ with gr.Blocks(theme="Soft") as demo:
             gr.Markdown("### Generate Recommendations")
             generate_recommendations = gr.Button(value="Generate Recommendations")
 
-        # with gr.Column(scale=2):
-        #     gr.Markdown("### User Profile")
-        #     user_profile = gr.JSON(value=[sample_json], label="User Profile")
-
         with gr.Column(scale=2):
             gr.Markdown("### Recommendations")
             # recommendations = gr.JSON(label="recommendations")
-            recommendations = gr.Markdown(label="recommendaitions", value="No recommendations generated, click the button to the left")
+            recommendations = gr.Markdown(label="recommendations", value="No recommendations generated, click the button to the left")
 
         with gr.Column(scale=2):
             gr.Markdown("### Message Semantics")
