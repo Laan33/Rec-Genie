@@ -101,38 +101,6 @@ class GradioFilmRec:
         has_recommendations = self.scores is not None
         print("Has recommendations:", has_recommendations)
 
-        # # Create a routing LLM with context about existing recommendations
-        # router_prompt = ChatPromptTemplate.from_messages([
-        #     ("system",
-        #      "You are a SIMPLE CLASSIFIER that determines what the user is asking for. "
-        #      f"CRITICAL FACT: {'THE SYSTEM ALREADY HAS FILM RECOMMENDATIONS GENERATED AND READY TO EXPLAIN.' if has_recommendations else 'No film recommendations exist yet.'} "
-        #      "RESPOND WITH EXACTLY ONE WORD from these two options: "
-        #      "- EXPLAIN: If the user is asking for an explanation of recommendation scores, or about recommendations they were given "
-        #      "- FEEDBACK: If the user is talking about their film interests, giving opinions, or having a general conversation "
-        #      "DO NOT EXPLAIN YOUR REASONING. DO NOT ADD ANY OTHER TEXT. JUST RESPOND WITH EITHER 'FEEDBACK' OR 'EXPLAIN'."
-        #      ),
-        #     ("human", "{question}")
-        # ])
-        #
-        # print("Router prompt:", router_prompt)
-        #
-        # # f"IMPORTANT: {'Recommendations HAVE already been generated and are available to explain.' if has_recommendations else 'No recommendations have been generated yet.'} "
-        # # "- RECOMMEND: If the user is asking for new film recommendations "
-        # # "- OTHER: If the query doesn't fit into any of the above categories"
-        #
-        # # Create the routing chain
-        # routing_chain = router_prompt | llm | StrOutputParser()
-        #
-        # # Timing the routing chain
-        # start_time = time.time()
-        #
-        # # Get the route category
-        # route_category = routing_chain.invoke({"question": input_value}).strip().upper()
-        # print(f"Router determined category: {route_category}")
-        #
-        # # Print the time taken for routing
-        # print("Routing time:", round((time.time() - start_time), 2), "seconds")
-
         explanation_path_words = ["EXPLAIN", "EXPLAINING", "EXPLANATION", "EXPLAINED", "BREAKDOWN", "HOW", "WHY DID", "REASON", "REASONS", "TELL ME"]
         # Use a simple check for keywords in the input
         route_category = "EXPLAIN" if any(word in input_value.upper() for word in explanation_path_words) else "FEEDBACK"
@@ -153,11 +121,9 @@ class GradioFilmRec:
                 return "I don't have any recommendations to explain yet. Would you like me to recommend some films first?"
         elif "FEEDBACK" in route_category:
             for response in self.custom_chatbot(input_value, history, session_id):
-                # Each yield becomes a return from the router function
                 yield response
         else:
             print("Unknown category, returning default response")
-            # Simple response, not a generator
             return "I'm not sure how to help with that. I can recommend films, explain recommendations, or chat about your film preferences."
 
     def custom_chatbot(self, input_value, history, session_id):
@@ -183,7 +149,6 @@ class GradioFilmRec:
             {"input_text": input_value},
             config={"configurable": {"session_id": str(self.session_id)}},
         )
-
         self.semantic_full_response = ''.join(semantic_response)
 
         # Update the user profile weights and items
@@ -261,7 +226,6 @@ with gr.Blocks(theme="Soft") as demo:
 
         with gr.Column(scale=2):
             gr.Markdown("### Recommendations")
-            # recommendations = gr.JSON(label="recommendations")
             recommendations = gr.Markdown(label="recommendations", value=film_rec_bot.current_recommendations)
 
         with gr.Column(scale=2):
@@ -278,7 +242,7 @@ with gr.Blocks(theme="Soft") as demo:
         additional_outputs=[recommendations, message_semantics],
         examples=[
             ["I love the Barbie film, I'm just Ken in a Barbie world"],
-            ["I really like Eddie Murphy as Donkey in Shrek, really, it's my favourite film"],
+            ["I really like Ryan Gosling in Blade Runner 2049, really, it's my favourite film"],
             ["I think the director is really important in making or breaking a film"],
             ["I liked the cast in the last film I saw, but they the casting didn't make the film for me"],
         ]
@@ -298,3 +262,16 @@ demo.launch()
 
 # TODO - add in 3 sample profiles. E.g. One for a kid (Disney), one for someone into action films, and one for someone into romcoms.
 
+# I liked harrison Ford, Ryan Gosling and Ana de armas in blade runner 2049. it was a great film. Denis Villeneuve is a great director too.
+# I think the cast is really important in making or breaking a film. For example, I think Vin Diesel ruined the Fast and Furious franchise.
+# Yeah Heath Ledger was great. I think Vin Diesel is just a bad actor in general, he is good in the Fast and Furious movies, (Which I like none of them, 1, 2, etc.) but I don't like him as an actor.
+#
+
+# Films; 1.0, Shrek: 0.9, Donkey: 0.9
+# Directors;
+# Actors; 0.2
+# Genres;
+
+# Directors; 0.9, Denis Villeneuve: 0.9
+# Films; 1.0, Blade Runner 2049: 0.8
+# Actors; 1.0, Harrison Ford: 0.9, Ryan Gosling: 0.7, Ana de Armas: 0.8

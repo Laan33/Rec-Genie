@@ -33,10 +33,12 @@ def load_data(num_lines=None):
     return films_df, ratings_df, credits_df
 
 def parse_semantic_breakdown(text):
-    """Parses a semantic breakdown and extracts categories, items, and scores."""
-    parsed_data = defaultdict(dict)  # Dictionary to store parsed categories and scores
+    """Parses a semantic breakdown and extracts categories, items, and scores separately."""
+    categories = {"Films": 0.0, "Actors": 0.0, "Genres": 0.0, "Directors": 0.0}  # Default weights
+    items_data = defaultdict(dict)  # Dictionary to store parsed categories and scores
 
     for line in text.strip().split('\n'):
+        line = line.strip().lstrip('#').strip()  # Remove leading '#' and spaces
         if not line:
             continue
 
@@ -45,17 +47,17 @@ def parse_semantic_breakdown(text):
             category, category_score, items = match.groups()
             category = category.strip()
 
-            # Store category score if available
-            if category_score:
-                parsed_data[category]['_score'] = float(category_score)
+            # Store category score if available and belongs to the four main categories
+            if category in categories and category_score:
+                categories[category] = float(category_score)
 
             # Extract items and their scores
             if items:
                 item_matches = re.findall(r"([^:,]+):\s*([-\d.]+)", items)
                 for item, score in item_matches:
-                    parsed_data[category][item.strip()] = float(score)
+                    items_data[category][item.strip()] = float(score)
 
-    return dict(parsed_data)
+    return categories, dict(items_data)
 
 
 class RecInterface:
@@ -71,13 +73,6 @@ class RecInterface:
         print("User ID:", user_id)
 
         self.update_user_profile(user_id)
-        # print("User profile user_id:", self.user_profile['id'])
-        # self.user_ratings_df = self.update_user_profile()
-        # self.user_ratings_df = self.ratings_df[self.ratings_df['userId'] == user_id]
-
-
-        # self.user_profile = user_pf.load_or_create_user_profile(user_id, self.films_df, self.user_ratings_df, self.genre_list_mlb)
-        # print("User profile user_id:", self.user_profile['id'])
         print("\nRecInterface initialized")
 
     def process_data(self):
@@ -130,6 +125,9 @@ class RecInterface:
     def implement_user_feedback(self, session_id, semantics_response):
         # Implement user feedback using the semantics_response
         # This could involve updating the user profile or modifying the recommendation algorithm
-        feedback_feature_weights, feedback_items = parse_semantic_breakdown(semantics_response)
+        categories_scores, items_scores = parse_semantic_breakdown(semantics_response)
+
+        # Adjust the weights on the user profile
+
 
 
