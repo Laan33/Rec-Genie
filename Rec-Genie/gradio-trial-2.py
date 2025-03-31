@@ -105,6 +105,7 @@ class GradioFilmRec:
         router_prompt = ChatPromptTemplate.from_messages([
             ("system",
              "You are a router that determines what the user is asking for. "
+             f"IMPORTANT: {'Recommendations HAVE already been generated and are available to explain.' if has_recommendations else 'No recommendations have been generated yet.'} "
              "Respond ONLY with one of these exact categories: "
              "- FEEDBACK: If the user is talking about films, providing feedback on their film tastes, or having a general conversation"
              "- EXPLAIN: ONLY, If the user is asking for an explanation of the existing recommendation scores"
@@ -136,18 +137,17 @@ class GradioFilmRec:
         if "EXPLAIN" in route_category:
             # If we have current recommendations to explain
             if has_recommendations:
-                # For streaming functions, we need to handle differently
-                # Custom handler for the explanation function that returns consistent output format
-                return self.score_explainer(self.scores)
+                for response in self.score_explainer(self.scores):
+                    # Each yield becomes a return from the router function
+                    yield response
             else:
                 return "I don't have any recommendations to explain yet. Would you like me to recommend some films first?"
         elif "FEEDBACK" in route_category:
-            # For streaming generator functions, we need to yield from them
-            # This is the key change - to handle the generator correctly
             for response in self.custom_chatbot(input_value, history, session_id):
                 # Each yield becomes a return from the router function
                 yield response
         else:
+            print("Unknown category, returning default response")
             # Simple response, not a generator
             return "I'm not sure how to help with that. I can recommend films, explain recommendations, or chat about your film preferences."
 
@@ -207,13 +207,17 @@ class GradioFilmRec:
             }
 
             # Get the explanation
-            response = explain_chain.invoke(
+            response = explain_chain.stream(
                 explanation_input,
                 config={"configurable": {"session_id": str(self.session_id)}},
             )
+            full_response = ""
+            for item in response:
+                full_response += item
+                yield full_response, self.current_recommendations, self.semantic_full_response
 
             # Return the expected values
-            return response, self.current_recommendations, self.semantic_full_response
+            yield response, self.current_recommendations, self.semantic_full_response
         else:
             return "No recommendations to explain.", self.current_recommendations, self.semantic_full_response
 
