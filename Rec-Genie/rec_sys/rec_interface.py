@@ -1,4 +1,5 @@
-import importlib
+import re
+from collections import defaultdict
 import pandas as pd
 from . import data_loader
 from . import user_profile as user_pf
@@ -30,6 +31,31 @@ def load_data(num_lines=None):
     print("-------\n")
 
     return films_df, ratings_df, credits_df
+
+def parse_semantic_breakdown(text):
+    """Parses a semantic breakdown and extracts categories, items, and scores."""
+    parsed_data = defaultdict(dict)  # Dictionary to store parsed categories and scores
+
+    for line in text.strip().split('\n'):
+        if not line:
+            continue
+
+        match = re.match(r"(\w+);\s*([\d.-]*)\s*(.*)", line)
+        if match:
+            category, category_score, items = match.groups()
+            category = category.strip()
+
+            # Store category score if available
+            if category_score:
+                parsed_data[category]['_score'] = float(category_score)
+
+            # Extract items and their scores
+            if items:
+                item_matches = re.findall(r"([^:,]+):\s*([-\d.]+)", items)
+                for item, score in item_matches:
+                    parsed_data[category][item.strip()] = float(score)
+
+    return dict(parsed_data)
 
 
 class RecInterface:
@@ -104,23 +130,6 @@ class RecInterface:
     def implement_user_feedback(self, session_id, semantics_response):
         # Implement user feedback using the semantics_response
         # This could involve updating the user profile or modifying the recommendation algorithm
-        pass
-
-    def convert_semantics_response_to_json(self, semantics_response):
-        # Convert the semantics response to JSON format
-        # This is parsing the response and extracting relevant information
-        #
-        pass
+        feedback_feature_weights, feedback_items = parse_semantic_breakdown(semantics_response)
 
 
-
-
-# def main():
-#     rec_system = RecInterface()
-#     rec_system.update_user_profile(USER_ID)
-#     recommendations = rec_system.recommend()
-#     print(recommendations)
-#     return recommendations
-#
-# if __name__ == "__main__":
-#     main()

@@ -43,7 +43,7 @@ glean_feed_back_chain = PromptTemplate(
     input_variables=["input_text"],
     template=(
         "Extract film preferences and sentiment scores from this user message. "
-        "FORMAT THE OUTPUT EXACTLY LIKE THIS EXAMPLE: "
+        "FORMAT THE OUTPUT EXACTLY LIKE THIS EXAMPLE, ONLY USE ITEMS MENTIONED IN THE USER MESSAGE: "
         "Directors; 0.9, Christopher Nolan: 0.9 \n"
         "Films; 1.0, Interstellar: 0.8, Inception: 0.8 \n"
         "Actors; 0.2, Brad Pitt: 0.7 \n"
