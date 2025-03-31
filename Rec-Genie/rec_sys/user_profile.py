@@ -103,6 +103,8 @@ def load_user_ratings():
     # Testing user id = 999,999
     user_ratings_df["userId"] = 999999
 
+    print("User ratings DataFrame shape:", user_ratings_df.shape)
+
     # Reorder columns to match the existing ratings DataFrame
     return user_ratings_df[["userId", "movieId", "rating"]]
 
@@ -208,6 +210,7 @@ def load_user_profile(user_id, profiles_dir):
     user_profile = profile_df.to_dict(orient='records')[0]
     # profile_df = pd.read_csv(f'/userProfiles/user_profile_{user_id}.csv')
     # return profile_df.to_dict(orient='records')[0]
+    print("User_profile loaded: ", user_profile)
     return user_profile
 
 def adjust_user_profile(user_profile, user_weights, feedback):

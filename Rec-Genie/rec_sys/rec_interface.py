@@ -68,15 +68,26 @@ class RecInterface:
         if load_original_credits:
             self.user_ratings_df = user_pf.load_user_ratings()
             self.ratings_df = pd.concat([self.ratings_df, self.user_ratings_df], ignore_index=True)
+            print("Ratings df shape: ", self.ratings_df.shape)
             self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
+            print("Ratings df shape after dropping duplicates: ", self.ratings_df.shape)
             self.user_profile = user_pf.create_user_profile(user_id, self.films_df, self.user_ratings_df, self.genre_list_mlb)
             # print("Feature user profile type4: ", type(self.user_profile['feature_profile'])) # this is a dict
             # print("Feature user profile: ", self.user_profile['feature_profile'])
         else:
             print("Loading user ratings from file")
-            user_profile  = user_pf.load_or_create_user_profile(user_id, self.films_df, self.ratings_df, self.genre_list_mlb)
+            # user_profile  = user_pf.load_or_create_user_profile(user_id, self.films_df, self.ratings_df, self.genre_list_mlb)
             # Convert from a string
             self.user_profile = user_pf.load_or_create_user_profile(user_id, self.films_df, self.ratings_df, self.genre_list_mlb)
+
+            self.user_ratings_df = user_pf.load_user_ratings()
+
+            print("Ratings df shape: ", self.ratings_df.shape)
+            self.ratings_df = pd.concat([self.ratings_df, self.user_ratings_df], ignore_index=True)
+            print("Ratings df shape after concatenation: ", self.ratings_df.shape)
+            self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
+            print("Ratings df shape after dropping duplicates: ", self.ratings_df.shape)
+
             # print("Feature user profile type4: ", type(self.user_profile['feature_profile'])) # this is a dict
             # print("Feature user profile: ", self.user_profile['feature_profile'])
 
@@ -89,6 +100,19 @@ class RecInterface:
 
     def score_breakdown(self, recommendations):
         return hyb.score_breakdown(self.films_df, recommendations)
+
+    def implement_user_feedback(self, session_id, semantics_response):
+        # Implement user feedback using the semantics_response
+        # This could involve updating the user profile or modifying the recommendation algorithm
+        pass
+
+    def convert_semantics_response_to_json(self, semantics_response):
+        # Convert the semantics response to JSON format
+        # This is parsing the response and extracting relevant information
+        #
+        pass
+
+
 
 
 # def main():
