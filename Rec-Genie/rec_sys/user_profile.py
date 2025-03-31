@@ -1,5 +1,9 @@
 import ast
 import os
+import re
+from collections import defaultdict
+
+import numpy as np
 
 import pandas as pd
 from io import StringIO
@@ -181,8 +185,6 @@ def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
     profile = {'id': user_id, 'weights': standard_weights,
                'feature_profile': user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb)}
 
-    # print("features_profile type (after2): ", type(profile['feature_profile']))
-
     # Save the user profile to a CSV file
     profile_df = pd.DataFrame([profile])
     profile_df.to_csv(os.path.join(profiles_dir, f'user_profile_{user_id}.csv'), index=False)
@@ -213,15 +215,32 @@ def load_user_profile(user_id, profiles_dir):
     print("User_profile loaded: ", user_profile)
     return user_profile
 
-def adjust_user_profile(user_profile, user_weights, feedback):
-    """Permanently adjusts the user profile based on feedback adjustments on the weighting.
-    Adjust the user profile based on the user's ratings"""
+def adjust_user_profile(user_profile, sentiment_response, alpha=0.5):
+    """Adjusts the user profile based on sentiment feedback while ensuring stability, by using tanh."""
+    category_sentiment, item_sentiment = parse_semantic_breakdown(sentiment_response)
 
-    # Update the user profile with the new weights
-    user_profile['weights'] = user_weights
 
-    # Load the user profile from a CSV file
-    user_profile = load_user_profile(user_profile['id'])
+    def update_score(current_score, adjustment):
+        """Uses tanh to taper off values around 3 while allowing smooth updates."""
+        return round(3 * np.tanh((current_score + alpha * adjustment) / 3), 2)
+
+    # Adjust category weights
+    for category, sentiment in category_sentiment.items():
+        if category in user_profile["categories"]:
+            user_profile["categories"][category] = update_score(user_profile["categories"][category], sentiment)
+
+    # Adjust item scores
+    for category, items in item_sentiment.items():
+        if category in user_profile["items"]:
+            for item, sentiment in items.items():
+                if item in user_profile["items"][category]:
+                    user_profile["items"][category][item] = update_score(user_profile["items"][category][item],
+                                                                         sentiment)
+                else:
+                    # Initialize new item with a default score (e.g., 1.0)
+                    user_profile["items"][category][item] = update_score(1.0, sentiment)
+
+    return user_profile
 
 
 def save_user_profile(user_profile, profiles_dir):
@@ -232,16 +251,32 @@ def save_user_profile(user_profile, profiles_dir):
 
 
     return user_profile
-#
-#
-# def main():
-#     user_id = 999999
-#     films_df, _, _ = load_data(num_lines=5000)
-#     # films_df = pd.DataFrame()  # Replace with actual DataFrame loading
-#     usr_ratings = load_user_ratings()
-#     genre_list_mlb = []  # Replace with actual genre list
-#     profile = create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb)
-#     print(profile)
-#
-# if __name__ == "__main__":
-#     main()
+
+def parse_semantic_breakdown(text):
+    """Parses a semantic breakdown and extracts categories, items, and scores separately."""
+    categories = {"Films": 0.0, "Actors": 0.0, "Genres": 0.0, "Directors": 0.0}  # Default weights
+    items_data = defaultdict(dict)  # Dictionary to store parsed categories and scores
+
+    for line in text.strip().split('\n'):
+        line = line.strip().lstrip('#').strip()  # Remove leading '#' and spaces
+        if not line:
+            continue
+
+        match = re.match(r"(\w+);\s*([\d.-]*)\s*(.*)", line)
+        if match:
+            category, category_score, items = match.groups()
+            category = category.strip()
+
+            # Store category score if available and belongs to the four main categories
+            if category in categories and category_score:
+                categories[category] = float(category_score)
+
+            # Extract items and their scores
+            if items:
+                item_matches = re.findall(r"([^:,]+):\s*([-\d.]+)", items)
+                for item, score in item_matches:
+                    items_data[category][item.strip()] = float(score)
+
+    return categories, dict(items_data)
+
+
