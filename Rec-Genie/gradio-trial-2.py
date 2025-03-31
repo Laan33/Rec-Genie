@@ -10,7 +10,7 @@ from langchain_community.chat_message_histories import SQLChatMessageHistory
 from sqlalchemy import create_engine
 
 from rec_sys import rec_interface
-from chatbot.prompts import film_chat_explore_chain, explain_rec_chain, glean_feed_back_chain, router_prompt
+from chatbot.prompts import film_chat_explore_chain, explain_rec_chain, glean_feed_back_chain
 
 # Initialize database connection
 engine = create_engine("sqlite:///sqlite.db")
@@ -25,7 +25,6 @@ def json_to_markdown(recommendations_list):
         f"{i + 1}. **{rec['title']}** (Released: {int(rec['release_date'])}) - Score: {rec['score']:.2f}"
         for i, rec in enumerate(recommendations_list)
     ])
-    print("Recommendations: \n", convert_json_to_markdown)
     return convert_json_to_markdown
 
 class GradioFilmRec:
@@ -74,7 +73,7 @@ class GradioFilmRec:
         self.scores = recommendations_list
 
         # Add on the line: "\n you can ask in chat for an explanation of these recommendations"
-        convert_json_to_markdown = convert_json_to_markdown + "\n Ask in the chat for an explanation of these recommendations!"
+        convert_json_to_markdown = convert_json_to_markdown + "\n\n### Ask in the chat for an explanation of these recommendations!"
 
         print("\n")
         print("Recommendations: \n", convert_json_to_markdown)
@@ -98,32 +97,63 @@ class GradioFilmRec:
         # if not input_value:
         #     return "Please enter a message."
 
+        # Check if recommendations exist
+        has_recommendations = self.scores is not None
+        print("Has recommendations:", has_recommendations)
+
+        # Create a routing LLM with context about existing recommendations
+        router_prompt = ChatPromptTemplate.from_messages([
+            ("system",
+             "You are a router that determines what the user is asking for. "
+             "Respond ONLY with one of these exact categories: "
+             "- FEEDBACK: If the user is talking about films, providing feedback on their film tastes, or having a general conversation"
+             "- EXPLAIN: ONLY, If the user is asking for an explanation of the existing recommendation scores"
+             ),
+            ("human", "{question}")
+        ])
+
+        # f"IMPORTANT: {'Recommendations HAVE already been generated and are available to explain.' if has_recommendations else 'No recommendations have been generated yet.'} "
+        # "- RECOMMEND: If the user is asking for new film recommendations "
+        # "- OTHER: If the query doesn't fit into any of the above categories"
+
         # Create the routing chain
         routing_chain = router_prompt | llm | StrOutputParser()
+
+        # Timing the routing chain
+        start_time = time.time()
 
         # Get the route category
         route_category = routing_chain.invoke({"question": input_value}).strip().upper()
         print(f"Router determined category: {route_category}")
 
+        # Print the time taken for routing
+        print("Routing time:", round((time.time() - start_time), 2), "seconds")
+
         # Route to the appropriate function based on the category
-        if "RECOMMEND" in route_category:
-            print("Routing to recommend_films")
-            return self.recommend_films()
-        elif "EXPLAIN" in route_category:
+        # if "RECOMMEND" in route_category:
+        #     print("Routing to recommend_films")
+        #     return self.recommend_films()
+        if "EXPLAIN" in route_category:
             # If we have current recommendations to explain
-            if self.scores:
+            if has_recommendations:
+                # For streaming functions, we need to handle differently
+                # Custom handler for the explanation function that returns consistent output format
                 return self.score_explainer(self.scores)
             else:
                 return "I don't have any recommendations to explain yet. Would you like me to recommend some films first?"
         elif "FEEDBACK" in route_category:
-            return self.custom_chatbot(input_value, history, session_id)
+            # For streaming generator functions, we need to yield from them
+            # This is the key change - to handle the generator correctly
+            for response in self.custom_chatbot(input_value, history, session_id):
+                # Each yield becomes a return from the router function
+                yield response
         else:
+            # Simple response, not a generator
             return "I'm not sure how to help with that. I can recommend films, explain recommendations, or chat about your film preferences."
 
     def custom_chatbot(self, input_value, history, session_id):
         """Handles user queries with persistent chat history."""
         self.session_id = session_id
-
 
         # Regular chat handling
         chat_chain = self.update_chain(film_chat_explore_chain)
@@ -146,20 +176,46 @@ class GradioFilmRec:
         )
 
         self.semantic_full_response = ''.join(semantic_response)
+
+        # Update the user profile weights and items
+        # self.rec_interface.implement_user_feedback(self.session_id, self.semantic_full_response)
+
         yield full_response, self.current_recommendations, self.semantic_full_response
 
     def score_explainer(self, breakdown):
         """Explains why a recommendation was made."""
+        print("Breakdown:", breakdown)
+
+        # Update the chain with the correct prompt template
         explain_chain = self.update_chain(explain_rec_chain)
-        response = explain_chain.stream(
-            {"ability": "everything", "score": breakdown},
-            config={"configurable": {"session_id": str(self.session_id)}},
-        )
-        full_response = ''
-        for item in response:
-            full_response += item
-            yield full_response, self.current_recommendations, self.semantic_full_response
-        yield full_response, self.current_recommendations, self.semantic_full_response
+
+        # Process the first recommendation in the list as an example
+        # You might want to expand this to explain all recommendations
+        if breakdown and len(breakdown) > 0:
+            item = breakdown[0]
+
+            # Extract the relevant fields from the breakdown
+            # Adapt these field names to match your actual data structure
+            explanation_input = {
+                "title": item.get('title', 'Unknown film'),
+                "release_date": item.get('year', 'Unknown year'),
+                "score": item.get('score', 0),
+                "cast_score": item.get('actor_score', 0),
+                "director_score": item.get('director_score', 0),
+                "genre_score": item.get('genre_score', 0),
+                "user_user_score": item.get('collab_score', 0)
+            }
+
+            # Get the explanation
+            response = explain_chain.invoke(
+                explanation_input,
+                config={"configurable": {"session_id": str(self.session_id)}},
+            )
+
+            # Return the expected values
+            return response, self.current_recommendations, self.semantic_full_response
+        else:
+            return "No recommendations to explain.", self.current_recommendations, self.semantic_full_response
 
     def semantics_scraper(self, input_value, history):
         """Extracts sentiment & features from user messages."""
@@ -227,3 +283,8 @@ with gr.Blocks(theme="Soft") as demo:
 
 # Launch app
 demo.launch()
+
+
+
+# TODO - add in 3 sample profiles. E.g. One for a kid (Disney), one for someone into action films, and one for someone into romcoms.
+

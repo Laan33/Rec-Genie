@@ -24,17 +24,20 @@ film_chat_explore_chain = ChatPromptTemplate.from_messages([
     ("human", "{question}"),
 ])
 
-explain_rec_chain = ChatPromptTemplate.from_messages([
-    ("system",
-     "You are talking to the user, briefly explain the recommendation_text to the user for the given film. "
-     "The recommendation score format is: `Title (Release Date): total_score, cast_score, director_score, genre_score, collaborative_filtering_score`. "
-     "total_score is how highly recommended this item is to the user. "
-     "The collaborative filtering score is based on other users' reviews, given the user's ratings. "
-     "The other scores are all content-based scores for the user, based on the user's previous ratings and preferences."
-    ),
-    MessagesPlaceholder(variable_name="recommendation_text"),
-    # MessagesPlaceholder(variable_name="history")
-])
+explain_rec_chain = PromptTemplate(
+    input_variables=["title", "release_date", "score", "cast_score", "director_score", "genre_score", "user_user_score"],
+    template=(
+        "You are talking to the user, briefly explain the recommendation for the given film. These are all attributes based off the users profile.\n\n"
+        "Film Recommendation:\n"
+        "Title: {title} ({release_date})\n"
+        "Total Score: {score}\n"
+        "Cast Score: {cast_score}\n"
+        "Director Score: {director_score}\n"
+        "Genre Score: {genre_score}\n"
+        "Collaborative Filtering Score: {user_user_score}\n\n"
+        "Explain why this movie is recommended based on the given scores."
+    )
+)
 
 glean_feed_back_chain = PromptTemplate(
     input_variables=["input_text"],
@@ -56,16 +59,17 @@ glean_feed_back_chain = PromptTemplate(
     )
 )
 
-# Create a routing LLM to determine what the user is asking for
-router_prompt = ChatPromptTemplate.from_messages([
-    ("system",
-     "You are a router that determines what the user is asking for. "
-     "Respond ONLY with one of these exact categories: "
-     "- RECOMMEND: If the user is asking for film recommendations "
-     "- EXPLAIN: If the user is asking for an explanation of recommendation scores "
-     "- FEEDBACK: If the user is providing feedback or having a general conversation about films "
-     "- OTHER: If the query doesn't fit into any of the above categories"
-     ),
-    ("human", "{question}")
-])
+# Create a routing LLM with context about existing recommendations
+# router_prompt = ChatPromptTemplate.from_messages([
+#     ("system",
+#      "You are a router that determines what the user is asking for. "
+#      f"IMPORTANT: {'Recommendations HAVE already been generated and are available to explain.' if has_recommendations else 'No recommendations have been generated yet.'} "
+#      "Respond ONLY with one of these exact categories: "
+#      "- RECOMMEND: If the user is asking for new film recommendations "
+#      "- EXPLAIN: If the user is asking for an explanation of the existing recommendation scores "
+#      "- FEEDBACK: If the user is providing feedback or having a general conversation about films "
+#      "- OTHER: If the query doesn't fit into any of the above categories"
+#      ),
+#     ("human", "{question}")
+# ])
 
