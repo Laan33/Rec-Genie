@@ -110,5 +110,22 @@ I like fast and furious 2,3,6
 I love this slasher horror, sound of music, what 
 
 
+------
+For the adjustment system I used tanh to plateau
+
+Mathematical Model
+
+    Update Formula for Categories and Items
+    Given an initial score SS, a sentiment adjustment ΔSΔS, and a scaling factor αα for sensitivity:
+    S′=3×tanh⁡(S+α⋅ΔS3)
+    S′=3×tanh(3S+α⋅ΔS​)
+
+        Why tanh(x)? It smoothly tapers values between -3 and 3.
+
+        Why divide by 3? It ensures small changes when values are already large.
+
+    Choose αα based on impact sensitivity
+
+        Example: α=0.5α=0.5 (Adjust this to control how strongly feedback affects the profile).
     
 \end{comment}

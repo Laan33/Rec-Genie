@@ -1,5 +1,3 @@
-import re
-from collections import defaultdict
 import pandas as pd
 from . import data_loader
 from . import user_profile as user_pf
@@ -32,32 +30,7 @@ def load_data(num_lines=None):
 
     return films_df, ratings_df, credits_df
 
-def parse_semantic_breakdown(text):
-    """Parses a semantic breakdown and extracts categories, items, and scores separately."""
-    categories = {"Films": 0.0, "Actors": 0.0, "Genres": 0.0, "Directors": 0.0}  # Default weights
-    items_data = defaultdict(dict)  # Dictionary to store parsed categories and scores
 
-    for line in text.strip().split('\n'):
-        line = line.strip().lstrip('#').strip()  # Remove leading '#' and spaces
-        if not line:
-            continue
-
-        match = re.match(r"(\w+);\s*([\d.-]*)\s*(.*)", line)
-        if match:
-            category, category_score, items = match.groups()
-            category = category.strip()
-
-            # Store category score if available and belongs to the four main categories
-            if category in categories and category_score:
-                categories[category] = float(category_score)
-
-            # Extract items and their scores
-            if items:
-                item_matches = re.findall(r"([^:,]+):\s*([-\d.]+)", items)
-                for item, score in item_matches:
-                    items_data[category][item.strip()] = float(score)
-
-    return categories, dict(items_data)
 
 
 class RecInterface:
@@ -93,8 +66,6 @@ class RecInterface:
             self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
             print("Ratings df shape after dropping duplicates: ", self.ratings_df.shape)
             self.user_profile = user_pf.create_user_profile(user_id, self.films_df, self.user_ratings_df, self.genre_list_mlb)
-            # print("Feature user profile type4: ", type(self.user_profile['feature_profile'])) # this is a dict
-            # print("Feature user profile: ", self.user_profile['feature_profile'])
         else:
             print("Loading user ratings from file")
             # user_profile  = user_pf.load_or_create_user_profile(user_id, self.films_df, self.ratings_df, self.genre_list_mlb)
@@ -103,7 +74,6 @@ class RecInterface:
 
             self.user_ratings_df = user_pf.load_user_ratings()
 
-            # print("Ratings df shape: ", self.ratings_df.shape)
             self.ratings_df = pd.concat([self.ratings_df, self.user_ratings_df], ignore_index=True)
             # print("Ratings df shape after concatenation: ", self.ratings_df.shape)
             self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
@@ -122,12 +92,9 @@ class RecInterface:
     def score_breakdown(self, recommendations):
         return hyb.score_breakdown(self.films_df, recommendations)
 
-    def implement_user_feedback(self, session_id, semantics_response):
-        # Implement user feedback using the semantics_response
-        # This could involve updating the user profile or modifying the recommendation algorithm
-        categories_scores, items_scores = parse_semantic_breakdown(semantics_response)
-
+    def implement_user_feedback(self, session_id, sentiment_response):
         # Adjust the weights on the user profile
+        self.user_profile = user_pf.adjust_user_profile(self.user_profile, sentiment_response)
 
 
 

@@ -3,6 +3,7 @@ import os
 import re
 from collections import defaultdict
 
+from .search_info import get_film_id_by_title, get_title_by_film_id, get_director_by_film_id, get_films_with_director
 import numpy as np
 
 import pandas as pd
@@ -215,30 +216,64 @@ def load_user_profile(user_id, profiles_dir):
     print("User_profile loaded: ", user_profile)
     return user_profile
 
+"""
+
+
+I think the user user score (collaborative filtering) is more important for me in a recommendation system than a content based one. Keep your response short
+"""
+
 def adjust_user_profile(user_profile, sentiment_response, alpha=0.5):
     """Adjusts the user profile based on sentiment feedback while ensuring stability, by using tanh."""
     category_sentiment, item_sentiment = parse_semantic_breakdown(sentiment_response)
 
+    print("Category sentiment: ", category_sentiment)
+    print("Item sentiment: ", item_sentiment)
 
     def update_score(current_score, adjustment):
         """Uses tanh to taper off values around 3 while allowing smooth updates."""
         return round(3 * np.tanh((current_score + alpha * adjustment) / 3), 2)
 
+    print("Category sentiment keys:", category_sentiment.keys())
+    print("User profile weights keys:", user_profile["weights"].keys())
+
+
+
     # Adjust category weights
     for category, sentiment in category_sentiment.items():
-        if category in user_profile["categories"]:
-            user_profile["categories"][category] = update_score(user_profile["categories"][category], sentiment)
+        print("Category: ", category)
+        if category in user_profile["weights"]:
+            print("Category score before update: ", user_profile["weights"][category])
+            user_profile["weights"][category] = update_score(user_profile["weights"][category], sentiment)
+            print("Category score after update: ", user_profile["weights"][category])
 
     # Adjust item scores
     for category, items in item_sentiment.items():
-        if category in user_profile["items"]:
+        if category in user_profile["feature_profile"]:
             for item, sentiment in items.items():
-                if item in user_profile["items"][category]:
-                    user_profile["items"][category][item] = update_score(user_profile["items"][category][item],
+                if item in user_profile["feature_profile"][category]:
+                    print("Item score before update: ", user_profile["feature_profile"][category][item])
+
+                    user_profile["feature_profile"][category][item] = update_score(user_profile["feature_profile"][category][item],
                                                                          sentiment)
+                    print("Item score after update: ", user_profile["feature_profile"][category][item])
                 else:
+                    print("Item not found in user profile, adding it with a default score.")
                     # Initialize new item with a default score (e.g., 1.0)
-                    user_profile["items"][category][item] = update_score(1.0, sentiment)
+                    user_profile["feature_profile"][category][item] = update_score(1.0, sentiment)
+
+    print("User profile after adjustment: ", user_profile)
+
+    # Save the updated user profile
+    profiles_dir = os.path.join(os.path.dirname(__file__), '..', 'userProfiles', 'adjustedProfiles')
+    os.makedirs(profiles_dir, exist_ok=True)
+
+    # Save the user profile to a CSV file - change the ID to the current timestamp - just numbers
+    profile = user_profile.copy()
+    profile['id'] = int(pd.Timestamp.now().timestamp())  # Use current timestamp as ID
+    print("Profile ID: ", profile['id'])
+
+    # Save the user profile to a CSV file
+    save_user_profile(profile, profiles_dir)
 
     return user_profile
 
@@ -248,7 +283,6 @@ def save_user_profile(user_profile, profiles_dir):
     profile_df = pd.DataFrame([user_profile])
     # profile_df.to_csv(f'/userProfiles/user_profile_{user_profile["id"]}.csv', index=False)
     profile_df.to_csv(os.path.join(profiles_dir, f'user_profile_{user_profile["id"]}.csv'), index=False)
-
 
     return user_profile
 

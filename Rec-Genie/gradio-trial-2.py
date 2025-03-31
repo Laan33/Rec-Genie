@@ -152,7 +152,7 @@ class GradioFilmRec:
         self.semantic_full_response = ''.join(semantic_response)
 
         # Update the user profile weights and items
-        # self.rec_interface.implement_user_feedback(self.session_id, self.semantic_full_response)
+        self.rec_interface.implement_user_feedback(session_id, self.semantic_full_response)
 
         yield full_response, self.current_recommendations, self.semantic_full_response
 

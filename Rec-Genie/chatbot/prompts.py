@@ -42,12 +42,13 @@ explain_rec_chain = PromptTemplate(
 glean_feed_back_chain = PromptTemplate(
     input_variables=["input_text"],
     template=(
-        "Extract film preferences and sentiment scores from this user message. "
+        "Extract film preferences, filtering preferences, and sentiment scores from this user message. "
         "FORMAT THE OUTPUT EXACTLY LIKE THIS EXAMPLE, ONLY USE ITEMS MENTIONED IN THE USER MESSAGE: "
         "Directors; 0.9, Christopher Nolan: 0.9 \n"
         "Films; 1.0, Interstellar: 0.8, Inception: 0.8 \n"
         "Actors; 0.2, Brad Pitt: 0.7 \n"
         "Genres; 0.5, Action: 0.6, Comedy: 0.3 \n"
+        "Filtering; Content: 0.7, Collaborative: 0.8 \n"
         "\n"
         "RULES:\n"
         "1. Each category score shows how important this category is to the user (0.1-1.0)\n"
@@ -57,6 +58,8 @@ glean_feed_back_chain = PromptTemplate(
         "5. No explanations or additional text - only the structured data\n"
         "6. Use negative scores (-0.1 to -1.0) for things the user dislikes\n"
         "7. If the user doesn't express a preference for a category, provide a neutral score of 0.0\n"
+        "8. For the Filtering category, extract 'Content' score (how much the user values film attributes) "
+        "   and 'Collaborative' score (how much the user values what others with similar taste liked)\n"
         "\n"
         "USER MESSAGE: {input_text}"
     )
