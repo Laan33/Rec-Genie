@@ -42,20 +42,23 @@ explain_rec_chain = PromptTemplate(
 glean_feed_back_chain = PromptTemplate(
     input_variables=["input_text"],
     template=(
-        "Analyze the sentiment of the following sentence. "
-        "Provide sentiment scores on the importance of the following features followed with the sentiment scores for items within these features: "
-        "- Films "
-        "- Actors "
-        "- Directors "
-        "- Genres "
-        "Add a `\n` before each feature, and a `,` between each item rating. "
-        
-        "- For item ratings, just write i: score, e.g. 'item1: 0.5'. "
-        "- For feature importance, just write f; score, e.g. 'feature1; 0.5'. "
-        "For example: "
-        "\n Films; 0.5 item1: 0.9, item2: 0.2 \n Actors; 0.3 item1: 0.5, item2: 0.1 "
-        "ONLY provide the item names and associated scores, no other chit chat. "
-        "Sentence: {input_text}"
+        "Extract film preferences and sentiment scores from this user message. "
+        "FORMAT THE OUTPUT EXACTLY LIKE THIS EXAMPLE: "
+        "Directors; 0.9, Christopher Nolan: 0.9 \n"
+        "Films; 1.0, Interstellar: 0.8, Inception: 0.8 \n"
+        "Actors; 0.2, Brad Pitt: 0.7 \n"
+        "Genres; 0.5, Action: 0.6, Comedy: 0.3 \n"
+        "\n"
+        "RULES:\n"
+        "1. Each category score shows how important this category is to the user (0.1-1.0)\n"
+        "2. Each item score shows how much the user likes that specific item (0.1-1.0)\n"
+        "3. Only include categories and items actually mentioned in the message\n"
+        "4. Format must be exactly: 'Category; score, Item1: score, Item2: score \\n'\n"
+        "5. No explanations or additional text - only the structured data\n"
+        "6. Use negative scores (-0.1 to -1.0) for things the user dislikes\n"
+        "7. If the user doesn't express a preference for a category, provide a neutral score of 0.0\n"
+        "\n"
+        "USER MESSAGE: {input_text}"
     )
 )
 

@@ -1,11 +1,6 @@
 
 
 def compute_content_scores(user_id, user_profile, films, credits_df, ratings_df, weights, genre_list_mlb):
-    # print("User profile type: ", type(user_profile))
-    # print("User profile: ", user_profile)
-
-    # user_profile = json.loads(user_profile)
-    # print("User profile type (after json loads): ", type(user_profile))
 
     print("films shape: ", films.shape) # User rated films are ending up in the recommendations
     print("Num user rated films: ", len(ratings_df[ratings_df['userId'] == user_id]))

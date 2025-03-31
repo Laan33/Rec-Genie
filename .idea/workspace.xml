@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="We're getting good breakdowns - still error at the end?">
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Going away from routing lol to plain old strings">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rec-Genie/gradio-trial-2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/gradio-trial-2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/chatbot/prompts.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/chatbot/prompts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/content_based.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/content_based.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -318,14 +318,6 @@
       <workItem from="1742830462594" duration="27049000" />
       <workItem from="1742914361883" duration="1323000" />
       <workItem from="1743088075971" duration="7099000" />
-    </task>
-    <task id="LOCAL-00044" summary="big data getting">
-      <option name="closed" value="true" />
-      <created>1742396668744</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1742396668746</updated>
     </task>
     <task id="LOCAL-00045" summary="big WORKING???">
       <option name="closed" value="true" />
@@ -711,7 +703,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743427606868</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="Going away from routing lol to plain old strings">
+      <option name="closed" value="true" />
+      <created>1743430181103</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1743430181103</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -781,7 +781,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Getting nowhere is a banger" />
     <MESSAGE value="trying to format the page" />
     <MESSAGE value="not working but fixed that langchain warning" />
     <MESSAGE value="For god sake that was so simple" />
@@ -806,7 +805,8 @@
     <MESSAGE value="Routing correctlty" />
     <MESSAGE value="Stopping user rated films being given" />
     <MESSAGE value="We're getting good breakdowns - still error at the end?" />
-    <option name="LAST_COMMIT_MESSAGE" value="We're getting good breakdowns - still error at the end?" />
+    <MESSAGE value="Going away from routing lol to plain old strings" />
+    <option name="LAST_COMMIT_MESSAGE" value="Going away from routing lol to plain old strings" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -857,7 +857,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Rec_Genie$simpleRec.coverage" NAME="simpleRec Coverage Results" MODIFIED="1731520402730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Rec_Genie$prompts.coverage" NAME="prompts Coverage Results" MODIFIED="1743184725920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/chatbot" />
-    <SUITE FILE_PATH="coverage/Rec_Genie$Gradio_Trial_2.coverage" NAME="Gradio-Trial-2 Coverage Results" MODIFIED="1743429908567" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$Gradio_Trial_2.coverage" NAME="Gradio-Trial-2 Coverage Results" MODIFIED="1743430584772" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
     <SUITE FILE_PATH="coverage/Rec_Genie$main.coverage" NAME="main Coverage Results" MODIFIED="1742407746749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rec-sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial.coverage" NAME="gradio-trial Coverage Results" MODIFIED="1742427286732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pocs" />
     <SUITE FILE_PATH="coverage/Rec_Genie$hybrid_recommender.coverage" NAME="hybrid_recommender Coverage Results" MODIFIED="1742844282328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
