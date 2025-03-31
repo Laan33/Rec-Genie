@@ -82,11 +82,11 @@ class RecInterface:
 
             self.user_ratings_df = user_pf.load_user_ratings()
 
-            print("Ratings df shape: ", self.ratings_df.shape)
+            # print("Ratings df shape: ", self.ratings_df.shape)
             self.ratings_df = pd.concat([self.ratings_df, self.user_ratings_df], ignore_index=True)
-            print("Ratings df shape after concatenation: ", self.ratings_df.shape)
+            # print("Ratings df shape after concatenation: ", self.ratings_df.shape)
             self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
-            print("Ratings df shape after dropping duplicates: ", self.ratings_df.shape)
+            # print("Ratings df shape after dropping duplicates: ", self.ratings_df.shape)
 
             # print("Feature user profile type4: ", type(self.user_profile['feature_profile'])) # this is a dict
             # print("Feature user profile: ", self.user_profile['feature_profile'])

@@ -101,34 +101,43 @@ class GradioFilmRec:
         has_recommendations = self.scores is not None
         print("Has recommendations:", has_recommendations)
 
-        # Create a routing LLM with context about existing recommendations
-        router_prompt = ChatPromptTemplate.from_messages([
-            ("system",
-             "You are a router that determines what the user is asking for. "
-             f"IMPORTANT: {'Recommendations HAVE already been generated and are available to explain.' if has_recommendations else 'No recommendations have been generated yet.'} "
-             "Respond ONLY with one of these exact categories: "
-             "- FEEDBACK: If the user is talking about films, providing feedback on their film tastes, or having a general conversation"
-             "- EXPLAIN: ONLY, If the user is asking for an explanation of the existing recommendation scores"
-             ),
-            ("human", "{question}")
-        ])
+        # # Create a routing LLM with context about existing recommendations
+        # router_prompt = ChatPromptTemplate.from_messages([
+        #     ("system",
+        #      "You are a SIMPLE CLASSIFIER that determines what the user is asking for. "
+        #      f"CRITICAL FACT: {'THE SYSTEM ALREADY HAS FILM RECOMMENDATIONS GENERATED AND READY TO EXPLAIN.' if has_recommendations else 'No film recommendations exist yet.'} "
+        #      "RESPOND WITH EXACTLY ONE WORD from these two options: "
+        #      "- EXPLAIN: If the user is asking for an explanation of recommendation scores, or about recommendations they were given "
+        #      "- FEEDBACK: If the user is talking about their film interests, giving opinions, or having a general conversation "
+        #      "DO NOT EXPLAIN YOUR REASONING. DO NOT ADD ANY OTHER TEXT. JUST RESPOND WITH EITHER 'FEEDBACK' OR 'EXPLAIN'."
+        #      ),
+        #     ("human", "{question}")
+        # ])
+        #
+        # print("Router prompt:", router_prompt)
+        #
+        # # f"IMPORTANT: {'Recommendations HAVE already been generated and are available to explain.' if has_recommendations else 'No recommendations have been generated yet.'} "
+        # # "- RECOMMEND: If the user is asking for new film recommendations "
+        # # "- OTHER: If the query doesn't fit into any of the above categories"
+        #
+        # # Create the routing chain
+        # routing_chain = router_prompt | llm | StrOutputParser()
+        #
+        # # Timing the routing chain
+        # start_time = time.time()
+        #
+        # # Get the route category
+        # route_category = routing_chain.invoke({"question": input_value}).strip().upper()
+        # print(f"Router determined category: {route_category}")
+        #
+        # # Print the time taken for routing
+        # print("Routing time:", round((time.time() - start_time), 2), "seconds")
 
-        # f"IMPORTANT: {'Recommendations HAVE already been generated and are available to explain.' if has_recommendations else 'No recommendations have been generated yet.'} "
-        # "- RECOMMEND: If the user is asking for new film recommendations "
-        # "- OTHER: If the query doesn't fit into any of the above categories"
+        explanation_path_words = ["EXPLAIN", "EXPLAINING", "EXPLANATION", "EXPLAINED", "BREAKDOWN", "HOW", "WHY DID", "REASON", "REASONS", "TELL ME"]
+        # Use a simple check for keywords in the input
+        route_category = "EXPLAIN" if any(word in input_value.upper() for word in explanation_path_words) else "FEEDBACK"
 
-        # Create the routing chain
-        routing_chain = router_prompt | llm | StrOutputParser()
-
-        # Timing the routing chain
-        start_time = time.time()
-
-        # Get the route category
-        route_category = routing_chain.invoke({"question": input_value}).strip().upper()
         print(f"Router determined category: {route_category}")
-
-        # Print the time taken for routing
-        print("Routing time:", round((time.time() - start_time), 2), "seconds")
 
         # Route to the appropriate function based on the category
         # if "RECOMMEND" in route_category:
@@ -184,8 +193,6 @@ class GradioFilmRec:
 
     def score_explainer(self, breakdown):
         """Explains why a recommendation was made."""
-        print("Breakdown:", breakdown)
-
         # Update the chain with the correct prompt template
         explain_chain = self.update_chain(explain_rec_chain)
 
@@ -195,7 +202,6 @@ class GradioFilmRec:
             item = breakdown[0]
 
             # Extract the relevant fields from the breakdown
-            # Adapt these field names to match your actual data structure
             explanation_input = {
                 "title": item.get('title', 'Unknown film'),
                 "release_date": item.get('year', 'Unknown year'),
@@ -207,19 +213,19 @@ class GradioFilmRec:
             }
 
             # Get the explanation
-            response = explain_chain.stream(
+            response_gen = explain_chain.stream(
                 explanation_input,
                 config={"configurable": {"session_id": str(self.session_id)}},
             )
-            full_response = ""
-            for item in response:
-                full_response += item
-                yield full_response, self.current_recommendations, self.semantic_full_response
 
-            # Return the expected values
-            yield response, self.current_recommendations, self.semantic_full_response
+            # Stream the response properly
+            full_response = ""
+            for chunk in response_gen:
+                full_response += chunk
+                # Yield a string, not a generator or tuple
+                yield full_response, self.current_recommendations, self.semantic_full_response
         else:
-            return "No recommendations to explain.", self.current_recommendations, self.semantic_full_response
+            yield "No recommendations to explain.", self.current_recommendations, self.semantic_full_response
 
     def semantics_scraper(self, input_value, history):
         """Extracts sentiment & features from user messages."""
