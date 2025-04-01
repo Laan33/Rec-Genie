@@ -47,61 +47,35 @@ I am also grateful to Pearse Carroll and Joe O'Connell from the technical suppor
 %     \textbf{Originality/Value} - This research offers a novel perspective on the use of conversational AI to improve on current reccomendation systems, providing valuable insights that extend the current understanding of [subject matter]. The study’s findings contribute to [mention the advancement or practical application], highlighting areas for future research and potential policy or practical applications. 
 %     \\\\
 %     \end{abstract}
-The aim of this project is to explore and investigate the use of large language models in the context of working with recommendation systems, providing a conversational interface for users to interact with the recommendation system.
-
-The project has an aim of improving the personalisation of the recommendations made to users, in a way that is non-intrusive, user friendly and does not require a technical background
-It also had the aim of exploring the use of these models for explaining the recommendations made to users, with the aim of increasing the transparency of the recommendations made.
-
-Through a proof of concept recommendation system, the project aims to demonstrate the feasibility of using large language models in the context of recommendation systems, and to explore the potential for these models to improve the personalisation and transparency of recommendations made to users.
-This project will also explore the use of user adjustable recommendation systems, allowing users to provide feedback on the recommendations made to them in a conversational manner.
-
-\section{Problem Statement and Domain Background}
+\section{Domain Background}
 \label{sec:domain_background}
 
+The background to this project is based on the desire for a more personalised and transparent recommendation system that allows users to provide feedback on the recommendations made to them in a conversational manner. Existing recommendation systems have limitations in terms of personalisation and transparency, with users often feeling frustrated and powerless when they want to change, correct, or adjust the recommendations made to them.
+\\\\
+Current recommendation systems often rely on collaborative filtering and content-based filtering techniques, which can lead to a lack of personalisation and transparency in the recommendations made to users. These systems are often opaque, with users having little understanding of how the recommendations are made, leading to a lack of trust in the system. Even when users are provided with explanations for the recommendations made to them, these explanations are often not user-friendly and can be difficult to understand.
+\\\\
+Collaborative filtering techniques rely on the behaviour of other users to make recommendations, by using algorithms to find similar users and recommend items that those users have liked. Content-based filtering techniques rely on the attributes of the items being recommended, by using algorithms to find similar items and recommend those items to users. These techniques can lead to a lack of personalisation, particularly when user preferences are not well captured.
+\\\\
+Additionally, while large language models (LLMs) have shown promise in the area of conversational recommendation systems, they often do not have the capability to handle large context windows for the size of data needed when the system is used outside of a single session. Furthermore, LLMs often do not have the capability to store fine-grain memory of conversations, losing information on implicit user preferences and feedback. Alongside this, the lack of reasoning capabilities in LLMs can lead to a lack of transparency in the recommendations made to users, as the explanations are at best, guessed by the model. New research in the area of reasoning models may help to alleviate this issue\cite{zhu2025collaborativeretrievallargelanguage}.
+
+\section{Problem Statement}
+\label{sec:problem_statement}
+
+The project aims to address the following key problems:
+
 \begin{itemize}
-    \item Traditional recommendation systems - collaborative filtering, content-based filtering
-    \item Limitations of traditional recommendation systems
-    \item Conversational recommendation systems - 
-    \item Large Language Models (LLMs) - overview and background
-    \item Explainable AI and user trust
-    \item User feedback in recommendation systems
-    \item User control in recommendation systems
-    \item User adjustable recommendation systems
-\end{itemize}
-
-The background to this project is based on the desire for a more personalised and transparent recommendation system, that allows users to provide feedback on the recommendations made to them in a conversational manner.
-Existing recommendation systems have limitations in terms of personalisation and transparency, with users often feeling frustrated and powerless when they want to change, correct or adjust the recommendations made to them.
-
-Current recommendation systems often rely on collaborative filtering and content-based filtering techniques, which can lead to a lack of personalisation and transparency in the recommendations made to users.
-These systems are often opaque, with users having little understanding of how the recommendations are made, leading to a lack of trust in the system.
-Even when users are provided with explanations for the recommendations made to them, these explanations are often not user friendly and can be difficult to understand.
-\\\\
-Collaborative filtering techniques rely on the behaviour of other users to make recommendations, by using algorithms to find similar users and recommend items that those users have liked.
-Content based filtering techniques rely on the attributes of the items being recommended, by using algorithms to find similar items and recommend those items to users.
-These techniques can lead to a lack of personalisation, particularly 
-\\\\
-Additionally, existing recommendation systems often do not allow for user feedback other than a rating, leading to a lack of user control in the recommendations made to them.
-Users often feel frustrated and powerless when they want to change, correct or adjust the recommendations made to them, leading to a lack of trust in the system.
-\\\\
-While large language models (LLMs) have shown promise in the area of conversational recommendation systems, they often do not have the capability to handle large context windows for the size of data needed when the system is used outside of a single session.
-
-Furthermore, LLMs often do not have the capability to store fine-grain memory of conversations, losing information on implicit user preferences and feedback.
-Alongside this, the lack of reasoning capabilities in LLMs can lead to a lack of transparency in the recommendations made to users, as the explanations are at best, guessed by the model.
-New research in the area of reasoning models may help to alleviate this issue\cite{zhu2025collaborativeretrievallargelanguage}.
-
-
-
-% Problem Statement
-\begin{itemize}
-    \item Traditional recommendation systems have limitations in terms of personalisation and transparency
-    \item Conversational recommendation systems aim to address these limitations
-    \item Large Language Models (LLMs) have shown promise in the area of conversational recommendation systems
-    \item LLMs don't have the capability to have a large context window for the size of data needed - or they require a huge model
-    \item Chatgpts memory is just key points from sessions. There's no fine grain memory of conversations (to hold speific information)
-    \item Building on that we can store information in a database of a user profile - e.g. films recommended, watched, etc
-    \item Existing recommendation systems don't allow for user feedback other than a rating.
-    \item Users feel frustrated and powerless when they want to change, correct or adjust the recommendations made to them.
-    \item Users want to feel heard, and they don't trust existing recommendation systems.
+    \item Traditional recommendation systems have limitations in terms of personalisation and transparency.
+    \item Users often feel frustrated and powerless when they want to change, correct, or adjust the recommendations made to them, leading to a lack of trust in the system.
+    \item Existing recommendation systems do not allow for user feedback other than a rating, limiting user control over the recommendations.
+    \item Large language models (LLMs) have shown promise in conversational recommendation systems but face challenges such as:
+    \begin{itemize}
+        \item Limited context windows for handling large datasets without requiring massive models.
+        \item Long term memory issues, where the model may not remember user preferences and feedback across sessions.
+        \item Lack of fine-grain memory of conversations, resulting in the loss of specific user preferences and feedback.
+        \item Limited reasoning capabilities, leading to a lack of transparency in the recommendations and explanations provided.
+    \end{itemize}
+    \item Users want to feel heard and desire a system that is transparent, user-friendly, and capable of providing personalised recommendations.
+    \item There is a need to explore how conversational recommendation systems can store user profiles (e.g., films recommended, watched, etc.) to enhance personalisation and transparency.
 \end{itemize}
 
 
