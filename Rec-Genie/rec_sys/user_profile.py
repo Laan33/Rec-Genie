@@ -222,7 +222,7 @@ I think the user user score (collaborative filtering) is more important for me i
 """
 
 
-def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.5):
+def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.2):
     """Adjusts the user profile based on sentiment feedback while ensuring stability, by using tanh."""
     category_sentiment, item_sentiment = parse_semantic_breakdown(sentiment_response)
 
@@ -239,6 +239,7 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.5):
     }
 
     def update_score(current_score, adjustment):
+        # TODO - currently if the score goes below 0.0, films with good correlation will be disincentive
         """Uses tanh to taper off values around 3 while allowing smooth updates."""
         return round(3 * np.tanh((current_score + alpha * adjustment) / 3), 2)
 
