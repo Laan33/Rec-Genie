@@ -48,8 +48,12 @@ I am also grateful to Pearse Carroll and Joe O'Connell from the technical suppor
 %     \\\\
 %     \end{abstract}
 The aim of this project is to explore and investigate the use of large language models in the context of working with recommendation systems, providing a conversational interface for users to interact with the recommendation system.
- aim of improving the personalisation of the recommendations made to users.
+
+The project has an aim of improving the personalisation of the recommendations made to users, in a way that is non-intrusive, user friendly and does not require a technical background
 It also had the aim of exploring the use of these models for explaining the recommendations made to users, with the aim of increasing the transparency of the recommendations made.
+
+Through a proof of concept recommendation system, the project aims to demonstrate the feasibility of using large language models in the context of recommendation systems, and to explore the potential for these models to improve the personalisation and transparency of recommendations made to users.
+This project will also explore the use of user adjustable recommendation systems, allowing users to provide feedback on the recommendations made to them in a conversational manner.
 
 \section{Problem Statement and Domain Background}
 \label{sec:domain_background}
@@ -63,8 +67,29 @@ It also had the aim of exploring the use of these models for explaining the reco
     \item User feedback in recommendation systems
     \item User control in recommendation systems
     \item User adjustable recommendation systems
-    \item 
 \end{itemize}
+
+The background to this project is based on the desire for a more personalised and transparent recommendation system, that allows users to provide feedback on the recommendations made to them in a conversational manner.
+Existing recommendation systems have limitations in terms of personalisation and transparency, with users often feeling frustrated and powerless when they want to change, correct or adjust the recommendations made to them.
+
+Current recommendation systems often rely on collaborative filtering and content-based filtering techniques, which can lead to a lack of personalisation and transparency in the recommendations made to users.
+These systems are often opaque, with users having little understanding of how the recommendations are made, leading to a lack of trust in the system.
+Even when users are provided with explanations for the recommendations made to them, these explanations are often not user friendly and can be difficult to understand.
+\\\\
+Collaborative filtering techniques rely on the behaviour of other users to make recommendations, by using algorithms to find similar users and recommend items that those users have liked.
+Content based filtering techniques rely on the attributes of the items being recommended, by using algorithms to find similar items and recommend those items to users.
+These techniques can lead to a lack of personalisation, particularly 
+\\\\
+Additionally, existing recommendation systems often do not allow for user feedback other than a rating, leading to a lack of user control in the recommendations made to them.
+Users often feel frustrated and powerless when they want to change, correct or adjust the recommendations made to them, leading to a lack of trust in the system.
+\\\\
+While large language models (LLMs) have shown promise in the area of conversational recommendation systems, they often do not have the capability to handle large context windows for the size of data needed when the system is used outside of a single session.
+
+Furthermore, LLMs often do not have the capability to store fine-grain memory of conversations, losing information on implicit user preferences and feedback.
+Alongside this, the lack of reasoning capabilities in LLMs can lead to a lack of transparency in the recommendations made to users, as the explanations are at best, guessed by the model.
+New research in the area of reasoning models may help to alleviate this issue\cite{zhu2025collaborativeretrievallargelanguage}.
+
+
 
 % Problem Statement
 \begin{itemize}
@@ -77,7 +102,6 @@ It also had the aim of exploring the use of these models for explaining the reco
     \item Existing recommendation systems don't allow for user feedback other than a rating.
     \item Users feel frustrated and powerless when they want to change, correct or adjust the recommendations made to them.
     \item Users want to feel heard, and they don't trust existing recommendation systems.
-    \item 
 \end{itemize}
 
 
@@ -85,6 +109,8 @@ It also had the aim of exploring the use of these models for explaining the reco
 
 \section{Aims and Objectives}
 \label{sec:aims_and_objectives}
+
+
 Project Purpose
 \begin{itemize}
     \item Explore the area of conversational recommendation systems
@@ -100,21 +126,45 @@ Project Purpose
     \item Investigate the accuracy of quantized and intruct based LLMs in handling multiple tasks 
 \end{itemize}
 
+The purpose of this project is to explore the area of conversational recommendation systems, with a focus on the use of large language models in the context of recommendation systems.
+It aims to investigate the 
+
+% to explore and investigate the use of large language models integrated with recommendation systems, providing a conversational interface for users to interact with the recommendation system.
+
+
+
+% This project aims to address these limitations by exploring the use of large language models in the context of recommendation systems, providing a conversational interface for users to interact with the recommendation system.
+% This project will also explore the use of user adjustable recommendation systems, allowing users to provide feedback on the recommendations made to them in a conversational manner.
+
+
+
 \section{Open Questions}
 \label{sec:open_questions}
-\begin{itemize}
-    \item How can we use large language models to improve conversational recommendation systems?
-    \item How can we use large language models to explain recommendations to users?
-    \item How can we allow users to provide feedback on recommendations in a conversational manner?
-    \item How can we implemnet user adjustable recommendation systems in a user friendly manner?
-    \item How can we implement a system that doesn't require a technical background?
-    \item How can we implement a system that can be feasibly scaled, efficient, effictive and user friendly?
-\end{itemize}
+
+The project aims to address the following open questions:
+
+\begin{enumerate}
+    \item \textbf{Enhancing Conversational Recommendation Systems:} How can large language models improve the effectiveness of conversational recommendation systems?
+    \item \textbf{User Feedback Mechanisms:} How can users provide feedback on recommendations through a conversational interface?
+    \item \textbf{User-Adjustable Systems:} What approaches can be used to design intuitive and accessible user-adjustable recommendation systems?
+    \item \textbf{Explainability:} In what ways can large language models deliver clear and user-friendly explanations for recommendations?
+    \item \textbf{Accessibility:} How can we develop a system that is easy to use for individuals without a technical background?
+    \item \textbf{Scalability and Efficiency:} What strategies can ensure the system is scalable, efficient, effective, and user-centric?
+\end{enumerate}
 
 
 \section{Contributions}
 \label{sec:contributions}
+The contributions of this project are as follows:
 
+\begin{itemize}
+    \item \textbf{Novel Integration of LLMs with Recommendation Systems:} This project explores the integration of large language models with traditional recommendation systems to enhance personalisation and transparency.
+    \item \textbf{Development of a Conversational Interface:} A conversational interface is implemented to allow users to interact with the recommendation system, providing feedback and adjusting recommendations in a user-friendly manner.
+    \item \textbf{Explainability in Recommendations:} The project investigates the use of LLMs to generate clear and comprehensible explanations for recommendations, improving user trust and understanding.
+    \item \textbf{User-Adjustable Recommendation System:} A proof-of-concept system is developed to demonstrate how users can adjust recommendations based on their preferences through conversational feedback.
+    \item \textbf{Addressing the Cold Start Problem:} The project explores how conversational feedback and user profiles can alleviate the cold start problem in recommendation systems.
+    \item \textbf{Evaluation of Low-Intensity LLMs:} The project evaluates the capabilities of quantized and instruction-based LLMs in handling multiple tasks within a recommendation system context.
+\end{itemize}
 
 
 
