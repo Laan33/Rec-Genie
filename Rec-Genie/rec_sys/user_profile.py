@@ -276,7 +276,7 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.5):
         if category != 'Filtering':
             for item, sentiment in items.items():
                 if item in user_profile["feature_profile"]:
-                    print("Item score before update: ", user_profile["feature_profile"][item])
+                    print(f"For item: '{item}' in category '{category}, score was {user_profile['feature_profile'][item]}")
                     user_profile["feature_profile"][item] = update_score(
                         user_profile["feature_profile"][item], sentiment
                     )
@@ -304,7 +304,7 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.5):
                         )
                         print("Item score after update: ", user_profile["feature_profile"][actor_id])
                     else:
-                        print(f"Actor '{item}' not found in user profile, adding it with a default score.")
+                        print(f"Actor '{item}' not found in user profile, adding it with a default score. Actor ID: {actor_id}")
                         # Initialize new item with a default score
                         user_profile["feature_profile"][actor_id] = update_score(1.0, sentiment)
                 else:
@@ -320,8 +320,9 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.5):
                             # TODO - future improvement - could add synonyms for items in the profile (jesus this'd be a pain)
                         else:
                             # If no fuzzy match, initialise new item with a default score
-                            print(f"Director '{item}' not found in user profile, adding it with a default score.")
-                            user_profile["feature_profile"][item] = update_score(1.0, sentiment)
+                            new_item_score = update_score(1.0, sentiment)
+                            user_profile["feature_profile"][item] = new_item_score
+                            print(f"Director '{item}' not found in user profile, adding it with a default score of {new_item_score}")
 
 
                     # Initialize new item with a default score

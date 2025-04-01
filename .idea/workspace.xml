@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Adding in somewhat handling proper scores and then filtering collab / content">
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="WOW it actually adjusts the params (and recs adjusted!!!) - need to stop negative weightings">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/search_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/search_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/chatbot/prompts.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/chatbot/prompts.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/user_profile.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/user_profile.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fyp/CL-FYP-Report/chapters/implementation.tex" beforeDir="false" afterPath="$PROJECT_DIR$/fyp/CL-FYP-Report/chapters/implementation.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/preliminary-code/pocs/gradio-trial.py" beforeDir="false" afterPath="$PROJECT_DIR$/preliminary-code/pocs/gradio-trial.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -320,15 +320,7 @@
       <workItem from="1742830462594" duration="27049000" />
       <workItem from="1742914361883" duration="1323000" />
       <workItem from="1743088075971" duration="7099000" />
-      <workItem from="1743516777624" duration="1737000" />
-    </task>
-    <task id="LOCAL-00054" summary="writing intro">
-      <option name="closed" value="true" />
-      <created>1742596980423</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1742596980423</updated>
+      <workItem from="1743516777624" duration="2722000" />
     </task>
     <task id="LOCAL-00055" summary="Arght">
       <option name="closed" value="true" />
@@ -714,7 +706,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743518559345</updated>
     </task>
-    <option name="localTasksCounter" value="103" />
+    <task id="LOCAL-00103" summary="WOW it actually adjusts the params (and recs adjusted!!!) - need to stop negative weightings">
+      <option name="closed" value="true" />
+      <created>1743518823789</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1743518823789</updated>
+    </task>
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -784,7 +784,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="BUTTON CLIKC" />
     <MESSAGE value="too many changes before a commit, I know it's not fully ported over, bad git practices bla bla bla." />
     <MESSAGE value="We're getting there!!!!" />
     <MESSAGE value="wutwututuwut" />
@@ -809,7 +808,8 @@
     <MESSAGE value="WE'VE ADJUSTMENT - need to encode using the directors names now&#10;&#10;Also getting collab and content filtering" />
     <MESSAGE value="This is knarly promptings" />
     <MESSAGE value="Adding in somewhat handling proper scores and then filtering collab / content" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding in somewhat handling proper scores and then filtering collab / content" />
+    <MESSAGE value="WOW it actually adjusts the params (and recs adjusted!!!) - need to stop negative weightings" />
+    <option name="LAST_COMMIT_MESSAGE" value="WOW it actually adjusts the params (and recs adjusted!!!) - need to stop negative weightings" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -850,7 +850,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Rec_Genie$simpleRec.coverage" NAME="simpleRec Coverage Results" MODIFIED="1731520402730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Rec_Genie$prompts.coverage" NAME="prompts Coverage Results" MODIFIED="1743184725920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/chatbot" />
-    <SUITE FILE_PATH="coverage/Rec_Genie$Gradio_Trial_2.coverage" NAME="Gradio-Trial-2 Coverage Results" MODIFIED="1743518561219" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$Gradio_Trial_2.coverage" NAME="Gradio-Trial-2 Coverage Results" MODIFIED="1743518977544" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
     <SUITE FILE_PATH="coverage/Rec_Genie$main.coverage" NAME="main Coverage Results" MODIFIED="1742407746749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rec-sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial.coverage" NAME="gradio-trial Coverage Results" MODIFIED="1742427286732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pocs" />
     <SUITE FILE_PATH="coverage/Rec_Genie$hybrid_recommender.coverage" NAME="hybrid_recommender Coverage Results" MODIFIED="1742844282328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
