@@ -53,17 +53,19 @@ glean_feed_back_chain = PromptTemplate(
         "RULES:\n"
         "1. Each category score shows how important this category is to the user (0.1-1.0)\n"
         "2. Each item score shows how much the user likes that specific item (0.1-1.0)\n"
-        "3. Only include categories and items actually mentioned in the message\n"
-        "4. Format must be exactly: 'Category; score, Item1: score, Item2: score \\n'\n"
+        "3. ONLY include categories and items related to what is actually mentioned in the message\n"
+        "4. FORMAT MUST BE EXACTLY: 'Category; score, Item1: score, Item2: score \\n'\n"
         "5. No explanations or additional text - only the structured data\n"
         "6. Use negative scores (-0.1 to -1.0) for things the user dislikes\n"
-        "7. If the user doesn't express a preference for a category, provide a neutral score of 0.0\n"
+        "7. IF AN ITEM IS MENTIONED BUT NO CLEAR SENTIMENT IS GIVEN, DEFAULT TO 0.3\n"
         "8. For the Filtering category, extract 'Content' score (how much the user values film attributes) "
         "   and 'Collaborative' score (how much the user values what others with similar taste liked)\n"
+        "9. ENSURE EVERY ITEM HAS A NUMERIC SCORE, DO NOT USE ANYTHING ELSE\n"
         "\n"
         "USER MESSAGE: {input_text}"
     )
 )
+
 
 # Create a routing LLM with context about existing recommendations
 # router_prompt = ChatPromptTemplate.from_messages([
