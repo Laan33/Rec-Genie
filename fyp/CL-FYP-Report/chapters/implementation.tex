@@ -127,5 +127,56 @@ Mathematical Model
     Choose αα based on impact sensitivity
 
         Example: α=0.5α=0.5 (Adjust this to control how strongly feedback affects the profile).
-    
+
+    -----
+
+    LLMs are annoying - e.g. when i was specifying actors in my prompt, it occasionally would forget or ignore the actresses the user mentioned.
+    There is a lot of work to be done in this area, and I would like to explore this further in the future.
+
+
+------ SAMPLE DIRECTOR BEING ADDED WITHOUT MENTION
+
+I loved the film Forrest Gump. It's great
+
+Category:  Filtering
+Film 'Forrest Gump' not found in user profile, adding it with a default score.
+Item 'Robert Zemeckis' not found in user profile category, adding it with a default score.
+
+---------
+For the user profile, films and actors were represented as tuples with their IDs and scores.
+Directors were represented as a list of tuples with their names and scores.
+Genres were represented as a list of tuples with their names and scores.
+
+
+
+For the feedback system, the system would first try to find the film id in the film database.
+Regardless of whether the film was found, it would then check the user profile for the film.
+If it had the id, it would update the score of the film in the user profile.
+If the film was not found, it would then check the user profile for the film title,
+and if it was found, it would update the score of the film in the user profile.
+If the film was not found, it would add the film to the user profile with a default score of 
+
+If the film was not found, it would then search for the film in the user profile.
+
+first search for the film in the user profile.
+If the film was not found, it
+
+\cite{FuzzyWuzzy} I used the FuzzyWuzzy library to match the film titles. It uses the Levenshtein distance to match the film titles.
+https://en.wikipedia.org/wiki/Levenshtein_distance
+
+
+--------
+
+Routing
+
+I initially used LLM routing, but I ended up using a much simpler approach, in just searching for words in a dictionary to classify what a user was looking for.
+This greatly spead up the system, but the LLM routing approach is still a valid approach, that can be quite powerful in handling more complex queries.
+If I had more time and resources, one possible approach would be to train a very simple NLP model to classify the queries, and then use that to route the queries to the appropriate LLM.
+
+----
+
+
+
+----
+
 \end{comment}
