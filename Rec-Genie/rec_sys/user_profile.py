@@ -2,6 +2,7 @@ import ast
 import os
 import re
 from collections import defaultdict
+from pprint import pprint
 
 from .search_info import get_film_id_by_title, get_title_by_film_id, get_director_by_film_id, get_films_with_director, fuzzy_search_user_profile
 import numpy as np
@@ -222,7 +223,7 @@ I think the user user score (collaborative filtering) is more important for me i
 """
 
 
-def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.2):
+def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.3):
     """Adjusts the user profile based on sentiment feedback while ensuring stability, by using tanh."""
     category_sentiment, item_sentiment = parse_semantic_breakdown(sentiment_response)
 
@@ -241,7 +242,7 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.2):
     def update_score(current_score, adjustment):
         # TODO - currently if the score goes below 0.0, films with good correlation will be disincentive
         """Uses tanh to taper off values around 3 while allowing smooth updates."""
-        return round(3 * np.tanh((current_score + alpha * adjustment) / 3), 2)
+        return round(3 * np.tanh((current_score + alpha * adjustment) / 3), 3)
 
     # Adjust category weights
     for category, sentiment in category_sentiment.items():
@@ -276,6 +277,7 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.2):
 
         if category != 'Filtering':
             for item, sentiment in items.items():
+                print(f"Item: '{item}' in category '{category}', sentiment: {sentiment}")
                 if item in user_profile["feature_profile"]:
                     print(f"For item: '{item}' in category '{category}, score was {user_profile['feature_profile'][item]}")
                     user_profile["feature_profile"][item] = update_score(
@@ -294,7 +296,7 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.2):
                     else:
                         print(f"Film '{item}' not found in user profile, adding it with a default score.")
                         # Initialize new item with a default score
-                        user_profile["feature_profile"][film_id] = update_score(1.0, sentiment)
+                        user_profile["feature_profile"][film_id] = update_score(3, sentiment)
                 elif category == "Actors":
                     # Handle actors separately
                     actor_id = get_film_id_by_title(item, films_df)
@@ -307,17 +309,18 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.2):
                     else:
                         print(f"Actor '{item}' not found in user profile, adding it with a default score. Actor ID: {actor_id}")
                         # Initialize new item with a default score
-                        user_profile["feature_profile"][actor_id] = update_score(1.0, sentiment)
+                        user_profile["feature_profile"][actor_id] = update_score(3, sentiment)
                 else:
                     print(
                         f"Item '{item}' not found in user profile category, adding it with a default score.")
 
                     if category == "Directors":
-                        # Firstly check with fuzzy matching for director name
-                        fuzzy_result = fuzzy_search_user_profile(user_profile, item)
+                        # Firstly, check with fuzzy matching for director name
+                        fuzzy_result = fuzzy_search_user_profile(user_profile["feature_profile"], item)
+                        print("Fuzzy result: ", fuzzy_result)
                         if fuzzy_result:
                             print("Fuzzy match found for director: ", fuzzy_result)
-                            user_profile["feature_profile"][fuzzy_result[0]] = update_score(1.0, sentiment)
+                            user_profile["feature_profile"][fuzzy_result[0]] = update_score(user_profile["feature_profile"][fuzzy_result[0]], sentiment)
                             # TODO - future improvement - could add synonyms for items in the profile (jesus this'd be a pain)
                         else:
                             # If no fuzzy match, initialise new item with a default score
@@ -325,11 +328,13 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.2):
                             user_profile["feature_profile"][item] = new_item_score
                             print(f"Director '{item}' not found in user profile, adding it with a default score of {new_item_score}")
 
+                    else:
+                        # Initialize new item with a default score
+                        print(f"Item '{item}' in category '{category}' not found in user profile, adding it with a default score.")
+                        user_profile["feature_profile"][item] = update_score(1.0, sentiment)
 
-                    # Initialize new item with a default score
-                    user_profile["feature_profile"][category][item] = update_score(1.0, sentiment)
-
-    print("User profile after adjustment: ", user_profile)
+    print("User profile after adjustment: ")
+    pprint(user_profile)
 
     # Save the updated user profile
     profiles_dir = os.path.join(os.path.dirname(__file__), '..', 'userProfiles', 'adjustedProfiles')
@@ -358,16 +363,14 @@ def parse_semantic_breakdown(text):
     categories = {"Films": 0.0, "Actors": 0.0, "Genres": 0.0, "Directors": 0.0, "Filtering": 0.0}
     items_data = defaultdict(dict)  # Dictionary to store parsed categories and scores
 
-    # print (poor mans debug log) the semantic breakdown
     print("Semantic breakdown:\n", text)
-
 
     for line in text.strip().split('\n'):
         line = line.strip().lstrip('#').strip()  # Remove leading '#' and spaces
         if not line:
             continue
 
-        match = re.match(r"(\w+);\s*([\d.-]*)\s*(.*)", line)
+        match = re.match(r"(\w+);\s*([\d.-]+)\s*(.*)", line)
         if match:
             category, category_score, items = match.groups()
             category = category.strip()
@@ -377,15 +380,12 @@ def parse_semantic_breakdown(text):
                 categories[category] = float(category_score)
 
             # Extract items and their scores
-            print("extracting items and scores in user_profile.py")
             if items:
                 item_matches = re.findall(r"([^:,]+):\s*([-\d.]+)", items)
                 for item, score in item_matches:
-                    print("Item: ", item)
-                    print("Score: ", score)
-
                     items_data[category][item.strip()] = float(score)
 
     return categories, dict(items_data)
 
 
+# I really like the film the godfather tbh. The directing in it is great, so is the cast. I don't usually like the genres with it, so it's a surprising like of mine

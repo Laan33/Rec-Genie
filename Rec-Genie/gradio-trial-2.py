@@ -101,7 +101,7 @@ class GradioFilmRec:
         has_recommendations = self.scores is not None
         print("Has recommendations:", has_recommendations)
 
-        explanation_path_words = ["EXPLAIN", "EXPLAINING", "EXPLANATION", "EXPLAINED", "BREAKDOWN", "HOW", "WHY DID", "REASON", "REASONS", "TELL ME"]
+        explanation_path_words = ["EXPLAIN", "EXPLAINING", "EXPLANATION", "EXPLAINED", "BREAKDOWN", "WHY DID", "REASON", "REASONS", "TELL ME"]
         # Use a simple check for keywords in the input
         route_category = "EXPLAIN" if any(word in input_value.upper() for word in explanation_path_words) else "FEEDBACK"
 
