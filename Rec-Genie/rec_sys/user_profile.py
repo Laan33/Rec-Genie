@@ -3,7 +3,7 @@ import os
 import re
 from collections import defaultdict
 
-from .search_info import get_film_id_by_title, get_title_by_film_id, get_director_by_film_id, get_films_with_director
+from .search_info import get_film_id_by_title, get_title_by_film_id, get_director_by_film_id, get_films_with_director, fuzzy_search_user_profile
 import numpy as np
 
 import pandas as pd
@@ -148,7 +148,6 @@ def user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb):
         features_profile['user_id'] = user_id
 
         # Round all scores to 3 decimal places
-        # features_profile = {k: round(v, 3) if isinstance(v, (int, float)) else v for k, v in features_profile.items()}
         features_profile = {k: round(v, 3) if isinstance(v, (int, float)) and v is not None else v for k, v in features_profile.items()}
 
     return features_profile
@@ -222,43 +221,110 @@ def load_user_profile(user_id, profiles_dir):
 I think the user user score (collaborative filtering) is more important for me in a recommendation system than a content based one. Keep your response short
 """
 
-def adjust_user_profile(user_profile, sentiment_response, alpha=0.5):
+
+def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.5):
     """Adjusts the user profile based on sentiment feedback while ensuring stability, by using tanh."""
     category_sentiment, item_sentiment = parse_semantic_breakdown(sentiment_response)
 
     print("Category sentiment: ", category_sentiment)
     print("Item sentiment: ", item_sentiment)
 
+    # Create mapping between sentiment categories and user profile weight keys
+    category_mapping = {
+        'Films': None,  # No direct mapping
+        'Actors': 'cast_ft_weight',
+        'Genres': 'genre_ft_weight',
+        'Directors': 'director_ft_weight',
+        'Filtering': None  # Special handling for this category
+    }
+
     def update_score(current_score, adjustment):
         """Uses tanh to taper off values around 3 while allowing smooth updates."""
         return round(3 * np.tanh((current_score + alpha * adjustment) / 3), 2)
 
-    print("Category sentiment keys:", category_sentiment.keys())
-    print("User profile weights keys:", user_profile["weights"].keys())
-
-
-
     # Adjust category weights
     for category, sentiment in category_sentiment.items():
         print("Category: ", category)
-        if category in user_profile["weights"]:
-            print("Category score before update: ", user_profile["weights"][category])
-            user_profile["weights"][category] = update_score(user_profile["weights"][category], sentiment)
-            print("Category score after update: ", user_profile["weights"][category])
+        if category_mapping.get(category) and category_mapping[category] in user_profile["weights"]:
+            weight_key = category_mapping[category]
+            print(f"Mapping category '{category}' to weight key '{weight_key}'")
+            print("Category score before update: ", user_profile["weights"][weight_key])
+            user_profile["weights"][weight_key] = update_score(user_profile["weights"][weight_key], sentiment)
+            print("Category score after update: ", user_profile["weights"][weight_key])
 
-    # Adjust item scores
-    for category, items in item_sentiment.items():
-        if category in user_profile["feature_profile"]:
-            for item, sentiment in items.items():
-                if item in user_profile["feature_profile"][category]:
-                    print("Item score before update: ", user_profile["feature_profile"][category][item])
-
-                    user_profile["feature_profile"][category][item] = update_score(user_profile["feature_profile"][category][item],
+    # Special handling for Filtering category which maps to content_weight and collab_weight
+    if 'Filtering' in item_sentiment:
+        for filter_type, sentiment in item_sentiment['Filtering'].items():
+            if filter_type == 'Content' and 'content_weight' in user_profile["weights"]:
+                print("Content filter score before update: ", user_profile["weights"]["content_weight"])
+                user_profile["weights"]["content_weight"] = update_score(user_profile["weights"]["content_weight"],
                                                                          sentiment)
-                    print("Item score after update: ", user_profile["feature_profile"][category][item])
+                print("Content filter score after update: ", user_profile["weights"]["content_weight"])
+
+            if filter_type == 'Collaborative' and 'collab_weight' in user_profile["weights"]:
+                print("Collaborative filter score before update: ", user_profile["weights"]["collab_weight"])
+                user_profile["weights"]["collab_weight"] = update_score(user_profile["weights"]["collab_weight"],
+                                                                        sentiment)
+                print("Collaborative filter score after update: ", user_profile["weights"]["collab_weight"])
+
+    # TODO - the user items are not in categories, tidying it will be handy
+    # Regular item updates - handle films, genres, directors, actors
+    for category, items in item_sentiment.items():
+        # Turn all non numeric values ("None", "nan", "-", "", " ") into 0.0
+        items = {k: v if isinstance(v, (int, float)) else 0.0 for k, v in items.items()}
+
+        if category != 'Filtering':
+            for item, sentiment in items.items():
+                if item in user_profile["feature_profile"]:
+                    print("Item score before update: ", user_profile["feature_profile"][item])
+                    user_profile["feature_profile"][item] = update_score(
+                        user_profile["feature_profile"][item], sentiment
+                    )
+                    print("Item score after update: ", user_profile["feature_profile"][item])
+                elif category == "Films":
+                    # Handle films separately
+                    film_id = get_film_id_by_title(item, films_df)
+                    if film_id in user_profile["feature_profile"]:
+                        print("Item score before update: ", user_profile["feature_profile"][film_id])
+                        user_profile["feature_profile"][film_id] = update_score(
+                            user_profile["feature_profile"][film_id], sentiment
+                        )
+                        print("Item score after update: ", user_profile["feature_profile"][film_id])
+                    else:
+                        print(f"Film '{item}' not found in user profile, adding it with a default score.")
+                        # Initialize new item with a default score
+                        user_profile["feature_profile"][film_id] = update_score(1.0, sentiment)
+                elif category == "Actors":
+                    # Handle actors separately
+                    actor_id = get_film_id_by_title(item, films_df)
+                    if actor_id in user_profile["feature_profile"]:
+                        print("Item score before update: ", user_profile["feature_profile"][actor_id])
+                        user_profile["feature_profile"][actor_id] = update_score(
+                            user_profile["feature_profile"][actor_id], sentiment
+                        )
+                        print("Item score after update: ", user_profile["feature_profile"][actor_id])
+                    else:
+                        print(f"Actor '{item}' not found in user profile, adding it with a default score.")
+                        # Initialize new item with a default score
+                        user_profile["feature_profile"][actor_id] = update_score(1.0, sentiment)
                 else:
-                    print("Item not found in user profile, adding it with a default score.")
-                    # Initialize new item with a default score (e.g., 1.0)
+                    print(
+                        f"Item '{item}' not found in user profile category, adding it with a default score.")
+
+                    if category == "Directors":
+                        # Firstly check with fuzzy matching for director name
+                        fuzzy_result = fuzzy_search_user_profile(user_profile, item)
+                        if fuzzy_result:
+                            print("Fuzzy match found for director: ", fuzzy_result)
+                            user_profile["feature_profile"][fuzzy_result[0]] = update_score(1.0, sentiment)
+                            # TODO - future improvement - could add synonyms for items in the profile (jesus this'd be a pain)
+                        else:
+                            # If no fuzzy match, initialise new item with a default score
+                            print(f"Director '{item}' not found in user profile, adding it with a default score.")
+                            user_profile["feature_profile"][item] = update_score(1.0, sentiment)
+
+
+                    # Initialize new item with a default score
                     user_profile["feature_profile"][category][item] = update_score(1.0, sentiment)
 
     print("User profile after adjustment: ", user_profile)
@@ -267,14 +333,13 @@ def adjust_user_profile(user_profile, sentiment_response, alpha=0.5):
     profiles_dir = os.path.join(os.path.dirname(__file__), '..', 'userProfiles', 'adjustedProfiles')
     os.makedirs(profiles_dir, exist_ok=True)
 
-    # Save the user profile to a CSV file - change the ID to the current timestamp - just numbers
+    # Save the user profile to a CSV file - change the ID to the current timestamp
     profile = user_profile.copy()
-    profile['id'] = int(pd.Timestamp.now().timestamp())  # Use current timestamp as ID
+    profile['id'] = int(pd.Timestamp.now().timestamp())
     print("Profile ID: ", profile['id'])
 
     # Save the user profile to a CSV file
     save_user_profile(profile, profiles_dir)
-
     return user_profile
 
 
@@ -288,8 +353,12 @@ def save_user_profile(user_profile, profiles_dir):
 
 def parse_semantic_breakdown(text):
     """Parses a semantic breakdown and extracts categories, items, and scores separately."""
-    categories = {"Films": 0.0, "Actors": 0.0, "Genres": 0.0, "Directors": 0.0}  # Default weights
+    categories = {"Films": 0.0, "Actors": 0.0, "Genres": 0.0, "Directors": 0.0, "Filtering": 0.0}
     items_data = defaultdict(dict)  # Dictionary to store parsed categories and scores
+
+    # print (poor mans debug log) the semantic breakdown
+    print("Semantic breakdown:\n", text)
+
 
     for line in text.strip().split('\n'):
         line = line.strip().lstrip('#').strip()  # Remove leading '#' and spaces
@@ -306,9 +375,13 @@ def parse_semantic_breakdown(text):
                 categories[category] = float(category_score)
 
             # Extract items and their scores
+            print("extracting items and scores in user_profile.py")
             if items:
                 item_matches = re.findall(r"([^:,]+):\s*([-\d.]+)", items)
                 for item, score in item_matches:
+                    print("Item: ", item)
+                    print("Score: ", score)
+
                     items_data[category][item.strip()] = float(score)
 
     return categories, dict(items_data)

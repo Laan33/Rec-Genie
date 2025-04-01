@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Going away from routing lol to plain old strings">
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Adding in somewhat handling proper scores and then filtering collab / content">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rec-Genie/chatbot/prompts.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/chatbot/prompts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/content_based.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/content_based.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/rec_interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/search_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/search_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/rec_sys/user_profile.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/rec_sys/user_profile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fyp/CL-FYP-Report/chapters/implementation.tex" beforeDir="false" afterPath="$PROJECT_DIR$/fyp/CL-FYP-Report/chapters/implementation.tex" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,32 +54,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.Gradio-Trial-2.executor": "Run",
-    "Python.baseSystem.executor": "Run",
-    "Python.collaborative.executor": "Run",
-    "Python.data_loader.executor": "Run",
-    "Python.gradio-trial (1).executor": "Run",
-    "Python.gradio-trial-2.executor": "Run",
-    "Python.gradio-trial.executor": "Run",
-    "Python.hybrid_recommender.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.rec_interface.executor": "Run",
-    "Python.simpleRec.executor": "Run",
-    "Python.user_profile.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/Cathal/Rec-Genie/Rec-Genie/chatbot",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Gradio-Trial-2.executor&quot;: &quot;Run&quot;,
+    &quot;Python.baseSystem.executor&quot;: &quot;Run&quot;,
+    &quot;Python.collaborative.executor&quot;: &quot;Run&quot;,
+    &quot;Python.data_loader.executor&quot;: &quot;Run&quot;,
+    &quot;Python.gradio-trial (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.gradio-trial-2.executor&quot;: &quot;Run&quot;,
+    &quot;Python.gradio-trial.executor&quot;: &quot;Run&quot;,
+    &quot;Python.hybrid_recommender.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.rec_interface.executor&quot;: &quot;Run&quot;,
+    &quot;Python.simpleRec.executor&quot;: &quot;Run&quot;,
+    &quot;Python.user_profile.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/Cathal/Rec-Genie/Rec-Genie/chatbot&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Rec-Genie/chatbot" />
@@ -241,8 +243,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.rec_interface" />
         <item itemvalue="Python.gradio-trial (1)" />
+        <item itemvalue="Python.rec_interface" />
         <item itemvalue="Python.gradio-trial" />
         <item itemvalue="Python.collaborative" />
         <item itemvalue="Python.user_profile" />
@@ -318,78 +320,7 @@
       <workItem from="1742830462594" duration="27049000" />
       <workItem from="1742914361883" duration="1323000" />
       <workItem from="1743088075971" duration="7099000" />
-    </task>
-    <task id="LOCAL-00045" summary="big WORKING???">
-      <option name="closed" value="true" />
-      <created>1742397553124</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1742397553124</updated>
-    </task>
-    <task id="LOCAL-00046" summary="Tidying!!">
-      <option name="closed" value="true" />
-      <created>1742399713329</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1742399713330</updated>
-    </task>
-    <task id="LOCAL-00047" summary="Tidying!!">
-      <option name="closed" value="true" />
-      <created>1742399845362</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1742399845362</updated>
-    </task>
-    <task id="LOCAL-00048" summary="Tidying!!">
-      <option name="closed" value="true" />
-      <created>1742400281551</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1742400281551</updated>
-    </task>
-    <task id="LOCAL-00049" summary="Adjusting for the aul LLM time">
-      <option name="closed" value="true" />
-      <created>1742404778661</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1742404778661</updated>
-    </task>
-    <task id="LOCAL-00050" summary="Optimisations">
-      <option name="closed" value="true" />
-      <created>1742406520035</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1742406520038</updated>
-    </task>
-    <task id="LOCAL-00051" summary="ah man this is hard">
-      <option name="closed" value="true" />
-      <created>1742413390997</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1742413390997</updated>
-    </task>
-    <task id="LOCAL-00052" summary="Tidying up again">
-      <option name="closed" value="true" />
-      <created>1742553819510</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1742553819510</updated>
-    </task>
-    <task id="LOCAL-00053" summary="getting something?">
-      <option name="closed" value="true" />
-      <created>1742596972033</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1742596972033</updated>
+      <workItem from="1743516777624" duration="1737000" />
     </task>
     <task id="LOCAL-00054" summary="writing intro">
       <option name="closed" value="true" />
@@ -711,7 +642,79 @@
       <option name="project" value="LOCAL" />
       <updated>1743430181103</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="Jeez this prompting thing is great at the aul feedback">
+      <option name="closed" value="true" />
+      <created>1743431171173</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1743431171173</updated>
+    </task>
+    <task id="LOCAL-00095" summary="REGEX wins">
+      <option name="closed" value="true" />
+      <created>1743433714857</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1743433714857</updated>
+    </task>
+    <task id="LOCAL-00096" summary="re winner">
+      <option name="closed" value="true" />
+      <created>1743434071637</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1743434071637</updated>
+    </task>
+    <task id="LOCAL-00097" summary="efficiencys">
+      <option name="closed" value="true" />
+      <created>1743434102346</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1743434102346</updated>
+    </task>
+    <task id="LOCAL-00098" summary="SENTIMENTS ADJUSTMENTS TANH">
+      <option name="closed" value="true" />
+      <created>1743450070386</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1743450070386</updated>
+    </task>
+    <task id="LOCAL-00099" summary="SENTIMENTS ADJUSTMENTS TANH">
+      <option name="closed" value="true" />
+      <created>1743452605770</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1743452605770</updated>
+    </task>
+    <task id="LOCAL-00100" summary="WE'VE ADJUSTMENT - need to encode using the directors names now&#10;&#10;Also getting collab and content filtering">
+      <option name="closed" value="true" />
+      <created>1743453053162</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1743453053163</updated>
+    </task>
+    <task id="LOCAL-00101" summary="WE'VE ADJUSTMENT - need to encode using the directors names now&#10;&#10;Also getting collab and content filtering">
+      <option name="closed" value="true" />
+      <created>1743453090291</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1743453090291</updated>
+    </task>
+    <task id="LOCAL-00102" summary="Adding in somewhat handling proper scores and then filtering collab / content">
+      <option name="closed" value="true" />
+      <created>1743518559345</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1743518559345</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -781,14 +784,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="trying to format the page" />
-    <MESSAGE value="not working but fixed that langchain warning" />
-    <MESSAGE value="For god sake that was so simple" />
-    <MESSAGE value="starting routing" />
-    <MESSAGE value="getting somewhere" />
-    <MESSAGE value="getting somewhere2" />
-    <MESSAGE value="ok python3.10 now works everyone happy la dee daa" />
-    <MESSAGE value="OM NOM NOM NOM" />
     <MESSAGE value="BUTTON CLIKC" />
     <MESSAGE value="too many changes before a commit, I know it's not fully ported over, bad git practices bla bla bla." />
     <MESSAGE value="We're getting there!!!!" />
@@ -806,7 +801,15 @@
     <MESSAGE value="Stopping user rated films being given" />
     <MESSAGE value="We're getting good breakdowns - still error at the end?" />
     <MESSAGE value="Going away from routing lol to plain old strings" />
-    <option name="LAST_COMMIT_MESSAGE" value="Going away from routing lol to plain old strings" />
+    <MESSAGE value="Jeez this prompting thing is great at the aul feedback" />
+    <MESSAGE value="REGEX wins" />
+    <MESSAGE value="re winner" />
+    <MESSAGE value="efficiencys" />
+    <MESSAGE value="SENTIMENTS ADJUSTMENTS TANH" />
+    <MESSAGE value="WE'VE ADJUSTMENT - need to encode using the directors names now&#10;&#10;Also getting collab and content filtering" />
+    <MESSAGE value="This is knarly promptings" />
+    <MESSAGE value="Adding in somewhat handling proper scores and then filtering collab / content" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding in somewhat handling proper scores and then filtering collab / content" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -827,16 +830,6 @@
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/preliminary-code/pocs/gradio-trial.py</url>
-          <line>17</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/preliminary-code/pocs/gradio-trial.py</url>
-          <line>15</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/venv_3.10/lib/python3.10/site-packages/gradio/components/button.py</url>
           <line>18</line>
           <option name="timeStamp" value="15" />
@@ -848,7 +841,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Rec-Genie/rec_sys/user_profile.py</url>
-          <line>23</line>
+          <line>28</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
@@ -857,7 +850,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Rec_Genie$simpleRec.coverage" NAME="simpleRec Coverage Results" MODIFIED="1731520402730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Rec_Genie$prompts.coverage" NAME="prompts Coverage Results" MODIFIED="1743184725920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/chatbot" />
-    <SUITE FILE_PATH="coverage/Rec_Genie$Gradio_Trial_2.coverage" NAME="Gradio-Trial-2 Coverage Results" MODIFIED="1743430584772" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$Gradio_Trial_2.coverage" NAME="Gradio-Trial-2 Coverage Results" MODIFIED="1743518561219" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
     <SUITE FILE_PATH="coverage/Rec_Genie$main.coverage" NAME="main Coverage Results" MODIFIED="1742407746749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rec-sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial.coverage" NAME="gradio-trial Coverage Results" MODIFIED="1742427286732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pocs" />
     <SUITE FILE_PATH="coverage/Rec_Genie$hybrid_recommender.coverage" NAME="hybrid_recommender Coverage Results" MODIFIED="1742844282328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
@@ -865,8 +858,8 @@
     <SUITE FILE_PATH="coverage/Rec_Genie$collaborative.coverage" NAME="collaborative Coverage Results" MODIFIED="1742759007789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$rec_interface.coverage" NAME="rec_interface Coverage Results" MODIFIED="1742843902819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$user_profile.coverage" NAME="user_profile Coverage Results" MODIFIED="1742862213265" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/rec_sys" />
-    <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial__1_.coverage" NAME="gradio-trial (1) Coverage Results" MODIFIED="1742659164439" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/preliminary-code/pocs" />
     <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial_2.coverage" NAME="gradio-trial-2 Coverage Results" MODIFIED="1742845208831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial__1_.coverage" NAME="gradio-trial (1) Coverage Results" MODIFIED="1743450528631" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/preliminary-code/pocs" />
     <SUITE FILE_PATH="coverage/Rec_Genie$data_loader.coverage" NAME="data_loader Coverage Results" MODIFIED="1742333006709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rec-sys" />
   </component>
 </project>

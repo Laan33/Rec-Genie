@@ -94,7 +94,7 @@ class RecInterface:
 
     def implement_user_feedback(self, session_id, sentiment_response):
         # Adjust the weights on the user profile
-        self.user_profile = user_pf.adjust_user_profile(self.user_profile, sentiment_response)
+        self.user_profile = user_pf.adjust_user_profile(self.user_profile, sentiment_response, self.films_df)
 
 
 
