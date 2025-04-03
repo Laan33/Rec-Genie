@@ -1,7 +1,86 @@
 
+% NOTE - writing this in third person, as it is a report
+
 % Chapter 3  Design
 
 % Introduction – overview of the system 
 % System architecture – include a diagram and discuss the main components in turn. (choice of approaches here)
 % Discussion of design decisions
 % Discussion of the data being used
+
+\section{Technologies and Languages used}
+\label{sec:technologies_and_languages_used}
+
+The system was implemented using Python 3.10, with the following libraries:
+\begin{itemize}
+    \item \texttt{LangChain} - 
+    \item \texttt{LensKit} - for the UserUser recommendation system
+    \item \texttt{pandas} - 
+    \item \texttt{numpy} - 
+\end{itemize}
+
+
+% Technologies and Languages used
+\begin{itemize}
+    \item \texttt{Ollama} - 
+    \item \texttt{llama3.2:3b-instruct-q4\_K\_M} - 
+
+\end{itemize}
+
+Python was chosen for this project due to its powerful capabilities in data manipulation and processing.
+
+Additionally, I personally had a strong desire to work with Python, as it was an excellent opportunity to enhance my proficiency in the language.
+
+
+
+
+\section{Hybrid Recommendation System}
+\label{sec:recommendation_system}
+The recommendation system was designed to be a hybrid recommendation system, using both collaborative filtering and content-based filtering.
+This was done to provide a more comprehensive recommendation system, as well as to allow for the use of both collaborative filtering and content-based filtering features.
+The recommendation system is designed to be modular, allowing for the addition of new features and the adjustment of existing features.
+The recommendation system is designed to be a proof of concept, and is not intended to be the best implementation.
+\\\\
+As this project is a exploratory proof of concept, the recommendation system is needed to be a modular, lightweight, and easily adjustable system.
+With thi
+
+
+\section{Content-based Filtering}
+\label{sec:content_based_filtering}
+As there's no frameworks or libraries for content-based filtering with the qualities needed for recommendation and feature adjustment, a custom implementation was needed.
+
+Importantly, this implementation is intended to be a proof of concept, and is not intended to be the best implementation.
+With this in mind, the content-based filtering system uses the following features:
+\begin{itemize}
+    \item Genres
+    \item Directors
+    \item Cast
+    % \item Year TODO - if time, add in year, write or similar | stretch goal
+\end{itemize}
+More features could be added, such as year, but the listed features are sufficient for a substantial proof of concept.
+Adding anything more would be a stretch goal, and would not be necessary for the proof of concept.
+
+With this in mind, there is not much reason to evaluate the content-based filtering system in detail.
+
+Testing, while not exhaustive, will cover:
+\begin{itemize}
+    \item The system works reliably
+    \item The system is able to provide recommendations based on the features
+    \item The system provides recommendations unique to user preferences
+    \item The system is able to provide recommendations based on the features with user preferences
+    \item The system is able to provide recommendations based on the feature weights
+    \item The system is able to provide recommendations based on the feature weights with user preferences
+\end{itemize}
+
+
+
+
+\section{Collaborative Filtering}
+\label{sec:collaborative_filtering}
+For the collaborative filtering component of the the LensKit library to build a collaborative filtering recommendation system.
+It is a user-user collaborative filtering system, which uses the user-item matrix to find similar users and recommend items based on their preferences.
+
+Again, as the recommendation system is only there to provide a working implementation of a recommendation system with key features, the collaborative filtering system is not the main focus of the project.
+As such, the design is not intended to be the most efficient or effective implementation, but rather a 
+it is not intended to be necessarily the best recommendation system, there is little need to evaluate the recommendation system in detail.
+

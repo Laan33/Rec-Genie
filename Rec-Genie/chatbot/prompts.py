@@ -1,20 +1,5 @@
-from typing import Annotated, TypedDict
-
-from langchain_ollama import OllamaLLM
 from langchain_core.prompts import PromptTemplate
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-
-
-
-# TyperdDict
-class SentimentScores(TypedDict):
-    """Sentiment scores for items within features, and feature importance scores."""
-
-    films: float # Sentiment score for films
-    actors: float # Sentiment score for actors
-    directors: float # Sentiment score for directors
-    genres: float # Sentiment score for genres
-
 
 
 film_chat_explore_chain = ChatPromptTemplate.from_messages([
