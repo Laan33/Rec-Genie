@@ -7,35 +7,83 @@
 % Use of LLMs in related domains – conversational IR, explanations etc.
 
 
+Conversational recommendation systems (CRSs) represent a rapidly evolving intersection of artificial intelligence, natural language processing, and user interaction
+design, aimed at enhancing personalized experiences across diverse domains such as e-commerce, entertainment, and customer service. 
+By facilitating engaging dialogues between users and machines, CRSs provide dynamic and context-aware
+recommendations tailored to individual preferences, effectively addressing the complexity of choices available in today's digital landscape.
 
-\section{Using Large Language Models soley as a recommendation system}
+
+\section{Large Language Models as recommendation systems}
 \label{sec:llm_as_recommendation_system}
 This study from Ruixuan Sun et al \cite{sun2024largelanguagemodelsconversational} looked at using large language models as a recommendation system.
 This study found that LLMs offer strong recommendation explainability but lack overall personalization, diversity, and user trust. 
 
 
+\subsection{Leveraging Large Language Models in Conversational Recommender Systems}
+Recent developments\cite{bdcc8040036} in large language models (LLMs) have significantly improved
+the capabilities of conversational recommenders. 
+Notably, studies have demonstrated that LLMs can serve as effective zero-shot conversational recommenders,
+allowing systems to generate recommendations based on limited prior knowledge of
+user preferences. These advancements are complemented by the integration
+of tools and external knowledge bases, enabling systems to perform complex tasks
+and provide more accurate recommendations
 
-
-\section{Collaborative Retrieval for LLM-based CRSs}
+\subsection{Collaborative Retrieval for LLM-based CRSs}
 \label{sec:collaborative_retrieval}
-Collaborative Retrieval for Large Language Model-based Conversational Recommender Systems
-Wassup \cite{zhu2025collaborativeretrievallargelanguage} This study is awful confusing. I don't know what they actually achieved here lol
+This paper by Zhu et al. \cite{zhu2025collaborativeretrievallargelanguage} introduces CRAG (Collaborative Retrieval Augmented Generation), a novel approach that combines large language models (LLMs) with collaborative filtering (CF) for conversational recommender systems (CRSs). While LLMs excel at understanding context and user preferences in conversations, they often lack the ability to leverage behavioral data effectively, which is a strength of traditional collaborative filtering methods. CRAG addresses this limitation by integrating both approaches.
+
+The CRAG framework consists of three main components:
+\begin{itemize}
+    \item \textbf{LLM-based entity linking:} Identifies and links entities mentioned in conversations.
+    \item \textbf{Collaborative retrieval with context-aware reflection:} Utilizes collaborative filtering to retrieve relevant items based on historical interaction data.
+    \item \textbf{Recommendation with reflect-and-rerank methodology:} Ranks recommendations by combining insights from both LLMs and collaborative filtering.
+\end{itemize}
+
+The authors demonstrate CRAG's superior performance on two movie recommendation datasets, namely a refined Reddit dataset (Reddit-v2) and the Redial dataset. The results show that CRAG provides better item coverage and recommendation accuracy compared to baseline CRS methods, with particularly significant improvements for recently released movies.
+
+By integrating collaborative filtering with LLMs, CRAG bridges a critical gap in current CRS approaches. This integration enables the system to leverage behavioral data that is not typically included in LLM training, resulting in improved recommendation performance. Additionally, the refined Reddit dataset introduced in this study highlights the importance of high-quality data in advancing research in this field.
+
+
+\section{Critiquing-based reccomendation systems}
+The project touches in on critiquing-based recommendation systems, where the user is asked to provide feedback on what preferences they hold for recommendations, with the system using this feedback to refine the user profile and improve the recommendations given to the user.
+Current reccomendation systems are limited in that they are only based on static attribute values (for example, in a digital marketplace, attributes such as a digital camera’s screen size, effectiveness pixels, optical zoom).
+
+One paper, Chen et al\cite{CHEN20194}, proposes a sentiment-integrated critiquing approach, for helping users to formulate and refine their preferences, improving the user's product knowledge, preference certainty, decision confidence, perceived information usefulness, and purchase intention.
+
+This can be integrated into a conversational recommender system, where the user sentiment can be used to refine the recommendations given to the user (e.g. the system might is picking up that a user isn't interested in a particular genre of movie, but isn't explicitly saying so, so the system can ask the user for feedback on the genre of movie they are being recommended).
+
+
+\section{Data scarcity and training cost}
+Data scarcity remains a significant challenge in training effective Conversational Recommender Systems (CRSs). To address this issue, techniques such as model distillation and fine-tuning can be employed to enhance model performance while reducing computational costs.
+
+In the paper by Hsieh et al. \cite{hsieh2023distillingstepbystepoutperforminglarger}, the authors propose a step-by-step distillation approach. This method involves training a smaller model to mimic the behavior of a larger model, followed by fine-tuning the smaller model on the target task. This approach not only outperforms the larger model on the target task but also proves to be more computationally efficient.
+
+Another strategy to mitigate data scarcity is the generation of synthetic data using a larger pre-trained model. 
+This technique leverages the capabilities of a large language model to create additional high quality training examples, 
+which can then be used to train a smaller, more efficient model. 
+By augmenting the training dataset with synthetic data, the performance of the conversational recommender system can be improved without the need for extensive real-world data collection. 
+This method is particularly useful in scenarios where obtaining large amounts of labeled data is challenging or costly. 
+For instance, in this project, it is not feasible for to have a large number of users interacting with the system to generate training data.
+
+\section{Explainability}
+In conversational recommendation systems, explainability is crucial for building trust with users. The system must be able to clearly explain why a particular recommendation was made and how it arrived at that conclusion. 
+
+Current approaches to explainability in recommendation systems, such as those discussed by Guo et al. \cite{Guo_2023}, or Xu et al. \cite{Tag_based_post_hoc} focus on providing transparent and understandable justifications for recommendations. These approaches often involve breaking down the recommendation process into comprehensible steps that can be communicated to the user. For instance, a system might explain that a movie recommendation is based on the user's previous preferences for a specific genre or the popularity of the movie among similar users.
+
+
+Recent advancements in natural language processing have enabled more sophisticated explainability mechanisms. NLP techniques can be used to generate natural language explanations that are easy for users to understand. Additionally, dialogue management systems can handle follow-up questions from users, providing further clarification and enhancing the overall transparency of the recommendation process.
+
+This project aims to incorporate these explainability techniques to ensure that users feel confident and informed about the recommendations they receive. By leveraging both content-based and collaborative filtering explanations, as well as utilizing NLP for natural language justifications, we can create a conversational recommendation system that not only provides accurate recommendations but also builds trust and engagement with users.
+
+\subsection{Context-aware recommendation}
+While not directly applicable to the project, this paper from Carchiolo et al\cite{CARCHIOLO20151086} proposes a context-aware recommendation network, which can be used to find experts in a particular field.
+
+If this was applied to a conversational recommender system, it could be used to find users with a lot of experience in a particular field, and use their feedback to improve the recommendations given to other users.
+This approach builds upon traditional information retrieval systems, which are already designed to address challenges posed by low-quality users, such as those who have contributed only one or two reviews in total.
 
 
 
-
-\section{Classic Recommender Systems Evaluation Metrics}
-\label{sec:classic_recommender_systems_evaluation_metrics}
-With this project, classic metrics just ain't gonna cut it. We need to come up with some new metrics to evaluate the system.
-
-The purpose of these metrics is to evaluate the system, judging it's recommendations on accuracy, TODO - add more here.
-
-This methodology doesn't apply to this project directly.
-As it is a complex system, that is a proof of concept, it 
-
-
-
-
+% ---------------------------
 
 
 \section{Current Evaluation Methods}
@@ -50,7 +98,7 @@ However, these metrics have limitations when it comes to capture and evaluate th
 \subsection{Evaluation of Conversational Recommender Systems}
 \label{sec:evaluation_of_conversational_recommender_systems}
 The evaluation of conversational recommender systems is a multifaceted challenge that encompasses various dimensions such as recommendation accuracy, user satisfaction, and interaction quality. 
-Traditional metrics for recommender systems, as mentioned above\ref{sec:evaluation_of_recommender_systems}, such as precision, recall, and F1-score are useful for measuring the accuracy of recommendations. 
+Traditional metrics for recommender systems, as mentioned above in \cref{sec:evaluation_of_recommender_systems}, such as precision, recall, and F1-score are useful for measuring the accuracy of recommendations. 
 \\However, these metrics alone are insufficient to capture the interactive and dynamic nature of CRSs.
 \\\\
 Recent research has emphasized the importance of user-centric evaluation metrics, including user satisfaction, engagement, and perceived usefulness. User studies and A/B testing are commonly used to gather qualitative feedback and assess the overall user experience, but requires a large user base. 
@@ -64,79 +112,9 @@ While LLMs have their own evaluation metrics, such as perplexity and BLEU scores
 \\
 Moreover, the use of simulation environments and user simulators has gained traction\cite{huang2024conceptevaluationprotocol} as a means to conduct large-scale evaluations without the need for extensive real-world user interactions. These simulators can model user behavior and preferences, providing a controlled setting to test and refine CRSs.
 Despite these advancements, papers outline that there remains a need for standardized evaluation frameworks that can comprehensively assess the performance of CRSs across different domains and use cases.
-\\\\
-
-This project took from the thinkings of both \cite{huang2024conceptevaluationprotocol} and \cite{10.1007/s10462-022-10229-x} to 
 
 
 % --------------------------
-
-
-
-\subsection{Conversational Recommender Systems}
-Conversational recommendation systems (CRSs) represent a rapidly evolving intersection of artificial intelligence, natural language processing, and user interaction
-design, aimed at enhancing personalized experiences across diverse domains such as e-commerce, entertainment, and customer service. 
-By facilitating engaging dialogues between users and machines, CRSs provide dynamic and context-aware
-recommendations tailored to individual preferences, effectively addressing the complexity of choices available in today's digital landscape.
-
-\subsection{Leveraging Large Language Models in Conversational Recommender Systems}
-Recent developments\cite{bdcc8040036} in large language models (LLMs) have significantly improved
-the capabilities of conversational recommenders. 
-Notably, studies have demonstrated that LLMs can serve as effective zero-shot conversational recommenders,
-allowing systems to generate recommendations based on limited prior knowledge of
-user preferences. These advancements are complemented by the integration
-of tools and external knowledge bases, enabling systems to perform complex tasks
-and provide more accurate recommendations
-
-
-\subsection{Data scarcity and training cost}
-Data scarcity remains a significant challenge in training effective Conversational Recommender Systems (CRSs). To address this issue, techniques such as model distillation and fine-tuning can be employed to enhance model performance while reducing computational costs.
-
-In the paper by Hsieh et al. \cite{hsieh2023distillingstepbystepoutperforminglarger}, the authors propose a step-by-step distillation approach. This method involves training a smaller model to mimic the behavior of a larger model, followed by fine-tuning the smaller model on the target task. This approach not only outperforms the larger model on the target task but also proves to be more computationally efficient.
-
-Another strategy to mitigate data scarcity is the generation of synthetic data using a larger pre-trained model. 
-This technique leverages the capabilities of a large language model to create additional high quality training examples, 
-which can then be used to train a smaller, more efficient model. 
-By augmenting the training dataset with synthetic data, the performance of the conversational recommender system can be improved without the need for extensive real-world data collection. 
-This method is particularly useful in scenarios where obtaining large amounts of labeled data is challenging or costly. 
-For instance, in this project, it is not feasible for to have a large number of users interacting with the system to generate training data.
-
-The combination of model distillation and synthetic data generation presents a promising avenue for addressing the challenges of data scarcity and training costs in CRSs. By leveraging these techniques, it is possible to develop more efficient and effective conversational recommenders that can adapt to user preferences and provide personalized recommendations.
-
-\subsection{Evaluation}
-The evaluation of conversational recommender systems (CRSs) is a multifaceted challenge that encompasses various dimensions such as recommendation accuracy, user satisfaction, and interaction quality. Traditional metrics like precision, recall, and F1-score are often employed to measure the accuracy of recommendations. However, these metrics alone are insufficient to capture the interactive and dynamic nature of CRSs.
-
-Recent research has emphasized the importance of user-centric evaluation metrics, including user satisfaction, engagement, and perceived usefulness. User studies and A/B testing are commonly used to gather qualitative feedback and assess the overall user experience. Additionally, metrics such as dialogue coherence, response relevance, and interaction length are considered to evaluate the quality of the conversational interactions.
-
-Moreover, the use of simulation environments and user simulators has gained traction\cite{huang2024conceptevaluationprotocol} as a means to conduct large-scale evaluations without the need for extensive real-world user interactions. These simulators can model user behavior and preferences, providing a controlled setting to test and refine CRSs.
-
-Despite these advancements, papers outline that there remains a need for standardized evaluation frameworks that can comprehensively assess the performance of CRSs across different domains and use cases.
-
-\subsection{Explainability}
-In conversational recommendation systems, explainability is crucial for building trust with users. The system must be able to clearly explain why a particular recommendation was made and how it arrived at that conclusion. 
-
-Current approaches to explainability in recommendation systems, such as those discussed by Guo et al. \cite{Guo_2023}, or Xu et al. \cite{Tag_based_post_hoc} focus on providing transparent and understandable justifications for recommendations. These approaches often involve breaking down the recommendation process into comprehensible steps that can be communicated to the user. For instance, a system might explain that a movie recommendation is based on the user's previous preferences for a specific genre or the popularity of the movie among similar users.
-
-
-Recent advancements in natural language processing have enabled more sophisticated explainability mechanisms. NLP techniques can be used to generate natural language explanations that are easy for users to understand. Additionally, dialogue management systems can handle follow-up questions from users, providing further clarification and enhancing the overall transparency of the recommendation process.
-
-This project aims to incorporate these explainability techniques to ensure that users feel confident and informed about the recommendations they receive. By leveraging both content-based and collaborative filtering explanations, as well as utilizing NLP for natural language justifications, we can create a conversational recommendation system that not only provides accurate recommendations but also builds trust and engagement with users.
-
-\subsection{Critiquing-based reccomendation systems}
-My project touches in on critiquing-based recommendation systems, where the user is asked to provide feedback on the recommendations they are given, and the system uses this feedback to refine the recommendations.
-Current reccomendation systems are limited in that they are only based on static attribute values (for example, in a digital marketplace, attributes such as a digital camera’s screen size, effectiveness pixels, optical zoom).
-
-One paper, Chen et al\cite{CHEN20194}, proposes a sentiment-integrated critiquing approach, for helping users to formulate and refine their preferences, improving the user's product knowledge, preference certainty, decision confidence, perceived information usefulness, and purchase intention.
-
-This can be integrated into a conversational recommender system, where the user sentiment can be used to refine the recommendations given to the user (e.g. the system might is picking up that a user isn't interested in a particular genre of movie, but isn't explicitly saying so, so the system can ask the user for feedback on the genre of movie they are being recommended).
-
-\subsection{Context-aware recommendation}
-While not directly applicable to my project, this paper from Carchiolo et al\cite{CARCHIOLO20151086} proposes a context-aware recommendation network, which can be used to find experts in a particular field.
-
-If this was applied to a conversational recommender system, it could be used to find users with a lot of experience in a particular field, and use their feedback to improve the recommendations given to other users.
-This approach builds upon traditional information retrieval systems, which are already designed to address challenges posed by low-quality users, such as those who have contributed only one or two reviews in total.
-
-
 
 
 
