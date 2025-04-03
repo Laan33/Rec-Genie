@@ -11,18 +11,109 @@
 % Efficiency issues
 
 
-\section{Recommendation Evaluation}
-\label{sec:recommendation_evaluation}
+Evaluation of the project will be done in four parts:
+\begin{itemize}
+    \item Recommendation System Evaluation
+    \item Large Language Model Evaluation
+    \item Feedback and Recommendation Adjustment Evaluation
+    \item User Evaluation
+\end{itemize}
+
+\section{Recommendation System Evaluation}
+\label{sec:recommendation_system_evaluation}
+As mentioned in \ref{sec:recommendation_system}, the recommendation system is designed to be a proof of concept, and is not intended to be the best implementation.
+
+What the system is being evaluated on is:
+\begin{itemize}
+    \item The system works reliably
+    \item That the system is able to provide recommendations that make sense
+    \item The recommendation breakdown is generated and is understandable
+    \item The system is able to provide recommendations based on the features
+    \item The system provides recommendations unique to user preferences
+\end{itemize}
+
 As mentioned in 
 As this the recommendation system is only there to provide a working implementation of a recommendation system, with adjustable parameters, it is not the main focus of the project.
 As such, it is not intended to be necessarily the best recommendation system, there is little need to evaluate the recommendation system in detail.
 
+
+\section{Large Language Model Evaluation}
+\label{sec:large_language_model_evaluation}
+The large language model is evaluated on the following:
+\begin{itemize}
+    \item The agent can work with the recommendation system
+    \item The agent works with the user to explore their preferences
+    \item The agent can provide a breakdown of the recommendations with an explanation that is understandable
+    \item The agent can handle out of scope conversations and can redirect the conversation back to the task at hand
+    \item The system is timely and responsive
+\end{itemize}
 
 
 \section{User Evaluation}
 \label{sec:user_evaluation}
 For this project, as classic metrics do not apply, we need to come up with a new way to evaluate the system. 
 We need to design a user evaluation, where users undertake tasks and provide feedback. This will provide an objective measure of the recommendations and subjective feedback.
+
+
+The user questions will be designed to evaluate the system in the following areas:
+\begin{itemize}
+    \item SAMPLE
+\end{itemize}
+
+\subsection{User Scenarios}
+\label{sec:user_scenarios}
+The users will be asked to undertake one of two scenarios, depending on their preferences.
+\\\\
+\textbf{Scenario 1:} The user will be asked to start with a blank profile and provide their preferences for topics such as films, genres, directors, casts etc.
+From this, the system will provide a set of recommendations based on the user preferences.
+
+After that, the user will be asked to evaluate the given recommendations and provide feedback on the recommendations.
+The user will then be tasked to ask the system to provide a breakdown of the recommendations, and to provide feedback on the breakdown.
+
+From there the user will be tasked to provide feedback on the system, to tweak feature importance in recommendations, where the user will generate a new set of recommendations based on those alterations.
+Finally, the user will be asked to provide feedback on the system and the recommendations, and to provide feedback on the system as a whole.
+
+\begin{itemize}
+    \item The user will be asked to start with a blank profile.
+    \item The user will be asked to provide their preferences for topics such as:
+    \begin{itemize}
+        \item Films
+        \item Genres
+        \item Directors
+        \item Casts
+        \item Years
+    \end{itemize}
+    \item The system will provide a recommendation based on the user preferences.
+    \item The user will be asked to evaluate the given recommendation.
+    \item The user will be asked to provide feedback on the recommendations and the system.
+    \item 
+\end{itemize}
+
+After t
+\\\\
+\textbf{Scenario 2:} The user will be start with a template sample profile and then tweak the profile to suit their preferences.
+
+
+
+\subsection{User Survey}
+\label{sec:user_survey}
+
+
+
+The survey questions will be:
+\begin{itemize}
+    \item Does the system feel useful
+    \item How cumbersome is it to use the system
+    \item How well does the system understand your preferences
+    \item How useful is the breakdown of the recommendations
+    \item Did the system reflect your change in preferences in the recommendations
+    \item Would you use the system again
+    \item What do you like about the system
+    \item What do you dislike about the system
+    \item What would you like to see in the system
+    \item What do you think of the system as a whole
+    \item How would you rate the system
+\end{itemize}
 
 
 
