@@ -25,7 +25,7 @@ Evaluation of the project will be done in four parts:
 
 \section{Recommendation System Evaluation}
 \label{sec:recommendation_system_evaluation}
-As mentioned in \ref{sec:recommendation_system}, the recommendation system is designed to be a proof of concept, and is not intended to be the best implementation.
+As mentioned in \ref{sec:recommendation_system_design}, the recommendation system is designed to be a proof of concept, and is not intended to be the best implementation.
 
 What the system is being evaluated on is:
 \begin{itemize}
@@ -55,11 +55,9 @@ The large language model is evaluated on the following:
 
 \section{User Evaluation}
 \label{sec:user_evaluation}
-For this project, as classic metrics do not apply, we need to come up with a new way to evaluate the system. 
-We need to design a user evaluation, where users undertake tasks and provide feedback. This will provide an objective measure of the recommendations and subjective feedback.
+For the user evaluation, users will undertake tasks and provide feedback. This will provide an objective measure of the recommendations and subjective feedback.
 
-
-The user questions will be designed to evaluate the system as a whole, as well as the recommendation system and the large language model.
+The user questions will be designed to evaluate the system as a whole, alongside the recommendation system and the large language model.
 The user will be asked to undertake one of two scenarios, depending on their preferences.
 
 \subsection{User Scenarios}
@@ -90,19 +88,25 @@ The users will be asked to undertake one of two scenarios, depending on their pr
 \subsection{User Survey}
 \label{sec:user_survey}
 Using the following questions, users will be asked to provide feedback on the system, the recommendations, and the system as a whole
-\begin{itemize}
-    \item Does the system feel useful
-    \item How cumbersome is it to use the system
-    \item How well does the system understand your preferences
-    \item How useful is the recommendations explanation
-    \item Did the system reflect your change in preferences in the recommendations
-    \item Would you use the system again
-    \item What do you like about the system
-    \item What do you dislike about the system
-    \item What would you like to see added to the system
-    \item What do you think of the system as a whole
-    \item How would you rate the systems objective overall
-\end{itemize}
-
+\begin{table}[h!]
+\centering
+\begin{tabular}{p{1\textwidth}}
+\hline
+\textbf{User Survey Questions} \\ \hline
+Does the system feel useful? \\ 
+How cumbersome is it to use the system? \\ 
+How well does the system understand your preferences? \\ 
+How useful is the recommendations explanation? \\ 
+Did the system reflect your change in preferences in the recommendations? \\ 
+Would you use the system again? \\ 
+What do you like about the system? \\ 
+What do you dislike about the system? \\ 
+What would you like to see added to the system? \\ 
+What do you think of the system as a whole? \\ 
+How would you rate the system's objective overall? \\ \hline
+\end{tabular}
+\caption{User Survey Questions}
+\label{tab:user_survey_questions}
+\end{table}
 
 
