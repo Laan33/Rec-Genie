@@ -34,8 +34,8 @@
 Python was chosen for this project due to its powerful capabilities in data manipulation and processing.
 Additionally, I personally had a strong desire to work with Python, as it was an excellent opportunity to enhance my proficiency in the language.
 
-
 \end{comment}
+
 \section{System Architecture}
 The system architecture is designed to be modular, allowing for the addition of other systems or components.
 \label{sec:system_architecture}
@@ -65,21 +65,20 @@ The recommendation system is designed to be both modular and adjustable.
 As there doesn't exist an existing framework, the recommendation system is designed to be a proof of concept, and is not intended to be the best implementation.
 It provides a working implementation of a recommendation system, on which the other components can be built.
 \\\\
-The recommendation system is designed to have a hybrid recommendation system, using both collaborative filtering and content-based filtering.
-This is to provide a more comprehensive recommendation system, allowing for the use of both collaborative filtering and content-based filtering features.
+The design choice to use a hybrid recommendation system is to provide a \textbf{more comprehensive recommendation system}, allowing for the use of both collaborative filtering and content-based filtering.
 
 \subsection{Content-based Filtering}
 \label{sec:content_based_filtering_design}
-As there's no frameworks or libraries for content-based filtering with the adjustability needed for recommendation, explanation and feature adjustment, a custom implementation was needed.
+As there's no frameworks or libraries for content-based filtering with the adjustability needed for recommendation, explanation and feature adjustment, a custom implementation is needed.
 
-As mentioned in \cref{sec:recommendation_system_design}, this implementation is just to act as a implementation that provides recommendations based on the features of the films.
+As mentioned above in \cref{sec:recommendation_system_design}, this implementation is to provide satisfactory recommendations based on the features of the films.
 The content-based filtering system uses the following features:
 \begin{itemize}
     \item Genres
     \item Directors
     \item Cast
 \end{itemize}
-Additional features could be added, such as the release year, but the listed features are sufficient for a substantial proof of concept.
+Additional features could be added, such as the release year, but the listed features are sufficient for a substantial proof of concept that can be built upon and works well.
 Adding additional features would be a stretch goal, and would not be necessary for the proof of concept.
 \\\\
 The content-based filtering system will fulfill the following requirements:
@@ -103,27 +102,29 @@ it is not intended to be necessarily the best recommendation system, there is li
 
 \section{Data}
 \label{sec:data_design}
-For the data, the project will utilise user ratings, film features, and user profiles.
+\subsection{Data Preprocessing}
+\label{sec:data_preprocessing_design}
 
+The system will include measures to handle cleaning the data by handling missing values, normalizing features, and encoding genres as they are categorical variables.
 
 \subsection{Data Storage}
 \label{sec:data_storage_design}
 
-Session vs User Profile data persistence
-A user profile can have diffrent sessions, to suit their preferences depending on the context of the of the conversation or situation.
-For example, a user may have a session for their kids, a session for their personal preferences, and a session for watching with their partner.
-This allows for the user to have different preferences for different situations, and allows for the user to have a more personalized experience.
+The system employs a dual-layered data persistence strategy, distinguishing between session data and user profile data. This design allows for greater flexibility and personalization in the recommendation process.
 
+A user profile serves as a comprehensive repository of a user's preferences, while session data captures the context-specific preferences and interactions during a particular session. For instance, a user may maintain separate sessions for different contexts, such as one for family-friendly recommendations, another for personal preferences, and a third for shared preferences with a partner. 
+
+This approach enables the system to adapt to varying situational needs, ensuring a more tailored and personalized user experience. By maintaining distinct sessions within a unified user profile, the system can provide recommendations that align with the specific context of each interaction.
 
 \section{User Interface}
 \label{sec:user_interface_design}
-The user interface is designed to be simple and easy to use, allowing the user to interact with the system and provide feedback.
+The user interface is designed to be intuitive and user-friendly, enabling seamless interaction with the system and facilitating user feedback.
 
-For this reason, the project will use Gradio \cite{abid2019gradio} as the user interface for the system.
-Gradio is a Python library that allows for the creation of simple and easy to use user interfaces for machine learning models.
-It is highly customizable, and allows for the creation of user interfaces that are easy to use and understand.
+To achieve this, the project employs Gradio \cite{abid2019gradio} as the framework for the user interface. Gradio is a Python library that simplifies the creation of interactive and accessible user interfaces for machine learning models. Its flexibility and ease of customization make it an ideal choice for this project.
 
-The user interface will feature components to allow the user to converse with the agent, request recommendations, and view both the recommendations and the extracted preferences from the conversation.
+The user interface will include components that allow users to engage in conversations with the agent, request recommendations, and view both the generated recommendations and the extracted preferences derived from the conversation.
+
+For what the user interface will look like, please refer to the User Interface Wireframe\ref{sec:user_interface_wireframe} below.
 
 \subsection{User Interface Wireframe}
 \label{sec:user_interface_wireframe}
