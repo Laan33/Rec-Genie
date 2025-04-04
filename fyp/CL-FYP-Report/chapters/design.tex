@@ -93,12 +93,30 @@ With this in mind, the content-based filtering system will not be forensically e
 
 \subsection{Collaborative Filtering}
 \label{sec:collaborative_filtering_design}
-For the collaborative filtering component of the recommendation system, the project uses the LensKit library\cite{ekstrand_2020_lenskit} for the collaborative filtering recommendation system.
-It is a user-user collaborative filtering system, which uses the user-item matrix to find similar users and recommend items based on their preferences.
+The collaborative filtering component of the recommendation system leverages the LensKit library\cite{ekstrand_2020_lenskit} to implement a user-user collaborative filtering approach. This method utilizes a user-item matrix to identify similar users and recommend items based on their preferences.
 
-Again, as the recommendation system is only there to provide a working implementation of a recommendation system with key features, the collaborative filtering system is not the main focus of the project.
-As such, the design is not intended to be the most efficient or effective implementation, but rather a 
-it is not intended to be necessarily the best recommendation system, there is little need to evaluate the recommendation system in detail.
+As it is a proven and widely used approach and the LensKit library is a well-established framework for collaborative filtering, it was chosen for its reliability and ease of integration into the overall system architecture.
+This component will not be evaluated in detail, as already mentioned abovein \cref{sec:recommendation_system_design}, particularly as it is library that is well established and proven to work.
+
+The collaborative filtering component will provide recommendations based on the user item matrix, and will be able to provide recommendations based on the current user profile.
+
+\section{Large Language Model Component}
+\label{sec:llm_component_design}
+The system will utilise the LangChain framework \cite{langchain} for the large language model component, as it provides a simple and easy to use interface for the large language model.
+This allows for the integration of the large language model with the other components of the system, and provides a simple interface for the user to interact with the system.
+
+\subsection{Prompt Routing}
+\label{sec:prompt_routing_design}
+The integration will follow a finite state machine model, where the system will follow a set of states to determine the next action.
+
+With this, the system will be able to handle the conversation and route the conversation to the appropriate component, based on the user's input.
+The system will follow a set of states to determine the next action, and will use the following states:
+\begin{itemize}
+    \item \textbf{Greeting} - The system will greet the user and ask for their preferences.
+    \item \textbf{Film Preference Exploration} - The system will converse with the user to explore their film preferences, asking questions about their favourite films, genres, directors, and actors.
+    \item \textbf{Preference Extraction} - The system will extract the user's preferences from the conversation and store them in the user profile.
+    \item \textbf{Recommendation Explanation} - When prompted, the system will explain the recommendations and provide a breakdown of the scores for each feature in the recommendation.
+\end{itemize}
 
 \section{Data}
 \label{sec:data_design}
@@ -121,6 +139,9 @@ This approach enables the system to adapt to varying situational needs, ensuring
 The user interface is designed to be intuitive and user-friendly, enabling seamless interaction with the system and facilitating user feedback.
 
 To achieve this, the project employs Gradio \cite{abid2019gradio} as the framework for the user interface. Gradio is a Python library that simplifies the creation of interactive and accessible user interfaces for machine learning models. Its flexibility and ease of customization make it an ideal choice for this project.
+Gradio was chosen for its suitability in creating interactive interfaces, particularly chatbots, alongside its ability to integrate with various libraries and frameworks.
+In contrast with other frameworks like Flask or Streamlit, Gradio offers a more straightforward approach to building user interfaces, especially for prototyping.
+
 
 The user interface will include components that allow users to engage in conversations with the agent, request recommendations, and view both the generated recommendations and the extracted preferences derived from the conversation.
 
@@ -135,3 +156,12 @@ For what the user interface will look like, please refer to the User Interface W
     \caption{Intended User Interface Wireframe}
     \label{fig:user_interface_design}
 \end{figure}
+
+The main components of the user interface are:
+\begin{itemize}
+    \item \textbf{Chat Interface} - The chat interface allows the user to interact with the agent, providing a conversational experience. The user can ask questions and provide feedback on the recommendations.
+    \item \textbf{Recommendations} - The recommendations are displayed in a list format, allowing the user to view the recommended films.
+    \item \textbf{Extracted Preferences} - The extracted preferences are displayed in a list format, allowing the user to view the preferences that were extracted from their message.
+    \item \textbf{Generate Recommendations Button} - The generate recommendations button allows the user to request recommendations based on their preferences.
+    \item \textbf{Session and User IDs} - The session and user IDs are displayed at the top of the interface, allowing the user to view and alter which session they are in and which user profile they are using.
+\end{itemize}
