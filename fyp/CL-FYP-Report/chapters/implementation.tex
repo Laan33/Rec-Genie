@@ -6,6 +6,25 @@
 % Issues when implementing; discuss challenges and solutions
 
 
+\begin{comment}
+    Key points to cover in the implementation chapter:
+    - Technologies and Languages used
+    - Issues when implementing; discuss challenges and solutions
+    - Design decisions made during the implementation
+    - Discussion of the data being used
+    - Discussion of the recommendation system design
+    - Discussion of the data processing design
+    - Discussion of the LLM integration design
+    - Discussion of the user interaction design
+    - Discussion of the challenges faced during the implementation
+    - Discussion of the prompt engineering process
+    - Discussion of the LLM performance
+    - User profile design
+    - User feedback implementation
+
+    
+\end{comment}
+
 \section{Project Methodology}
 \label{sec:project_methodology}
 As mentioned in the recommendation system (\cref{sec:recommendation_system_design}), the project was designed to be a proof of concept, and as such, the recommendation engine implementation was not intended to be the most efficient or effective implementation.
@@ -124,7 +143,6 @@ The prompts were structured to ensure clarity and consistency in the responses g
 The prompts directly influence the quality of the interactions and recommendations provided to users, where they were carefully implemented to ensure that the LLM could effectively understand and respond to user queries.
 
 
-
 \subsection{Prompt Engineering}
 \label{subsec:prompt_engineering}
 
@@ -134,6 +152,47 @@ The user interaction process was designed to be as simple and intuitive as possi
 
 In the chat interface, the user can talk freely to the system, and the system will address the users requests with the appropriate tooling and features.
 
+\subsection{User Profile}
+\label{subsec:user_profile}
+
+
+
+\subsection{User Profile Score Adjustment}
+\label{subsec:user_profile_score_adjustment}
+
+To adjust the user profile scores based on feedback, I used the hyperbolic tangent (\texttt{tanh}) function. 
+This approach was chosen because \texttt{tanh} provides a smooth, non-linear mapping that naturally tapers values between 0 and 3, ensuring that extreme adjustments are avoided while still allowing meaningful changes.
+
+The floor of 0 was implemented to ensure that films with a high relevance score, such as 3, do not get punished more than films that are less relevant, such as 0.
+
+The formula used for updating the scores, with a floor of 0, is as follows:
+\[
+S' = \max\left(0, 3 \times \tanh\left(\frac{S + \alpha \cdot \Delta S}{3}\right)\right)
+\]
+where:
+\begin{itemize}
+    \item \( S \) is the current score.
+    \item \( \Delta S \) is the sentiment adjustment derived from user feedback.
+    \item \( \alpha \) is a scaling factor that controls the sensitivity of the adjustment.
+    \item \( S' \) is the updated score.
+\end{itemize}
+
+The use of \texttt{tanh} ensures that:
+\begin{itemize}
+    \item Scores remain bounded within a reasonable range, preventing runaway values.
+    \item Adjustments have diminishing returns as scores approach their limits, reflecting a natural plateau effect.
+\end{itemize}
+
+For example, if a user expresses strong positive feedback about a film, the corresponding score in their profile is increased, but the adjustment becomes less pronounced as the score nears the upper limit of 3. 
+Similarly, negative feedback reduces the score, but it is bounded by 0, ensuring that a film cannot be penalized below this threshold.
+\\\\
+This design choice was made to ensure that the system remains stable and does not produce erratic behavior in response to user feedback.
+\\
+The scaling factor \( \alpha \) was chosen based on the desired sensitivity of the feedback.
+The value of \( \alpha \) can be adjusted to control how strongly feedback affects the profile. 
+In the actual implementation, a value of \( \alpha = 0.3 \) was used, but this can be fine-tuned based on user testing and feedback if the system were to be changed in the future.
+\\
+This approach provided a robust and intuitive way to manage user profile updates, ensuring stability while still reflecting user preferences effectively.
 
 
 \section{Challenges Faced}
