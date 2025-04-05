@@ -57,6 +57,10 @@ class RecInterface:
             self.credits_df = pre.condense_credits(self.credits_df)
 
         films_df = pre.data_tidying(ohe_films_df, self.credits_df)
+        print("Credits df shape after tidying: ", self.credits_df.shape)
+        print("Credits df columns: ", self.credits_df.columns)
+        print("Credits df head after tidying: ", self.credits_df.head())
+
         return films_df, self.credits_df, genre_list_mlb
 
     def update_user_profile(self, user_id):
@@ -97,7 +101,7 @@ class RecInterface:
 
     def implement_user_feedback(self, session_id, sentiment_response):
         # Adjust the weights on the user profile
-        self.user_profile, self.current_profile_path = user_pf.adjust_user_profile(self.user_profile, sentiment_response, self.films_df)
+        self.user_profile, self.current_profile_path = user_pf.adjust_user_profile(self.user_profile, sentiment_response, self.films_df, self.credits_df)
 
 
     def reload_user_profile(self):
@@ -106,13 +110,22 @@ class RecInterface:
             print("\nReloading user ratings from path:", self.current_profile_path)
             print("Ratings df shape before concatenation: ", self.ratings_df.shape)
             print("Self.user_ratings_df shape before concatenation: ", self.user_ratings_df.shape)
-            self.user_ratings_df = pd.concat([self.user_ratings_df, user_pf.load_user_ratings_from_profile(self.user_profile, self.films_df, self.current_profile_path)], ignore_index=True)
+            new_user_ratings = user_pf.load_user_ratings_from_profile(self.user_profile, self.films_df)
+
+            new_features_profile = (
+                user_pf.user_feature_profile(self.user_profile, self.films_df, new_user_ratings, self.genre_list_mlb, feature_profile=self.user_profile['feature_profile']))
+            print("User profile feature shape after reloading: ", self.user_profile['feature_profile'].shape)
+
+            self.user_ratings_df = pd.concat([self.user_ratings_df, new_user_ratings], ignore_index=True)
             self.user_ratings_df = self.user_ratings_df.drop_duplicates(subset=['userId', 'movieId'])
             print("User ratings df shape after dropping duplicates: ", self.user_ratings_df.shape)
 
             self.ratings_df = pd.concat([self.ratings_df, self.user_ratings_df], ignore_index=True)
             self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
             print("Ratings df shape after concatenation & duplicate removal: ", self.ratings_df.shape)
+
+            # Update the user profile
+
         else:
             print("\nWARNING: No user profile path found. Please update the user profile first.\n")
 

@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 from pprint import pprint
 
-from .search_info import get_film_id_by_title, get_title_by_film_id, get_director_by_film_id, get_films_with_director, fuzzy_search_user_profile
+from .search_info import get_film_id_by_title, fuzzy_search_user_profile, get_actor_id_by_name
 import numpy as np
 
 import pandas as pd
@@ -114,7 +114,7 @@ def load_user_ratings():
     # Reorder columns to match the existing ratings DataFrame
     return user_ratings_df[["userId", "movieId", "rating"]]
 
-def load_user_ratings_from_profile(user_profile, films_df, profile_dir):
+def load_user_ratings_from_profile(user_profile, films_df):
     u_ratings = user_profile['feature_profile']
 
     # For all the films in the user_profile['feature_profile'], get all the numeric id's (as there is actors, directors, genres mixed in)
@@ -126,23 +126,29 @@ def load_user_ratings_from_profile(user_profile, films_df, profile_dir):
     u_ratings_df = u_ratings_df.dropna(subset=['movieId'])
     u_ratings_df['movieId'] = u_ratings_df['movieId'].astype(int)
     u_ratings_df["userId"] = user_profile['id']
-    print("User ratings DataFrame shape:", u_ratings_df.shape)
+    print("User ratings DataFrame shape with non-film items:", u_ratings_df.shape)
 
     # Filter out any id's that are not in the films_df
     u_ratings_df = u_ratings_df[u_ratings_df['movieId'].isin(films_df['id'])]
     u_ratings_df = u_ratings_df.drop_duplicates(subset=['userId', 'movieId'])
     print("User ratings DataFrame shape after filtering out non films: ", u_ratings_df.shape)
+    print("------------------")
+    print("User ratings DataFrame after filtering out non films: ", u_ratings_df)
+    print("\n------------------\n")
     # Reorder columns to match the existing ratings DataFrame
     u_ratings_df = u_ratings_df[["userId", "movieId", "rating"]]
     return u_ratings_df
 
-
 genre_normalisation = 0.12
 
-
-def user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb):
+def user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb, feature_profile=None):
     """Creates a user profile based on ratings for movies with shared cast/directors."""
-    features_profile = {}
+    if feature_profile is None:
+        features_profile = {}
+        add_id_flag = True
+    else :
+        features_profile = feature_profile.copy()
+        add_id_flag = False
 
     for _, rating_row in usr_ratings.iterrows():
         movie_id = int(rating_row['movieId'])
@@ -168,7 +174,9 @@ def user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb):
             if films_df.loc[films_df['id'] == movie_id, film_genre].values[0] == 1:
                 features_profile[film_genre] = features_profile.get(film_genre, 0) + genre_score
 
-        features_profile['user_id'] = user_id
+        if add_id_flag:
+            features_profile['user_id'] = user_id
+
 
         # Round all scores to 3 decimal places
         features_profile = {k: round(v, 3) if isinstance(v, (int, float)) and v is not None else v for k, v in features_profile.items()}
@@ -199,7 +207,6 @@ def load_or_create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
 
         return profile
 
-
 def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
     # Create the directory relative to the current script
     profiles_dir = os.path.join(os.path.dirname(__file__), '..', 'userProfiles')
@@ -214,38 +221,25 @@ def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
 
 
     # print("features_profile type (after3): ", type(profile_df['feature_profile'])) # this was a series?
-
     return profile
 
 def load_user_profile(user_id, profiles_dir):
     """Loads the user profile from a CSV file."""
     profile_df = pd.read_csv(os.path.join(profiles_dir, f'user_profile_{user_id}.csv'))
-    # print("Profile_df type: ", type(profile_df))
-    # print("Profile_df columns: ", profile_df.columns)
-    # print("Profile_df", profile_df)
-    # Convert from string to dictionary
-    # profile_df = profile_df.applymap(ast.literal_eval)
 
     # Convert feature_profile from string to dictionary
     profile_df['feature_profile'] = profile_df['feature_profile'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
     profile_df['weights'] = profile_df['weights'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
 
-    # print("Profile_df columns: ", profile_df.columns)
-
     user_profile = profile_df.to_dict(orient='records')[0]
-    # profile_df = pd.read_csv(f'/userProfiles/user_profile_{user_id}.csv')
-    # return profile_df.to_dict(orient='records')[0]
     print("User_profile loaded: ", user_profile)
     return user_profile
 
 """
-
-
 I think the user user score (collaborative filtering) is more important for me in a recommendation system than a content based one. Keep your response short
 """
 
-
-def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.3):
+def adjust_user_profile(user_profile, sentiment_response, films_df, credits_df, alpha=0.3):
     """Adjusts the user profile based on sentiment feedback while ensuring stability, by using tanh."""
     category_sentiment, item_sentiment = parse_semantic_breakdown(sentiment_response)
 
@@ -262,9 +256,9 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.3):
     }
 
     def update_score(current_score, adjustment):
-        # TODO - currently if the score goes below 0.0, films with good correlation will be disincentive
+        # TODO - currently if the score goes below 0.0, films with good correlation will be disincentive - fix with a floor
         """Uses tanh to taper off values around 3 while allowing smooth updates."""
-        return round(3 * np.tanh((current_score + alpha * adjustment) / 3), 3)
+        return max(0, round(3 * np.tanh((current_score + alpha * adjustment) / 3), 3))
 
     # Adjust category weights
     for category, sentiment in category_sentiment.items():
@@ -275,6 +269,8 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.3):
             print("Category score before update: ", user_profile["weights"][weight_key])
             user_profile["weights"][weight_key] = update_score(user_profile["weights"][weight_key], sentiment)
             print("Category score after update: ", user_profile["weights"][weight_key])
+
+    print("\n-------------------------------\n")
 
     # Special handling for Filtering category which maps to content_weight and collab_weight
     if 'Filtering' in item_sentiment:
@@ -315,23 +311,27 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.3):
                             user_profile["feature_profile"][film_id], sentiment
                         )
                         print("Item score after update: ", user_profile["feature_profile"][film_id])
-                    else:
-                        print(f"Film '{item}' not found in user profile, adding it with a default score.")
+                    elif film_id is not None:
+                        print(f"Film '{item}' not found in user profile, but ID found, film added to profile.")
                         # Initialize new item with a default score
                         user_profile["feature_profile"][film_id] = update_score(3, sentiment)
+                    else:
+                        print(f"Film '{item}' not found in films_df, skipping it.")
                 elif category == "Actors":
                     # Handle actors separately
-                    actor_id = get_film_id_by_title(item, films_df)
+                    actor_id = get_actor_id_by_name(item, credits_df['cast_info'])
                     if actor_id in user_profile["feature_profile"]:
                         print("Item score before update: ", user_profile["feature_profile"][actor_id])
                         user_profile["feature_profile"][actor_id] = update_score(
                             user_profile["feature_profile"][actor_id], sentiment
                         )
                         print("Item score after update: ", user_profile["feature_profile"][actor_id])
-                    else:
+                    elif actor_id is not None:
                         print(f"Actor '{item}' not found in user profile, adding it with a default score. Actor ID: {actor_id}")
                         # Initialize new item with a default score
                         user_profile["feature_profile"][actor_id] = update_score(3, sentiment)
+                    else:
+                        print(f"Actor '{item}' not found in user profile, skipping it.")
                 else:
                     print(
                         f"Item '{item}' not found in user profile category, adding it with a default score.")
@@ -342,7 +342,7 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.3):
                         print("Fuzzy result: ", fuzzy_result)
                         if fuzzy_result:
                             print("Fuzzy match found for director: ", fuzzy_result)
-                            user_profile["feature_profile"][fuzzy_result[0]] = update_score(user_profile["feature_profile"][fuzzy_result[0]], sentiment)
+                            user_profile["feature_profile"][fuzzy_result] = update_score(user_profile["feature_profile"][fuzzy_result], sentiment)
                             # TODO - future improvement - could add synonyms for items in the profile (jesus this'd be a pain)
                         else:
                             # If no fuzzy match, initialise new item with a default score
@@ -355,8 +355,8 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.3):
                         print(f"Item '{item}' in category '{category}' not found in user profile, adding it with a default score.")
                         user_profile["feature_profile"][item] = update_score(1.0, sentiment)
 
-    print("User profile after adjustment: ")
-    pprint(user_profile)
+    # print("User profile after adjustment: ")
+    # pprint(user_profile)
 
     # Save the updated user profile
     profiles_dir = os.path.join(os.path.dirname(__file__), '..', 'userProfiles', 'adjustedProfiles')
@@ -380,34 +380,112 @@ def save_user_profile(user_profile, profiles_dir):
 
     return user_profile
 
-def parse_semantic_breakdown(text):
-    """Parses a semantic breakdown and extracts categories, items, and scores separately."""
-    categories = {"Films": 0.0, "Actors": 0.0, "Genres": 0.0, "Directors": 0.0, "Filtering": 0.0}
-    items_data = defaultdict(dict)  # Dictionary to store parsed categories and scores
+"""
+Sample inputs for parse_semantic_breakdown function
+ Films; 1.0, Blade Runner 2049: 0.95 \nDirectors; 0.4, Ridley Scott: -0.2 \nActors; 0.8, Ryan Gosling: 0.7
+ 
+"""
 
+def parse_semantic_breakdown(text):
+    """Parses a semantic breakdown and extracts categories, items, and scores separately.
+    Designed to be robust against various LLM output formats.
+    """
+    # Initialize results
+    categories = {"Films": 0.0, "Actors": 0.0, "Genres": 0.0, "Directors": 0.0, "Filtering": 0.0}
+    items_data = defaultdict(dict)
+
+    # Clean and normalise input
+    text = re.sub(r'\\n', '\n', text)
     print("Semantic breakdown:\n", text)
 
-    for line in text.strip().split('\n'):
-        line = line.strip().lstrip('#').strip()  # Remove leading '#' and spaces
+    # Extract category blocks from the text
+    lines = text.strip().split('\n')
+
+    # Define category mapping for singular/plural forms
+    category_map = {
+        "film": "Films", "films": "Films",
+        "actor": "Actors", "actors": "Actors",
+        "genre": "Genres", "genres": "Genres",
+        "director": "Directors", "directors": "Directors",
+        "filtering": "Filtering", "filter": "Filtering"
+    }
+
+    current_category = None
+
+    for line in lines:
+        line = line.strip()
         if not line:
             continue
 
-        match = re.match(r"(\w+);\s*([\d.-]+)\s*(.*)", line)
-        if match:
-            category, category_score, items = match.groups()
-            category = category.strip()
+        # Check for a new category
+        found_category = False
+        for cat_variant, std_cat in category_map.items():
+            # Match at start of line or after punctuation, case insensitive
+            pattern = rf'(^|\s|[,;])({cat_variant})\s*[;:]?\s*([-\d.]+)?'
+            match = re.search(pattern, line.lower())
 
-            # Store category score if available and belongs to the four main categories
-            if category in categories and category_score:
-                categories[category] = float(category_score)
+            if match:
+                current_category = std_cat
+                found_category = True
 
-            # Extract items and their scores
-            if items:
-                item_matches = re.findall(r"([^:,]+):\s*([-\d.]+)", items)
-                for item, score in item_matches:
-                    items_data[category][item.strip()] = float(score)
+                # Extract category score if available
+                if match.group(3):
+                    try:
+                        score = float(match.group(3))
+                        categories[current_category] = score
+                    except ValueError:
+                        pass
+
+                # Process items after the category declaration
+                item_section = line[match.end():].strip()
+                if item_section.startswith(','):
+                    item_section = item_section[1:].strip()
+
+                # Extract items with scores
+                extract_items(item_section, current_category, items_data)
+                break
+
+        # If no category found, this line contains items for the current category
+        if not found_category and current_category:
+            extract_items(line, current_category, items_data)
 
     return categories, dict(items_data)
+
+def extract_items(text, category, items_data):
+    """Extract items and their scores from text"""
+    if not text or not category:
+        return
+
+    # Match "Item: score" pattern
+    item_score_pairs = re.findall(r'([^:,]+):\s*([-\d.]+)', text)
+
+    if item_score_pairs:
+        for item, score in item_score_pairs:
+            item = item.strip()
+            if item:
+                try:
+                    items_data[category][item] = float(score)
+                except ValueError:
+                    items_data[category][item] = 0.0
+    else:
+        # Handle comma-separated items without scores
+        items = re.split(r',\s*', text)
+        for item in items:
+            item = item.strip()
+            if item and not re.match(r'^[-\d.]+$', item):  # Make sure it's not just a number
+                # Look for embedded scores like "Science Fiction 0.7"
+                score_match = re.search(r'(.*)\s+([-\d.]+)$', item)
+                if score_match:
+                    try:
+                        item_name = score_match.group(1).strip()
+                        item_score = float(score_match.group(2))
+                        items_data[category][item_name] = item_score
+                    except ValueError:
+                        items_data[category][item] = 0.0
+                else:
+                    items_data[category][item] = 0.0
+
+
 
 
 # I really like the film the godfather tbh. The directing in it is great, so is the cast. I don't usually like the genres with it, so it's a surprising like of mine

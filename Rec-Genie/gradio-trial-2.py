@@ -223,6 +223,8 @@ with gr.Blocks(theme="Soft") as demo:
             )
             gr.Markdown("### Generate Recommendations")
             generate_recommendations = gr.Button(value="Generate Recommendations")
+            gr.Markdown("### Re-Generate User Profile")
+            regenerate_user_profile = gr.Button(value="Regenerate User Profile")
 
         with gr.Column(scale=2):
             gr.Markdown("### Recommendations")
@@ -253,6 +255,13 @@ with gr.Blocks(theme="Soft") as demo:
         fn=film_rec_bot.recommend_films,
         inputs=[],
         outputs=[recommendations]
+    )
+
+    # Link button to regenerate user profile
+    regenerate_user_profile.click(
+        fn=film_rec_bot.rec_interface.reload_user_profile,
+        inputs=[],
+        outputs=[]
     )
 
 # Launch app
