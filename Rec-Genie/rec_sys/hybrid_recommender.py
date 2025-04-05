@@ -72,6 +72,10 @@ def score_breakdown(films_df, recommended_movies):
         genre_proportion=[round(recommended_movies_dict[movie_id]['genre_score'] / recommended_movies_dict[movie_id]['final_score'],2) for movie_id in filtered_films['id']],
         user_user_proportion=[round(recommended_movies_dict[movie_id]['collab_score'] / recommended_movies_dict[movie_id]['final_score'],2) for movie_id in filtered_films['id']]
     )
+    
+    print("Scored films type: ", type(scored_films))
+    print("Scored films columns: ", scored_films.columns)
+
 
     # Get a basic list with just the film name and it's score
     basic_list = scored_films[['title', 'release_date', 'score']]

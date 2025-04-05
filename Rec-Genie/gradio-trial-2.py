@@ -40,6 +40,7 @@ def complex_json_to_markdown(recommendations_list):
 
 class GradioFilmRec:
     def __init__(self):
+        self.scores_df = None
         self.current_recommendations = "No recommendations generated, click the button to the left"
         self.complex_recommendations = "No complex recommendations generated, click the button to the left"
         self.scores = None
@@ -77,6 +78,8 @@ class GradioFilmRec:
         recs = self.rec_interface.recommend(num_recommendations=5)
         scores, _ = self.rec_interface.score_breakdown(recs)
 
+        self.scores_df = scores[['title', 'score', 'cast_proportion', 'director_proportion', 'genre_proportion', 'user_user_proportion']]
+
         # # Convert DataFrame to list of dictionaries for easy JSON rendering
         recommendations_list = scores.to_dict('records')
         convert_json_to_markdown = json_to_markdown(recommendations_list)
@@ -94,7 +97,7 @@ class GradioFilmRec:
         print("\n")
         print("Recommendations: \n", convert_json_to_markdown)
 
-        return convert_json_to_markdown, self.complex_recommendations
+        return convert_json_to_markdown, self.scores_df
 
     def router(self, input_value, history, session_id):
         """
@@ -121,10 +124,6 @@ class GradioFilmRec:
 
         print(f"Router determined category: {route_category}")
 
-        # Route to the appropriate function based on the category
-        # if "RECOMMEND" in route_category:
-        #     print("Routing to recommend_films")
-        #     return self.recommend_films()
         if "EXPLAIN" in route_category:
             # If we have current recommendations to explain
             if has_recommendations:
@@ -240,14 +239,21 @@ with gr.Blocks(theme="Soft") as demo:
             gr.Markdown("### Re-Generate User Profile")
             regenerate_user_profile = gr.Button(value="Regenerate User Profile")
 
-        with gr.Column(scale=2):
+        with gr.Column(scale=3):
             gr.Markdown("### Recommendations")
             recommendations = gr.Markdown(label="recommendations", value=film_rec_bot.current_recommendations)
 
             gr.Markdown("### Complex breakdown")
-            recommendations_complex = gr.Markdown(label="recommendations_complex", value=film_rec_bot.complex_recommendations)
+            recommendations_complex = gr.Dataframe(
+                label="Complex recommendations breakdown",
+                value=film_rec_bot.scores_df,
+                type="pandas",
+                show_copy_button=True,
+                visible=True
+            )
+            # recommendations_complex = gr.Markdown(label="recommendations_complex", value=film_rec_bot.complex_recommendations)
 
-        with gr.Column(scale=2):
+        with gr.Column(scale=1):
             gr.Markdown("### Message Semantics")
             message_semantics = gr.Text(label="Extracted Message Semantics", placeholder="No message semantics yet")
 
