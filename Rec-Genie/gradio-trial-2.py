@@ -27,6 +27,17 @@ def json_to_markdown(recommendations_list):
     ])
     return convert_json_to_markdown
 
+def complex_json_to_markdown(recommendations_list):
+    """Converts a JSON object to a markdown list."""
+    convert_json_to_markdown = "\n".join([
+        f"{i + 1}. **{rec['title']}** (Released: {int(rec['release_date'])}) - Score: {rec['score']:.2f}, "
+        f"Cast Proportion: {rec['cast_proportion']}, "
+        f"Director Proportion: {rec['director_proportion']}, Genre Proportion: {rec['genre_proportion']}, "
+        f"User-User Proportion: {rec['user_user_proportion']}"
+        for i, rec in enumerate(recommendations_list)
+    ])
+    return convert_json_to_markdown
+
 class GradioFilmRec:
     def __init__(self):
         self.current_recommendations = "No recommendations generated, click the button to the left"
@@ -41,7 +52,7 @@ class GradioFilmRec:
 
         # Timer to measure rec_interface initialisation time
         start_time = time.time()
-        self.rec_interface = rec_interface.RecInterface(user_id=self.session_id)
+        self.rec_interface = rec_interface.RecInterface(session_id=self.session_id)
         print("RecInterface initialised in", round((time.time() - start_time), 1), "seconds\n")
 
     def get_message_history(self):
@@ -68,6 +79,11 @@ class GradioFilmRec:
         # # Convert DataFrame to list of dictionaries for easy JSON rendering
         recommendations_list = scores.to_dict('records')
         convert_json_to_markdown = json_to_markdown(recommendations_list)
+
+        convert_json_to_markdown_complex_breakdown = complex_json_to_markdown(recommendations_list)
+        print("Full recommendations breakdown:\n", convert_json_to_markdown_complex_breakdown)
+        print("----------\n")
+
         # self.recs  = recs
         self.current_recommendations = convert_json_to_markdown
         self.scores = recommendations_list

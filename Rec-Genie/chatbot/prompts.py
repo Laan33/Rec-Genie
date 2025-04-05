@@ -43,7 +43,7 @@ glean_feed_back_chain = PromptTemplate(
         "5. FORMAT MUST BE EXACTLY: 'Category; score, Item1: score, Item2: score \\n'\n"
         "6. No explanations or additional text - only the structured data\n"
         "7. Use negative scores (-0.1 to -0.5) for things the user explicitly dislikes or has negative sentiment about\n"
-        "8. IF AN ITEM IS MENTIONED BUT NO CLEAR SENTIMENT IS GIVEN, DEFAULT TO 0.3\n"
+        "8. IF AN ITEM IS MENTIONED BUT NO CLEAR SENTIMENT IS GIVEN, DEFAULT TO 0.5\n"
         "9. ENSURE EVERY ITEM HAS A NUMERIC SCORE\n"
         "10. For implied items, multiply the sentiment score of the source item by the relationship factor\n"
         "11. ENSURE ALL EXPLICITLY MENTIONED FILMS, DIRECTORS, ACTORS AND GENRES ARE INCLUDED, even if sentiment is negative\n"

@@ -9,8 +9,6 @@ import numpy as np
 
 import pandas as pd
 from io import StringIO
-# import data_loader
-
 # # TODO - burn once tested
 # def load_data(num_lines=None):
 #     if num_lines is not None:
@@ -26,6 +24,56 @@ from io import StringIO
 #
 #     return films_df, ratings_df, credits_df
 
+
+# ID - 1,111,111 - comedy and romcom
+scenario1_user_profile = """
+18785,The Hangover, 3.4
+67913,The Guard, 3.7
+40807,50/50, 4
+70160,The Hunger Games, 2.4
+77930,Magic Mike, 4.5
+72190,World War Z, 3
+187017,22 Jump Street, 4
+198663,The Maze Runner, 4.1
+207703,Kingsman: The Secret Service, 3.5
+99861,Avengers: Age of Ultron, 2
+167073,Brooklyn, 4.2
+254470,Pitch Perfect 2, 4.3
+271718,Trainwreck, 4
+314365,Spotlight, 2.3
+324786,Hacksaw Ridge, 2
+330459,Rogue One: A Star Wars Story, 2
+339846,Baywatch, 3.9
+"""
+
+# ID - 2,222,222 - Children's films
+scenario2_user_profile = """
+324849,The Lego Batman Movie, 5
+283995,Guardians of the Galaxy Vol. 2, 5
+324852,Despicable Me 3, 5
+627,Trainspotting, 1
+99861,Avengers: Age of Ultron, 4
+330459,Rogue One: A Star Wars Story, 2.94
+10315,Fantastic Mr. Fox, 5
+141052,Justice League, 2.5
+284053,Thor: Ragnarok, 4
+"""
+
+# ID - 3,333,333 - Crime Comedy, Action, Drama, Big Budget Films
+scenario3_user_profile = """
+710,golden eye, 4
+1770,Michael Collins, 5
+341013,Atomic Blonde, 3.8
+374720,Dunkirk, 4.7
+339403,Baby Driver, 4.7
+318846,The Big Short, 4.4
+627,Trainspotting, 4.9
+27205,Inception, 3.6
+106646,The Wolf of Wall Street, 4.5
+1893,Star Wars: Episode I - The Phantom Menace, 3.8
+550,Fight Club, 4.2
+98,Gladiator, 4
+"""
 
 user_ratings = """
 710,golden eye, 4
@@ -95,9 +143,21 @@ standard_weights = {
     'average_rating_weight': 0.3
 }
 
-def load_user_ratings():
+def load_user_ratings(user_id=999999):
     # Convert into a DataFrame
-    user_ratings_df = pd.read_csv(StringIO(user_ratings), header=None, names=["movieId", "movie_name", "rating"])
+    print("Loading user ratings for user ID:", user_id)
+    if user_id == 999999:
+        user_ratings_df = pd.read_csv(StringIO(user_ratings), header=None, names=["movieId", "movie_name", "rating"])
+    else:
+        if user_id == 1111111:
+            user_ratings_df = pd.read_csv(StringIO(scenario1_user_profile), header=None, names=["movieId", "movie_name", "rating"])
+        elif user_id == 2222222:
+            user_ratings_df = pd.read_csv(StringIO(scenario2_user_profile), header=None, names=["movieId", "movie_name", "rating"])
+        elif user_id == 3333333:
+            user_ratings_df = pd.read_csv(StringIO(scenario3_user_profile), header=None, names=["movieId", "movie_name", "rating"])
+        else:
+            print("User ID not found in the predefined scenarios. No ratings available.")
+            return pd.DataFrame(columns=["userId", "movieId", "rating"])
 
     # Drop the movie_name column as it's unnecessary for appending to the ratings DataFrame
     user_ratings_df = user_ratings_df.drop(columns=["movie_name"])
@@ -106,8 +166,7 @@ def load_user_ratings():
     user_ratings_df = user_ratings_df.dropna(subset=['movieId'])
     user_ratings_df['movieId'] = user_ratings_df['movieId'].astype(int)
 
-    # Testing user id = 999,999
-    user_ratings_df["userId"] = 999999
+    user_ratings_df["userId"] = user_id
 
     print("User ratings DataFrame shape:", user_ratings_df.shape)
 
@@ -131,10 +190,7 @@ def load_user_ratings_from_profile(user_profile, films_df):
     # Filter out any id's that are not in the films_df
     u_ratings_df = u_ratings_df[u_ratings_df['movieId'].isin(films_df['id'])]
     u_ratings_df = u_ratings_df.drop_duplicates(subset=['userId', 'movieId'])
-    print("User ratings DataFrame shape after filtering out non films: ", u_ratings_df.shape)
-    print("------------------")
-    print("User ratings DataFrame after filtering out non films: ", u_ratings_df)
-    print("\n------------------\n")
+
     # Reorder columns to match the existing ratings DataFrame
     u_ratings_df = u_ratings_df[["userId", "movieId", "rating"]]
     return u_ratings_df
@@ -192,6 +248,7 @@ def load_or_create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
     """Loads the user profile from a CSV file or creates it if it doesn't exist."""
     profiles_dir = os.path.join(os.path.dirname(__file__), '..', 'userProfiles')
     os.makedirs(profiles_dir, exist_ok=True)
+    print("Profiles dir: ", profiles_dir)
     try:
         profile = load_user_profile(user_id, profiles_dir)
         return profile
@@ -256,9 +313,9 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, credits_df, 
     }
 
     def update_score(current_score, adjustment):
-        # TODO - currently if the score goes below 0.0, films with good correlation will be disincentive - fix with a floor
-        """Uses tanh to taper off values around 3 while allowing smooth updates."""
-        return max(0, round(3 * np.tanh((current_score + alpha * adjustment) / 3), 3))
+        # TODO - Put all the scores through this function as now there's mismatches
+        """Uses tanh to taper off values around 5 while allowing smooth updates."""
+        return max(0, round(5 * np.tanh((current_score + alpha * adjustment) / 5), 3))
 
     # Adjust category weights
     for category, sentiment in category_sentiment.items():

@@ -3,13 +3,18 @@ from . import data_loader
 from . import user_profile as user_pf
 from . import preprocessing as pre
 from . import hybrid_recommender as hyb
-# import AttributeSearch
 
+
+"""
+Scenario 1: ID:1,111,111 - comedy and romcom
+Scenario 2: ID:2,222,222 - children's films
+Scenario 3: ID:3,333,333 - action and thriller
+"""
+# IMPORTANT - Choose scenario here
+SCENARIO_CHOICE = 2
 
 # Configuration
 RUNNING_ON_COLAB = False
-# USER_ID = 999999
-# load_original_credits = True
 load_original_credits = False
 
 
@@ -30,23 +35,30 @@ def load_data(num_lines=None):
 
     return films_df, ratings_df, credits_df
 
-
-
+def get_user_id_from_scenario(scenario_number):
+    scenario_map = {
+        1: 1111111, # Comedy and Romcom
+        2: 2222222, # Children's Films
+        3: 3333333 # Action and Thriller
+    }
+    return scenario_map.get(scenario_number, 999999)  # Default to 999,999 if scenario_number is not in the map
 
 class RecInterface:
 
-    def __init__(self, user_id):
+    def __init__(self, session_id):
+        self.session_id = session_id
+
+        # IMPORTANT - Choose scenario here
+        self.user_id = get_user_id_from_scenario(SCENARIO_CHOICE)
+
         self.current_profile_path = None
         self.user_profile = None
         self.user_ratings_df = None
-        self.user_id = user_id
-        # self.films_df, self.ratings_df, self.credits_df = load_data()
         self.films_df, self.ratings_df, self.credits_df = load_data(num_lines=None)
-        # self.attribute_search = AttributeSearch('path/to/films.csv', 'path/to/credits.csv')
         self.films_df, self.credits_df, self.genre_list_mlb = self.process_data()
-        print("User ID:", user_id)
+        print("User ID:", self.user_id)
 
-        self.update_user_profile(user_id)
+        self.update_user_profile()
         print("\nRecInterface initialized")
 
     def process_data(self):
@@ -57,35 +69,26 @@ class RecInterface:
             self.credits_df = pre.condense_credits(self.credits_df)
 
         films_df = pre.data_tidying(ohe_films_df, self.credits_df)
-        print("Credits df shape after tidying: ", self.credits_df.shape)
-        print("Credits df columns: ", self.credits_df.columns)
-        print("Credits df head after tidying: ", self.credits_df.head())
-
         return films_df, self.credits_df, genre_list_mlb
 
-    def update_user_profile(self, user_id):
+    def update_user_profile(self):
         if load_original_credits:
-            self.user_ratings_df = user_pf.load_user_ratings()
+            self.user_ratings_df = user_pf.load_user_ratings(self.user_id)
             self.ratings_df = pd.concat([self.ratings_df, self.user_ratings_df], ignore_index=True)
             print("Ratings df shape: ", self.ratings_df.shape)
             self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
             print("Ratings df shape after dropping duplicates: ", self.ratings_df.shape)
-            self.user_profile = user_pf.create_user_profile(user_id, self.films_df, self.user_ratings_df, self.genre_list_mlb)
+            self.user_profile = user_pf.create_user_profile(self.user_id, self.films_df, self.user_ratings_df, self.genre_list_mlb)
         else:
             print("Loading user ratings from file")
-            # user_profile  = user_pf.load_or_create_user_profile(user_id, self.films_df, self.ratings_df, self.genre_list_mlb)
-            # Convert from a string
-            self.user_profile = user_pf.load_or_create_user_profile(user_id, self.films_df, self.ratings_df, self.genre_list_mlb)
+            self.user_ratings_df = user_pf.load_user_ratings(user_id=self.user_id)
 
-            self.user_ratings_df = user_pf.load_user_ratings()
+            # Convert from a string
+            self.user_profile = user_pf.load_or_create_user_profile(self.user_id, self.films_df, self.user_ratings_df, self.genre_list_mlb)
+
 
             self.ratings_df = pd.concat([self.ratings_df, self.user_ratings_df], ignore_index=True)
-            # print("Ratings df shape after concatenation: ", self.ratings_df.shape)
             self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
-            # print("Ratings df shape after dropping duplicates: ", self.ratings_df.shape)
-
-            # print("Feature user profile type4: ", type(self.user_profile['feature_profile'])) # this is a dict
-            # print("Feature user profile: ", self.user_profile['feature_profile'])
 
 
 
@@ -112,10 +115,11 @@ class RecInterface:
             print("Self.user_ratings_df shape before concatenation: ", self.user_ratings_df.shape)
             new_user_ratings = user_pf.load_user_ratings_from_profile(self.user_profile, self.films_df)
 
+            print("Building new user profile feature profile")
             new_features_profile = (
                 user_pf.user_feature_profile(self.user_profile, self.films_df, new_user_ratings, self.genre_list_mlb, feature_profile=self.user_profile['feature_profile']))
-            print("User profile feature shape after reloading: ", self.user_profile['feature_profile'].shape)
-
+            # print("User profile feature shape after reloading: ", self.user_profile['feature_profile'].shape)
+            self.user_profile['feature_profile'] = new_features_profile
             self.user_ratings_df = pd.concat([self.user_ratings_df, new_user_ratings], ignore_index=True)
             self.user_ratings_df = self.user_ratings_df.drop_duplicates(subset=['userId', 'movieId'])
             print("User ratings df shape after dropping duplicates: ", self.user_ratings_df.shape)
@@ -123,8 +127,6 @@ class RecInterface:
             self.ratings_df = pd.concat([self.ratings_df, self.user_ratings_df], ignore_index=True)
             self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
             print("Ratings df shape after concatenation & duplicate removal: ", self.ratings_df.shape)
-
-            # Update the user profile
 
         else:
             print("\nWARNING: No user profile path found. Please update the user profile first.\n")
