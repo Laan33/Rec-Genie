@@ -41,6 +41,7 @@ def complex_json_to_markdown(recommendations_list):
 class GradioFilmRec:
     def __init__(self):
         self.current_recommendations = "No recommendations generated, click the button to the left"
+        self.complex_recommendations = "No complex recommendations generated, click the button to the left"
         self.scores = None
         self.semantic_full_response = None
 
@@ -80,23 +81,20 @@ class GradioFilmRec:
         recommendations_list = scores.to_dict('records')
         convert_json_to_markdown = json_to_markdown(recommendations_list)
 
-        convert_json_to_markdown_complex_breakdown = complex_json_to_markdown(recommendations_list)
-        print("Full recommendations breakdown:\n", convert_json_to_markdown_complex_breakdown)
+        recs_complex = complex_json_to_markdown(recommendations_list)
+        self.complex_recommendations = recs_complex
+        print("Full recommendations breakdown:\n", recs_complex)
         print("----------\n")
-
-        # self.recs  = recs
-        self.current_recommendations = convert_json_to_markdown
         self.scores = recommendations_list
 
         # Add on the line: "\n you can ask in chat for an explanation of these recommendations"
         convert_json_to_markdown = convert_json_to_markdown + "\n\n### Ask in the chat for an explanation of these recommendations!"
 
+        self.current_recommendations = convert_json_to_markdown
         print("\n")
         print("Recommendations: \n", convert_json_to_markdown)
 
-        self.current_recommendations = convert_json_to_markdown
-
-        return convert_json_to_markdown
+        return convert_json_to_markdown, self.complex_recommendations
 
     def router(self, input_value, history, session_id):
         """
@@ -246,6 +244,9 @@ with gr.Blocks(theme="Soft") as demo:
             gr.Markdown("### Recommendations")
             recommendations = gr.Markdown(label="recommendations", value=film_rec_bot.current_recommendations)
 
+            gr.Markdown("### Complex breakdown")
+            recommendations_complex = gr.Markdown(label="recommendations_complex", value=film_rec_bot.complex_recommendations)
+
         with gr.Column(scale=2):
             gr.Markdown("### Message Semantics")
             message_semantics = gr.Text(label="Extracted Message Semantics", placeholder="No message semantics yet")
@@ -270,7 +271,7 @@ with gr.Blocks(theme="Soft") as demo:
     generate_recommendations.click(
         fn=film_rec_bot.recommend_films,
         inputs=[],
-        outputs=[recommendations]
+        outputs=[recommendations, recommendations_complex]
     )
 
     # Link button to regenerate user profile
