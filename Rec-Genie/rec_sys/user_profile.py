@@ -114,6 +114,28 @@ def load_user_ratings():
     # Reorder columns to match the existing ratings DataFrame
     return user_ratings_df[["userId", "movieId", "rating"]]
 
+def load_user_ratings_from_profile(user_profile, films_df, profile_dir):
+    u_ratings = user_profile['feature_profile']
+
+    # For all the films in the user_profile['feature_profile'], get all the numeric id's (as there is actors, directors, genres mixed in)
+    u_ratings = {k: v for k, v in u_ratings.items() if isinstance(v, (int, float)) and v is not None}
+
+    # Convert into a DataFrame
+    u_ratings_df = pd.DataFrame(u_ratings.items(), columns=["movieId", "rating"])
+    u_ratings_df['movieId'] = pd.to_numeric(u_ratings_df['movieId'], errors='coerce')
+    u_ratings_df = u_ratings_df.dropna(subset=['movieId'])
+    u_ratings_df['movieId'] = u_ratings_df['movieId'].astype(int)
+    u_ratings_df["userId"] = user_profile['id']
+    print("User ratings DataFrame shape:", u_ratings_df.shape)
+
+    # Filter out any id's that are not in the films_df
+    u_ratings_df = u_ratings_df[u_ratings_df['movieId'].isin(films_df['id'])]
+    u_ratings_df = u_ratings_df.drop_duplicates(subset=['userId', 'movieId'])
+    print("User ratings DataFrame shape after filtering out non films: ", u_ratings_df.shape)
+    # Reorder columns to match the existing ratings DataFrame
+    u_ratings_df = u_ratings_df[["userId", "movieId", "rating"]]
+    return u_ratings_df
+
 
 genre_normalisation = 0.12
 
@@ -347,7 +369,7 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, alpha=0.3):
 
     # Save the user profile to a CSV file
     save_user_profile(profile, profiles_dir)
-    return user_profile
+    return user_profile, profiles_dir
 
 
 def save_user_profile(user_profile, profiles_dir):

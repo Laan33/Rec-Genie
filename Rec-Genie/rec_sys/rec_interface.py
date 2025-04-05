@@ -36,6 +36,7 @@ def load_data(num_lines=None):
 class RecInterface:
 
     def __init__(self, user_id):
+        self.current_profile_path = None
         self.user_profile = None
         self.user_ratings_df = None
         self.user_id = user_id
@@ -82,6 +83,8 @@ class RecInterface:
             # print("Feature user profile type4: ", type(self.user_profile['feature_profile'])) # this is a dict
             # print("Feature user profile: ", self.user_profile['feature_profile'])
 
+
+
     def recommend(self, num_recommendations=5):
         print("Generating recommendations for user ID:", self.user_id)
         if self.user_profile is None:
@@ -94,7 +97,24 @@ class RecInterface:
 
     def implement_user_feedback(self, session_id, sentiment_response):
         # Adjust the weights on the user profile
-        self.user_profile = user_pf.adjust_user_profile(self.user_profile, sentiment_response, self.films_df)
+        self.user_profile, self.current_profile_path = user_pf.adjust_user_profile(self.user_profile, sentiment_response, self.films_df)
 
 
+    def reload_user_profile(self):
+        # Reload the user profile from the file
+        if self.current_profile_path:
+            print("\nReloading user ratings from path:", self.current_profile_path)
+            print("Ratings df shape before concatenation: ", self.ratings_df.shape)
+            print("Self.user_ratings_df shape before concatenation: ", self.user_ratings_df.shape)
+            self.user_ratings_df = pd.concat([self.user_ratings_df, user_pf.load_user_ratings_from_profile(self.user_profile, self.films_df, self.current_profile_path)], ignore_index=True)
+            self.user_ratings_df = self.user_ratings_df.drop_duplicates(subset=['userId', 'movieId'])
+            print("User ratings df shape after dropping duplicates: ", self.user_ratings_df.shape)
 
+            self.ratings_df = pd.concat([self.ratings_df, self.user_ratings_df], ignore_index=True)
+            self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
+            print("Ratings df shape after concatenation & duplicate removal: ", self.ratings_df.shape)
+        else:
+            print("\nWARNING: No user profile path found. Please update the user profile first.\n")
+
+
+# I'm realling vibing with tarantino recently, he's a great director, and I'm loving all his films. I also like the Cornetto Triology Films, but I don't like the John Wick series
