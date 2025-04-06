@@ -1,57 +1,69 @@
-% Chapter 6 Conclusion
-% Summary  - re-iterate what the project was
-% Conclusion – summarise main findings
-% Reflections/Discussion
-% Future Work
-
-
-\section{Summary}
-\label{sec:summary}
-The project aimed to create a film recommendation system that was explainable, adjustable, and user-friendly.
-It used a combination of technologies, including a large language model (LLM) for user interaction and feedback, a collaborative filtering recommendation system to provide recommendations based on user preferences and an adjustable and explainable content-based filtering recommendation system to provide recommendations based on the content of the films.
-
-
-
-
-
-
-
 \section{Conclusion}
 \label{sec:conclusion}
-The project proved there is a large potential in the integration of large language models and recommendation systems.
+The project successfully demonstrated the potential of integrating large language models (LLMs) with recommendation systems to create a conversational, adjustable, and explainable recommendation system. By combining collaborative filtering, content-based filtering, and conversational AI, the system addressed key limitations of traditional recommendation systems, such as lack of personalization, transparency, and user control.
 
-From the user feedback, it was clear that the users found the system to be useful and easy to use. It was able to provide recommendations that were relevant to the user, and the users found the explanations to be helpful in understanding the recommendations.
-Additionally, the users found the system to understand and respond to their preferences, 
+The user evaluation results highlighted the system's strengths, including its ability to provide relevant recommendations, adapt to user preferences, and explain its reasoning in a clear and concise manner. Users found the system intuitive, engaging, and effective in meeting their needs. The modular design of the system ensured flexibility, allowing for the addition of new features and the adjustment of existing ones.
 
+Despite its success, the project also revealed areas for improvement. Challenges such as occasional noise in recommendations, limited user-user similarity explanations, and inference latency in the LLM were identified. These challenges provide valuable insights for future work and opportunities to further enhance the system.
 
+Overall, the project demonstrated the feasibility and effectiveness of combining LLMs with recommendation systems, paving the way for more user-centric and transparent recommendation technologies.
 
-
+\section{Key Findings and Contributions}
+\label{sec:key_findings}
+The project made several key contributions to the field of recommendation systems and conversational AI:
+\begin{itemize}
+    \item \textbf{Integration of LLMs:} The project successfully integrated LLMs into a recommendation system, demonstrating their potential to enhance user interaction and provide personalized recommendations.
+    \item \textbf{Modular Design:} The modular architecture allowed for flexibility and scalability, enabling the integration of various components and the addition of new features.
+    \item \textbf{Explainability:} The system provided clear and concise explanations for its recommendations, addressing a common limitation in traditional recommendation systems.
+    \item \textbf{User-Centric Approach:} The project emphasized user control and personalization, allowing users to adjust their preferences and receive tailored recommendations.
+    \item \textbf{Real-World Application:} The project demonstrated the practical application of LLMs in a real-world context, showcasing their potential to enhance user experiences in various domains.
+    \item \textbf{Challenges and Solutions:} The project identified key challenges in implementing LLMs in recommendation systems, such as inference latency and noise in recommendations, and proposed solutions to address these issues.
+\end{itemize}
 
 \section{Reflections}
 \label{sec:reflections}
-The project was a success, and I am happy with the outcome. I thorougly enjoyed the project itself, and I have gained a lot of experience in the process.
+The project was a rewarding experience, providing an opportunity to design and implement a system from the ground up. It allowed for the exploration of cutting-edge technologies, such as LLMs, and the integration of these technologies into a cohesive and functional system.
 
-The project was a great opportunity to learn to craft a system from the ground up, and to gain experience in combining different technologies and to create a system that is modular and flexible.
+Additionally, the challenges faced during implementation, such as prompt engineering and data processing, provided valuable learning experiences and highlighted the complexities of working with LLMs.
+
+The project also underscored the potential of modular system design, which enabled flexibility and scalability. This approach not only facilitates the integration of various components but also provides the foundations for future enhancements and extensions.
 
 
 
 
 \section{Future Work}
 \label{sec:future_work}
-The system is designed to be modular, allowing for the addition of new features and the adjustment of existing features.
+While the project achieved its primary objectives, there are several areas for future exploration and improvement:
 
-Theoretically this system could be extended to include a wider range of features, and a wider range of recommendation systems.
-It could also be used to provide recommendations for other items, and could also be used to provide recommendations for other types of data.
-\\\\
-The large language models have a lot of potential, particularly if given the time, right data and resources, the models could be fine-tuned to provide higher quality interactions, and reduce issues such as the noise in the sentiment analysis.
+\subsection{Enhancing Explainability}
+Users expressed interest in more detailed explanations of user-user similarity in collaborative filtering. Future work could focus on providing richer insights into the profiles of similar users, enhancing transparency and trust in the system.
 
-The system could also be extended to include a wider range of features, or utilise a different adjustable recommendation system.
-\\\\
+\subsection{Improving Noise Filtering}
+Some users noted occasional noise in the recommendations. Refining the filtering process and incorporating advanced techniques, such as sentiment analysis or contextual filtering, could improve the quality of recommendations.
 
-The use of speech to text and text to speech could also be added to the system, allowing for a more natural interaction with the system.
-This would allow for the user to interact with the system in a more natural way, and would allow for the user to provide feedback in a more natural way.
+\subsection{Expanding Features}
+The system could be extended to include additional features, such as:
+\begin{itemize}
+    \item \textbf{Visual Enhancements:} Adding movie posters or visual elements to make the interface more engaging.
+    \item \textbf{Suggested Replies:} Providing suggested replies in the chatbot to reduce typing effort and improve usability.
+    \item \textbf{Speech-to-Text and Text-to-Speech:} Enabling voice-based interaction for a more natural user experience, particularly for use cases like television-based systems.
+\end{itemize}
 
-Particularly in cases where the user is using the system on a television, this would allow for a more natural interaction with the system.
+\subsection{Optimizing LLM Performance}
+The inference latency of the LLM remains a challenge. Future work could explore techniques such as prompt optimization, model fine-tuning, or the use of more efficient LLM architectures to reduce response times further.
 
+\subsection{Addressing the Cold Start Problem}
+The system could be enhanced to better address the cold start problem by leveraging synthetic data generation or pre-trained user profiles. This would improve the system's ability to provide recommendations for new users with limited interaction history.
+
+\subsection{Exploring New Domains}
+While the system focused on film recommendations, the modular design allows for its application to other domains, such as e-commerce, music, or books. Future work could explore the adaptability of the system to these areas.
+
+\subsection{Fine-Tuning LLMs}
+Given more time and resources, fine-tuning the LLM on domain-specific data could improve the quality of interactions and reduce issues such as hallucinations or irrelevant outputs.
+
+\subsection{Scalability and Deployment}
+The system could be deployed as a web application or mobile app, making it more accessible to a broader audience. This would involve addressing scalability challenges and optimizing the system for real-world usage.
+
+By addressing these areas, the system could evolve into a more robust, versatile, and user-friendly recommendation platform, further advancing the state of conversational recommendation systems.
 
 

@@ -22,6 +22,7 @@
     
 \end{comment}
 
+The system architecture design is visualised in \cref{fig:system_architecture}, which provides an overview of the system's components and their interactions.
 To see a run through of the system, see \cref{sec:system_run_through}.
 
 \subsection{Technologies and Languages}
@@ -267,12 +268,44 @@ The prompt engineering process was a significant challenge, as it required caref
 The model was sensitive to the smallest changes in the prompts, which could lead to drastically different responses.
 
 One key challenge was ensuring that the LLM understood it's instructions, but would not let the example responses influence the model's output.
-The "Glean Feedback Prompt" in \cref{subsec:prompts} was particularly challenging, as it required the model to extract user preferences and sentiment from feedback messages, additionally extracting related films and actors and  
-Often, the model would
+The "Glean Feedback Prompt" in \cref{subsec:prompts} was particularly challenging, as it required the model to extract user preferences and sentiment from feedback messages, additionally extracting related films and actors from the user input.
+At times, if the user input was short, and did not contain much information, the model would sometimes include the example responses in the output, or hallucinate information that was not present in the user input.
 
 There is still a lot of work to be done in this area. There is still a lot of noise at times in the LLM outputs, and the model would sometimes forget or ignore the formatting instructions, which then impacted the performance of the system as it was not able to parse the output correctly.
+\paragraph{Solution} To mitigate this, fine-tuning the model on domain-specific data could improve the quality of interactions and reduce issues such as hallucinations or non-conforming outputs.
+This would require training the model on a custom dataset of preference extraction and sentiment analysis outputs, which would help the model learn the desired output format and improve its performance on these tasks.
+This would be costly and time-consuming, but the use of a smaller model to generate synthetic data could help reduce the cost and time needed to train the model.
 
 
+\subsection{Limited Data}
+\label{subsec:limited_data}
+The system was limited by the data available in the datasets used. The TMDB dataset provided a wealth of information, which was up to date, but the user ratings from the MovieLens dataset were limited up to October 2023. Even at that, a lot of the ratings were for films over 20 years old, which limited the relevance of the recommendations for users looking for more recent films.
+As such, when the user user collaborative filtering was used, the applicable films decreased from over 100,000 down to just over 28,000 films.
+
+\paragraph{Solution} To mitigate this, whenever the collaborative filtering failed to proivde a score for a film, the system would take the average IMBD rating for the film, and multiply it by 0.4, as not to over penalise the film for not having other ratings.
+This was a simple solution, but allowing films that were not in the user ratings dataset to still be recommended to the user.
+However, this is certainly not a great solution.
+
+The same issue was present with the credits dataset, where the latest film in the dataset was from 2018, over 7 years ago.
+This limited the ability of the system to provide collaborative filtering recommendations for films.
+Unfortunately, due to time constraints, there was no time to implement a solution for this.
+
+
+\section{Current Limitations}
+\label{sec:current_limitations}
+The current implementation of the system has several limitations that need to be addressed in future work. These limitations include:
+\begin{itemize}
+    \item \textbf{Lack of Data:} The system is limited by the data available in the datasets used. This caused the recommendation system to be less effective. See \cref{subsec:limited_data} for more details.
+    \item \textbf{Noise in Recommendations:} The LLM extracts data that was not mentioned by the user. This can lead to noise in the recommendations, as the system may recommend films that are not relevant to the user.
+    \item \textbf{No Speech-to-Text or Text-to-Speech:} The system does not currently support voice-based interaction, which could enhance user experience, particularly for use cases like television-based systems.
+    \item \textbf{No Fine-Tuning of LLMs:} The current implementation does not include fine-tuning of the LLM on domain-specific data, which could improve the quality of interactions and reduce issues such as hallucinations or irrelevant outputs.
+    \item \textbf{Inference Latency:} The LLM's inference latency remains a challenge, particularly for real-time applications. While prompt engineering has improved response times, further optimization is needed to enhance user experience.
+    \item \textbf{Cold Start Problem:} Although the system deals with the cold start problem much better than traditional recommendation systems, especially as the LLM can explore the users tastes quickly and efficiently, it still somewhat suffers from the cold start problem.
+    \item \textbf{Limited Feature Set:} The current implementation relies on a limited set of features for content-based filtering. While this is sufficient for the proof of concept, expanding the feature set could improve the quality of recommendations.
+    \item \textbf{User Profile Management:} The user profile management system is currently basic and could benefit from more advanced techniques for managing user preferences and feedback.
+\end{itemize}
+
+% \item \textbf{Limited User-User Similarity Explanations:} The system does not provide detailed explanations for user-user similarity in collaborative filtering. This limits the transparency of the recommendations and may reduce user trust in the system.
 
 \begin{comment}
 
