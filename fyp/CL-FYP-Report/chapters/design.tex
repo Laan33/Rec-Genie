@@ -16,7 +16,7 @@
     - System Architecture Diagram
     - System Architecture Components
 
-- Recommmendation System
+- Recommendation System
     - Content-based Filtering
     - Collaborative Filtering
 
@@ -38,6 +38,7 @@ Additionally, I personally had a strong desire to work with Python, as it was an
 
 \section{System Architecture}
 The system architecture is designed to be modular, allowing for the addition of other systems or components.
+The architecture is composed of several interconnected components, each designed to handle specific functionalities within the system.
 \label{sec:system_architecture}
 \begin{figure}[H]
     \centering
@@ -49,13 +50,13 @@ The system architecture diagram (\cref{fig:system_architecture_diagram}) shows t
 
 
 \subsection{System Architecture Components}
-The system architecture is designed to be modular, allowing for the addition of new features and the adjustment of existing features.
+The system architecture adopts a modular design, enabling the integration and modification of new and existing components and features. 
 
 \begin{itemize}
     \item \textbf{User Interface} - The user interface is designed to be simple and easy to use, allowing the user to interact with the system and provide feedback.
-    \item \textbf{Recommendation System} - The recommendation system is designed to be modular, allowing for the addition of new recommendation systems, features and the adjustment of existing features.
+    \item \textbf{Recommendation System} - The recommendation system is designed to allow for the addition of new recommendation systems, features and the adjustment of existing features.
     \item \textbf{Data} - The data holds the session conversation logs, user preference profile, films and their features, and film ratings from users.
-    \item \textbf{Data Analysis \& Processing} - The data analysis and processing handles loading the data, processing sentiment analysis and adjustment of the user profile.
+    \item \textbf{Data Analysis \& Processing} - The data analysis and processing handles loading and preprocessing the data, processing sentiment analysis and adjustment of the user profile.
     \item \textbf{Large Language Model Prompt Engine} - The large language model prompt engine handles various scenarios, and routes the conversation to the appropriate component.
 \end{itemize}
 
@@ -81,14 +82,14 @@ The content-based filtering system uses the following features:
 Additional features could be added, such as the release year, but the listed features are sufficient for a substantial proof of concept that can be built upon and works well.
 Adding additional features would be a stretch goal, and would not be necessary for the proof of concept.
 \\\\
-The content-based filtering system will fulfill the following requirements:
+The content-based filtering system will fulfil the following requirements:
 \begin{itemize}
     \item The system is able to provide recommendations based on the features
     \item The system can provide recommendations based on the features with a user profile
     \item Feature weights can be adjusted to provide different recommendations
     \item The system provides a breakdown of the scores for each feature in the recommendation
 \end{itemize}
-With this in mind, the content-based filtering system will not be forensically examined, the evaluation of the system will be covered in \cref{sec:recommendation_system_evaluation}.
+With this in mind, the content-based filtering system will not be forensically examined, with the evaluation of the system being covered in \cref{sec:recommendation_system_evaluation}.
 
 
 \subsection{Collaborative Filtering}
@@ -96,7 +97,7 @@ With this in mind, the content-based filtering system will not be forensically e
 The collaborative filtering component of the recommendation system leverages the LensKit library\cite{ekstrand_2020_lenskit} to implement a user-user collaborative filtering approach. This method utilizes a user-item matrix to identify similar users and recommend items based on their preferences.
 
 As it is a proven and widely used approach and the LensKit library is a well-established framework for collaborative filtering, it was chosen for its reliability and ease of integration into the overall system architecture.
-This component will not be evaluated in detail, as already mentioned abovein \cref{sec:recommendation_system_design}, particularly as it is library that is well established and proven to work.
+This component will not be evaluated in detail, as already mentioned above in \cref{sec:recommendation_system_design}, particularly as it is library that is well established and proven to work.
 
 The collaborative filtering component will provide recommendations based on the user item matrix, and will be able to provide recommendations based on the current user profile.
 
@@ -145,7 +146,7 @@ In contrast with other frameworks like Flask or Streamlit, Gradio offers a more 
 
 The user interface will include components that allow users to engage in conversations with the agent, request recommendations, and view both the generated recommendations and the extracted preferences derived from the conversation.
 
-For what the user interface will look like, please refer to the User Interface Wireframe\ref{sec:user_interface_wireframe} below.
+For what the user interface will look like, please refer to the User Interface Wireframe (\cref{sec:user_interface_wireframe}) below.
 
 \subsection{User Interface Wireframe}
 \label{sec:user_interface_wireframe}
