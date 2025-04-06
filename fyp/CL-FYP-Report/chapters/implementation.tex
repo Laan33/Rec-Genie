@@ -27,31 +27,27 @@
 
 To see a run through of the system, see \cref{sec:system_run_through}.
 
-\section{Project Methodology}
-\label{sec:project_methodology}
-As mentioned in the recommendation system (\cref{sec:recommendation_system_design}), the project was designed to be a proof of concept, and as such, the recommendation engine implementation was not intended to be the most efficient or effective implementation.
-
-
 \subsection{Technologies and Languages}
 \label{sec:technologies_and_languages}
 
 The system was implemented using Python 3.10. Python was chosen as the primary language for the project due to its extensive libraries and frameworks for data manipulation, machine learning, and natural language processing.
 Python is also well suited for rapid prototyping and development, which was a key requirement for this project.
+\\
 Additionally, I wanted to learn more about Python, particularly in the areas of data science. This provided a great opportunity to do so.
-
+\\\\
 The libraries and frameworks used in the system are listed below:
 \input{tables/librariesAndFrameworks.tex}
 
 \section{Recommendation System}
 \label{subsec:recommendation_system}
-As covered in \cref{sec:recommendation_system_design}, the recommendation system is designed to provide recommendations based on user preferences and feedback.
+As covered in the recommendation system \cref{sec:recommendation_system_design}, the recommendation system is designed to provide recommendations based on user preferences and feedback.
 It uses a combination of content-based filtering and collaborative filtering to provide recommendations.
 
 \subsection{Content-based Filtering}
 \label{sec:content_based_filtering_implementation}
 As there's no frameworks or libraries for content-based filtering with the qualities needed for recommendation and feature adjustment, a custom implementation was needed.
 
-Importantly, this implementation is intended to be a proof of concept, and is not intended to be the best implementation.
+Importantly, this implementation is intended to be a \textbf{proof of concept}, and is not intended to be the best implementation.
 With this in mind, the content-based filtering system uses the following features:
 \begin{itemize}
     \item Genres
@@ -80,10 +76,11 @@ it is not intended to be necessarily the best recommendation system, there is li
 
 
 For the collaborative filtering feature, I used the \texttt{UserUser} algorithm from the \texttt{user\_knn} module that the \texttt{LensKit} library provides.
+The default \texttt{UserUser} parameters of \texttt{user\_knn} with the \texttt{nnbrs=15} and \texttt{min\_nbrs=3} parameters were used, as they provided a good balance between performance and accuracy.
+
 
 \section{Data Processing}
 \label{sec:data_processing_implementation}
-
 
 \subsection{Datasets}
 \label{sec:datasets}
@@ -98,6 +95,89 @@ The ensemble dataset was leveraged to create a CSV file containing the top three
 To prepare the data for the recommendation system, the films were stripped of irrelevant metadata, retaining only the essential attributes. The cast and director information from the ensemble dataset was appended to the film data to enhance its utility for content-based filtering. This streamlined dataset was then used to power the recommendation engine, ensuring efficient and accurate recommendations.
 
 
+\section{User Interaction}
+\label{sec:user_interaction}
+The user interaction process was designed to be as simple and intuitive as possible, while still allowing for a comprehensive exploration of user preferences.
+
+In the chat interface, the user can talk freely to the system, and the system will address the users requests with the appropriate tooling and features.
+
+\subsection{User Profile}
+\label{subsec:user_profile}
+The user profile is a key component of the system, as it stores the user's preferences and feedback.
+It holds the weighting scheme for the hybrid recommendation system alongside the content-based filtering system. 
+It also holds the users feature item scores, which are used to provide recommendations based on the user's preferences.
+
+It is represented as a dictionary, with the following structure:
+\begin{verbatim}
+{
+    "user_id": {
+        "userId": user_id,
+        "weightings": {
+            'cast_ft_weight': 0.3, 
+            'genre_ft_weight': 0.4, 
+            ...
+        },
+        "feature_profile": {
+            'Quentin Tarantino': 0.5,
+            'Action': 0.8,
+            4995: 0.7, // film id
+            390012: 0.6, // actor id
+            ...
+        }
+    }
+}
+\end{verbatim}
+
+The user profile is designed to be flexible and extensible, allowing for the addition of new features and attributes as needed.
+If given more time, the user profile would have it's various features in the \texttt{feature\_profile} dictionary separated into their own dictionaries, such as \texttt{cast\_profile}, \texttt{genre\_profile}, etc.
+
+\subsection{User Profile Creation}
+\label{subsec:user_profile_creation}
+The user profile is created when the user first interacts with the system, and is populated with a set of default weightings.
+If there are film ratings provided, the system will use these ratings to populate the user profile with the relevant feature scores.
+
+The system does this by going through the film ratings and extracting relevant features from the films dataset alongside the ensemble dataset.
+The system will then add the relevant features to the user profile, with a score of the rating given by the user multiplied by the weighting of the feature.
+
+\subsection{User Profile Score Adjustment}
+\label{subsec:user_profile_score_adjustment}
+
+To adjust the user profile scores based on feedback, I used the hyperbolic tangent (\texttt{tanh}) function. 
+This approach was chosen because \texttt{tanh} provides a smooth, non-linear mapping that naturally tapers values between 0 and 5, ensuring that extreme adjustments are avoided while still allowing meaningful changes.
+
+The floor of 0 was implemented to ensure that films with a high relevance score, such as 3.4, do not get punished more than films that are less relevant, such as 0.
+
+The formula used for updating the scores, with a floor of 0, is as follows:
+\[
+S' = \max\left(0, 3 \times \tanh\left(\frac{S + \alpha \cdot \Delta S}{5}\right)\right)
+\]
+where:
+\begin{itemize}
+    \item \( S \) is the current score.
+    \item \( \Delta S \) is the sentiment adjustment derived from user feedback.
+    \item \( \alpha \) is a scaling factor that controls the sensitivity of the adjustment.
+    \item \( S' \) is the updated score.
+\end{itemize}
+
+The use of \texttt{tanh} ensures that:
+\begin{itemize}
+    \item Scores remain bounded within a reasonable range, preventing runaway values.
+    \item Adjustments have diminishing returns as scores approach their limits, reflecting a natural plateau effect.
+\end{itemize}
+
+For example, if a user expresses strong positive feedback about a film, the corresponding score in their profile is increased, but the adjustment becomes less pronounced as the score nears the upper limit of 3. 
+Similarly, negative feedback reduces the score, but it is bounded by 0, ensuring that a film cannot be penalized below this threshold.
+\\\\
+This design choice was made to ensure that the system remains stable and does not produce erratic behavior in response to user feedback.
+\\
+The scaling factor \( \alpha \) was chosen based on the desired sensitivity of the feedback.
+The value of \( \alpha \) can be adjusted to control how strongly feedback affects the profile. 
+In the actual implementation, a value of \( \alpha = 0.3 \) was used, but this can be fine-tuned based on user testing and feedback if the system were to be changed in the future.
+\\
+This approach provided a robust and intuitive way to manage user profile updates, ensuring stability while still reflecting user preferences effectively.
+
+\paragraph{Searching for items in the user profile} is done using the \texttt{FuzzyWuzzy} library\cite{FuzzyWuzzy}, which uses the Levenshtein distance to match the item title to items in the user profile.
+The same process is performed when looking to add a new film to the user profile, where the system will first run a staight match search on the dataset, and if it is not, it will run a fuzzy search on the items in the dataset. This is to handle any noise in the given input from the LLM, such as syntax errors or typos.
 
 \section{Large Language Model Integration}
 \label{sec:large_language_model_integration}
@@ -148,85 +228,25 @@ The prompts directly influence the quality of the interactions and recommendatio
 
 \subsection{Prompt Engineering}
 \label{subsec:prompt_engineering}
-WIP
-The prompt engineering process was a significant challenge, as it required careful consideration of the language and structure used in the prompts.
+The prompt engineering process proved to be challenging, as it required careful consideration of the language and structure used in the prompts.
+The model is quite liable to deviate from the given instructions. 
+
+\paragraph{Prompt Structure} Another challenge was ensuring that the LLM understood its instructions, but would not let the example responses influence the model's output.
+The "Glean Feedback Prompt" was particularly challenging, as it required the model to extract user preferences and sentiment from feedback messages, while also extracting related films and actors.
+
+At times, if the user input was short, and did not contain much information, the model would sometimes included the example responses in the output, or hallucinate information that was not present in the user input.
+For example, it tended to include \texttt{Shawshank Redemption} in the output, even if it was not mentioned in the user input, as it is one of the most well known films.
 
 
-\section{User Interaction}
-\label{sec:user_interaction}
-The user interaction process was designed to be as simple and intuitive as possible, while still allowing for a comprehensive exploration of user preferences.
+\paragraph{Inference Latency}
+The inference latency of the LLM was a significant consideration, as it directly impacts the user experience.
+The initial response time for the LLM when generating sentiment analysis from a user message was around 35 seconds, which was too slow for the conversational system, even with the user taking time to read the agent response and to respond.
+Through iterative prompt engineering, the response time was significantly reduced to approximately 15 seconds, which is a substantial improvement with a \textbf{reduction of 57\%} in response time.
+This improvement was achieved by optimizing the prompt structure, specifically by minimizing the number of tokens in the generated response.
 
-In the chat interface, the user can talk freely to the system, and the system will address the users requests with the appropriate tooling and features.
-
-\subsection{User Profile}
-\label{subsec:user_profile}
-The user profile is a key component of the system, as it stores the user's preferences and feedback.
-It holds the weighting scheme for the hybrid recommendation system alongside the content-based filtering system. 
-It also holds the users feature item scores, which are used to provide recommendations based on the user's preferences.
-
-It is represented as a dictionary, with the following structure:
-\begin{verbatim}
-{
-    "user_id": {
-        "userId": user_id,
-        "weightings": {
-            'cast_ft_weight': 0.3, 
-            'genre_ft_weight': 0.4, 
-            ...
-        },
-        "feature_profile": {
-            'Quentin Tarantino': 0.5,
-            'Action': 0.8,
-            4995: 0.7, // film id
-            390012: 0.6, // actor id
-            ...
-        }
-    }
-}
-\end{verbatim}
-
-The user profile is designed to be flexible and extensible, allowing for the addition of new features and attributes as needed.
-If given more time, the user profile would have it's various features in the \texttt{feature\_profile} dictionary separated into their own dictionaries, such as \texttt{cast\_profile}, \texttt{genre\_profile}, etc.
-
-\subsection{User Profile Score Adjustment}
-\label{subsec:user_profile_score_adjustment}
-
-To adjust the user profile scores based on feedback, I used the hyperbolic tangent (\texttt{tanh}) function. 
-This approach was chosen because \texttt{tanh} provides a smooth, non-linear mapping that naturally tapers values between 0 and 5, ensuring that extreme adjustments are avoided while still allowing meaningful changes.
-
-The floor of 0 was implemented to ensure that films with a high relevance score, such as 3.4, do not get punished more than films that are less relevant, such as 0.
-
-The formula used for updating the scores, with a floor of 0, is as follows:
-\[
-S' = \max\left(0, 3 \times \tanh\left(\frac{S + \alpha \cdot \Delta S}{5}\right)\right)
-\]
-where:
-\begin{itemize}
-    \item \( S \) is the current score.
-    \item \( \Delta S \) is the sentiment adjustment derived from user feedback.
-    \item \( \alpha \) is a scaling factor that controls the sensitivity of the adjustment.
-    \item \( S' \) is the updated score.
-\end{itemize}
-
-The use of \texttt{tanh} ensures that:
-\begin{itemize}
-    \item Scores remain bounded within a reasonable range, preventing runaway values.
-    \item Adjustments have diminishing returns as scores approach their limits, reflecting a natural plateau effect.
-\end{itemize}
-
-For example, if a user expresses strong positive feedback about a film, the corresponding score in their profile is increased, but the adjustment becomes less pronounced as the score nears the upper limit of 3. 
-Similarly, negative feedback reduces the score, but it is bounded by 0, ensuring that a film cannot be penalized below this threshold.
-\\\\
-This design choice was made to ensure that the system remains stable and does not produce erratic behavior in response to user feedback.
-\\
-The scaling factor \( \alpha \) was chosen based on the desired sensitivity of the feedback.
-The value of \( \alpha \) can be adjusted to control how strongly feedback affects the profile. 
-In the actual implementation, a value of \( \alpha = 0.3 \) was used, but this can be fine-tuned based on user testing and feedback if the system were to be changed in the future.
-\\
-This approach provided a robust and intuitive way to manage user profile updates, ensuring stability while still reflecting user preferences effectively.
-
-\paragraph{Searching for items in the user profile} is done using the \texttt{FuzzyWuzzy} library\cite{FuzzyWuzzy}, which uses the Levenshtein distance to match the item title to items in the user profile.
-The same process is performed when looking to add a new film to the user profile, where the system will first run a staight match search on the dataset, and if it is not, it will run a fuzzy search on the items in the dataset. This is to handle any noise in the given input from the LLM, such as syntax errors or typos.
+There is more work to be done in this area, as the model is still quite slow at times, and the response time can vary significantly depending on the prompt.
+One idea would be to implement a mapping or flag system where specific prefixes are used to denote categories. For example; \texttt{F;} for films, \texttt{A;} for actors, \texttt{D;} for directors, and \texttt{G;} for genres.
+This would allow the system to quickly identify the type of item being referenced and parse it accordingly, while importantly reducing the number of tokens in the response.
 
 
 
@@ -266,6 +286,8 @@ The model was sensitive to the smallest changes in the prompts, which could lead
 One key challenge was ensuring that the LLM understood it's instructions, but would not let the example responses influence the model's output.
 The "Glean Feedback Prompt" in \cref{subsec:prompts} was particularly challenging, as it required the model to extract user preferences and sentiment from feedback messages, additionally extracting related films and actors and  
 Often, the model would
+
+There is still a lot of work to be done in this area. There is still a lot of noise at times in the LLM outputs, and the model would sometimes forget or ignore the formatting instructions, which then impacted the performance of the system as it was not able to parse the output correctly.
 
 
 \section{System Run Through}
@@ -329,27 +351,12 @@ The user can also ask the system to provide a breakdown of a recommendation, whi
 
 \begin{comment}
 
-
-sessions-
-temporary sessions
-
-add in movies
-
-make chapters
-
-
-
-add sample templates to launch start off - disney, romcoms, action etc.
-
 in demo - you want sufficient features to show algorithmically
 
 Evalutation = features to fulfill tasks
 
 REFLECT important - 
 
-
-(1/3 tidy up, 1/3 report, 1/3 report) (Bullet points to use as a lunchpad) 
-if you do 1hr design, do 20 mins bullet points, 
 
 -------
 
@@ -360,55 +367,21 @@ how well do I follow what i done
 
 Domain if people know the stuff (conor likes both), jose IR, James LLM
 
-
-
-structure of the code in the report - hla
-
-Code can just ask as private repo
-
-
-
 -------
-
 
 instead of typing = use voice
 
-
 Evalutation
 - how do you feel about this type of rec
-
 - novelty?
-
 - tasks will be on quality of recs, interactions, (frustrating, too cumbersome, - too much convo is effort, tasks for users, you're a fan of thrillers and you 
-
 I like fast and furious 2,3,6
-
 I love this slasher horror, sound of music, what 
 
-
 ------
-For the adjustment system I used tanh to plateau
-
-Mathematical Model
-
-    Update Formula for Categories and Items
-    Given an initial score SS, a sentiment adjustment ΔSΔS, and a scaling factor αα for sensitivity:
-    S′=3×tanh⁡(S+α⋅ΔS3)
-    S′=3×tanh(3S+α⋅ΔS​)
-
-        Why tanh(x)? It smoothly tapers values between -3 and 3.
-
-        Why divide by 3? It ensures small changes when values are already large.
-
-    Choose αα based on impact sensitivity
-
-        Example: α=0.5α=0.5 (Adjust this to control how strongly feedback affects the profile).
-
-    -----
 
     LLMs are annoying - e.g. when i was specifying actors in my prompt, it occasionally would forget or ignore the actresses the user mentioned.
     There is a lot of work to be done in this area, and I would like to explore this further in the future.
-
 
 ------ SAMPLE DIRECTOR BEING ADDED WITHOUT MENTION
 
@@ -422,8 +395,6 @@ Item 'Robert Zemeckis' not found in user profile category, adding it with a defa
 For the user profile, films and actors were represented as tuples with their IDs and scores.
 Directors were represented as a list of tuples with their names and scores.
 Genres were represented as a list of tuples with their names and scores.
-
-
 
 For the feedback system, the system would first try to find the film id in the film database.
 Regardless of whether the film was found, it would then check the user profile for the film.
@@ -439,20 +410,5 @@ If the film was not found, it
 
 \cite{FuzzyWuzzy} I used the FuzzyWuzzy library to match the film titles. It uses the Levenshtein distance to match the film titles.
 https://en.wikipedia.org/wiki/Levenshtein_distance
-
-
---------
-
-Routing
-
-I initially used LLM routing, but I ended up using a much simpler approach, in just searching for words in a dictionary to classify what a user was looking for.
-This greatly spead up the system, but the LLM routing approach is still a valid approach, that can be quite powerful in handling more complex queries.
-If I had more time and resources, one possible approach would be to train a very simple NLP model to classify the queries, and then use that to route the queries to the appropriate LLM.
-
-----
-
-
-
-----
 
 \end{comment}
