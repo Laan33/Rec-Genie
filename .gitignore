@@ -336,3 +336,5 @@ cython_debug/
 /.idea/
 /rec-sys/credentials.py
 Rec-Genie/rec_sys/credentials.py
+fyp/CL-FYP-Report/Figures/FYP_HLA.drawio.png
+.idea/workspace.xml

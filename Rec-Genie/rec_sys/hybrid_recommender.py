@@ -31,12 +31,12 @@ def hybrid_recommend(user_profile, films_df, credits_df, ratings_df, genre_list_
 
     final_scores = {
         movie_id: {
-            'final_score': content_score + collab_scores_dict.get(movie_id, 0),  # Default to 0 if not found
+            'final_score': content_score + (collab_scores_dict.get(movie_id, 0) * weights['collab_weight']),  # Default to 0 if not found
             'content_score': content_score,
             'cast_score': cast_score,
             'director_score': director_score,
             'genre_score': genre_score,
-            'collab_score': collab_scores_dict.get(movie_id, 0) * weights['collab_weight']  # Default to 0 if not found
+            'collab_score': (collab_scores_dict.get(movie_id, 0) * weights['collab_weight'])  # Default to 0 if not found
         }
         for movie_id, content_score, cast_score, director_score, genre_score in content_scores
     }
@@ -94,6 +94,8 @@ def fill_in_collab_scores(films_df, collab_scores, weights):
     # If no collaborative recommendations are available, add the vote_average as a fallback to the score
     collab_scores['score'] = collab_scores['score'].fillna(0)
     collab_scores = collab_scores.rename(columns={'item': 'id'})
+
+    # TODO - scale the vote_average to 0.3 as not to outweigh the real collaborative scores
 
     # Merge vote_average from films_df
     collab_scores = collab_scores.merge(films_df[['id', 'vote_average']], on='id', how='left')
