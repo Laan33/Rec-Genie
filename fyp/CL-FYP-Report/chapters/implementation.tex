@@ -273,64 +273,6 @@ Often, the model would
 There is still a lot of work to be done in this area. There is still a lot of noise at times in the LLM outputs, and the model would sometimes forget or ignore the formatting instructions, which then impacted the performance of the system as it was not able to parse the output correctly.
 
 
-\section{System Run Through}
-\label{sec:system_run_through}
-This section provides a brief run through of the system, demonstrating how the system works and how it can be used to provide recommendations based on user preferences, alongside it's feedback and adjustment system.
-
-\subsection{User Profile Starting Template}
-\label{subsec:user_profile_starting_template}
-The system allows users to start with a template profile - e.g. action and crime films, romcoms, etc.
-This is done by providing a set of film ids and their associated ratings.
-
-The system will then use this template to generate a user profile, which can be adjusted based on user feedback and preferences.
-For this example, the user profile is set to a template profile of action and crime films, with a few films added to the profile. See \cref{tab:sample_user_ratings} for the ratings used for this example.
-
-\input{tables/sampleUserRatings.tex}
-
-\subsection{Generated Recommendations}
-\label{subsec:generated_recommendations}
-As soon as the system is started, the user is presented with a set of recommendations based on their profile. You can see the recommendations in the image below \cref{fig:sample_recommendations}.
-\begin{figure}[H]
-    \centering
-    \makebox[\textwidth]{\includegraphics[width=1.2\textwidth]{Figures/RunThrough/FirstRecommendations.png}}
-    \caption{Sample Recommendations}
-    \label{fig:sample_recommendations}
-\end{figure}
-
-\subsection{User Interaction}
-\label{subsec:user_interaction_run_through}
-The user can then interact with the system, providing feedback on their preferences and the recommendations.
-
-\begin{figure}[H]
-    \centering
-    \makebox[\textwidth]{\includegraphics[width=1.2\textwidth]{Figures/RunThrough/GodfatherTypething.png}}
-    \caption{Sample User Interaction}
-    \label{fig:sample_user_interaction}
-\end{figure}
-
-\subsection{New Recommendations Based on User Feedback}
-\label{subsec:new_recommendations}
-The user can also then provide feedback on the recommendations, and have the system adjust the recommendations based on their feedback, which you can see the extracted user preferences in the top right of the image.
-\begin{figure}[H]
-    \centering
-    \makebox[\textwidth]{\includegraphics[width=1.2\textwidth]{Figures/RunThrough/WhenNoLikeBatman.png}}
-    \caption{Sample User Feedback}
-    \label{fig:sample_user_feedback}
-\end{figure}
-
-You can see that the system has adjusted the recommendations based on the user feedback, and Batman is no longer in the recommendations.
-
-\subsection{Recommendation Breakdown}
-\label{subsec:recommendation_breakdown}
-The user can also ask the system to provide a breakdown of a recommendation, which will show the user how the recommendations were generated.
-\begin{figure}[H]
-    \centering
-    \makebox[\textwidth]{\includegraphics[width=1.2\textwidth]{Figures/RunThrough/RecommendationExplanation.png}}
-    \caption{Sample Recommendation Breakdown}
-    \label{fig:sample_recommendation_breakdown}
-\end{figure}
-
-
 
 \begin{comment}
 
@@ -395,3 +337,5 @@ If the film was not found, it
 https://en.wikipedia.org/wiki/Levenshtein_distance
 
 \end{comment}
+
+

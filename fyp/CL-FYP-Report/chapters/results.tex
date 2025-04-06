@@ -8,14 +8,67 @@
 % % Efficiency issues
 
 
+\section{System Run Through}
+\label{sec:system_run_through}
+This section provides a brief run through of the system, demonstrating how the system works and how it can be used to provide recommendations based on user preferences, alongside it's feedback and adjustment system.
+
+\subsection{User Profile Starting Template}
+\label{subsec:user_profile_starting_template}
+The system allows users to start with a template profile - e.g. action and crime films, romcoms, etc.
+This is done by providing a set of film ids and their associated ratings.
+
+The system will then use this template to generate a user profile, which can be adjusted based on user feedback and preferences.
+For this example, the user profile is set to a template profile of action and crime films, with a few films added to the profile. See \cref{tab:sample_user_ratings} for the ratings used for this example.
+
+\input{tables/sampleUserRatings.tex}
+
+\subsection{Generated Recommendations}
+\label{subsec:generated_recommendations}
+As soon as the system is started, the user is presented with a set of recommendations based on their profile. You can see the recommendations in the image below \cref{fig:sample_recommendations}.
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.2\textwidth]{Figures/RunThrough/FirstRecommendations.png}}
+    \caption{Sample Recommendations}
+    \label{fig:sample_recommendations}
+\end{figure}
+
+\subsection{User Interaction}
+\label{subsec:user_interaction_run_through}
+The user can then interact with the system, providing feedback on their preferences and the recommendations.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.2\textwidth]{Figures/RunThrough/GodfatherTypething.png}}
+    \caption{Sample User Interaction}
+    \label{fig:sample_user_interaction}
+\end{figure}
+
+\subsection{New Recommendations Based on User Feedback}
+\label{subsec:new_recommendations}
+The user can also then provide feedback on the recommendations, and have the system adjust the recommendations based on their feedback, which you can see the extracted user preferences in the top right of the image.
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.2\textwidth]{Figures/RunThrough/WhenNoLikeBatman.png}}
+    \caption{Sample User Feedback}
+    \label{fig:sample_user_feedback}
+\end{figure}
+
+You can see that the system has adjusted the recommendations based on the user feedback, and Batman is no longer in the recommendations.
+
+\subsection{Recommendation Breakdown}
+\label{subsec:recommendation_breakdown}
+The user can also ask the system to provide a breakdown of a recommendation, which will show the user how the recommendations were generated.
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.2\textwidth]{Figures/RunThrough/RecommendationExplanation.png}}
+    \caption{Sample Recommendation Breakdown}
+    \label{fig:sample_recommendation_breakdown}
+\end{figure}
+
+
 \section{Recommendation System Evaluation}
 \label{sec:recommendation_system_evaluation_results}
 The recommendation system fulfils its purpose of providing a proof of concept for a recommendation system that is adjustable and explainable.
-
-\subsection{Sample Runs}
-\label{sec:sample_runs}
-
-
 
 
 \section{Large Language Model Evaluation}
@@ -26,10 +79,9 @@ Lorum ipsum dolor sit amet, consectetur adipiscing elit.
 \label{sec:conversational_interface}
 The system is able to provide a conversational interface that allows the user to explore their preferences and provide feedback.
 It is easily able to provide detailed responses to user queries, explore user preferences and keep the user engaged in the conversation.
-For example, in the following conversation, the system engages with the 
+
+For example, in the following conversation, the system engages with the user and is able to talk about the directors style and asks the user about their opinions on other directors and genres.
 \input{tables/results/chattyChitChat.tex}
-
-
 
 \subsection{User Preference Extraction}
 \label{sec:user_preference_extraction}
@@ -38,15 +90,22 @@ For example, in the following conversation, the user is able to provide their pr
 
 \input{tables/results/sampleSemanticExtraction.tex}
 
+\subsection{Recommendation Breakdown}
+\label{sec:recommendation_breakdown}
+As you can see in \cref{sec:system_run_through}, the system is able to provide a breakdown of the recommendations and explain why it recommended a certain film to the user.
+For example, in the following conversation, the user asks the system to explain why it recommended "Batman Begins" to them, and the system is able to provide a detailed explanation of the recommendation:
 
+\input{tables/results/explain.tex}
 
 \subsection{Responsiveness}
 \label{sec:responsiveness}
 The system was able to respond in a timely manner and was able to handle out of scope conversations and redirect the conversation back to the task at hand.
 
-On average, the system was able to start responding to user prompts in under 5 seconds, even with long prompts full of user preferences and associated comments.
+On average, the system was able to start responding to user prompts in under 7 to 10 seconds, even with long prompts full of user preferences and associated comments.
 
-For explanations, 
+For explanations, the system was able to provide a detailed explanation of the recommendation in under 10 seconds.
+
+
 
 \section{User Evaluation Results}
 \label{sec:user_evaluation_results}
@@ -55,7 +114,7 @@ The user evaluation was conducted with 4 users, who were asked to complete a ser
 \subsection{Survey Results}
 \label{sec:survey_results}
 You can find the full survey results in \cref{appendix:surveyResults}.
-Overall, the survey results were really positive, with the users finding the system quite useful, able to understand their preferences, and has a lot of potential.
+Overall, the survey results were quite positive, with the users finding the system quite useful, able to understand their preferences, and has a lot of potential.
 
 
 \subsection{User Feedback}
