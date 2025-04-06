@@ -30,7 +30,7 @@ and provide more accurate recommendations
 
 \subsection{Collaborative Retrieval for LLM-based CRSs}
 \label{sec:collaborative_retrieval}
-This paper by Zhu et al. \cite{zhu2025collaborativeretrievallargelanguage} introduces CRAG (Collaborative Retrieval Augmented Generation), a novel approach that combines large language models (LLMs) with collaborative filtering (CF) for conversational recommender systems (CRSs). While LLMs excel at understanding context and user preferences in conversations, they often lack the ability to leverage behavioral data effectively, which is a strength of traditional collaborative filtering methods. CRAG addresses this limitation by integrating both approaches.
+This paper by Zhu et al. \cite{zhu2025collaborativeretrievallargelanguage} introduces CRAG (Collaborative Retrieval Augmented Generation), a novel approach that combines large language models (LLMs) with collaborative filtering (CF) for conversational recommender systems (CRSs). While LLMs excel at understanding context and user preferences in conversations, they often lack the ability to leverage behavioural data effectively, which is a strength of traditional collaborative filtering methods. CRAG addresses this limitation by integrating both approaches.
 
 The CRAG framework consists of three main components:
 \begin{itemize}
@@ -41,12 +41,12 @@ The CRAG framework consists of three main components:
 
 The authors demonstrate CRAG's superior performance on two movie recommendation datasets, namely a refined Reddit dataset (Reddit-v2) and the Redial dataset. The results show that CRAG provides better item coverage and recommendation accuracy compared to baseline CRS methods, with particularly significant improvements for recently released movies.
 
-By integrating collaborative filtering with LLMs, CRAG bridges a critical gap in current CRS approaches. This integration enables the system to leverage behavioral data that is not typically included in LLM training, resulting in improved recommendation performance. Additionally, the refined Reddit dataset introduced in this study highlights the importance of high-quality data in advancing research in this field.
+By integrating collaborative filtering with LLMs, CRAG bridges a critical gap in current CRS approaches. This integration enables the system to leverage behavioural data that is not typically included in LLM training, resulting in improved recommendation performance. Additionally, the refined Reddit dataset introduced in this study highlights the importance of high-quality data in advancing research in this field.
 
 
-\section{Critiquing-based reccomendation systems}
+\section{Critiquing-based recommendation systems}
 The project touches in on critiquing-based recommendation systems, where the user is asked to provide feedback on what preferences they hold for recommendations, with the system using this feedback to refine the user profile and improve the recommendations given to the user.
-Current reccomendation systems are limited in that they are only based on static attribute values (for example, in a digital marketplace, attributes such as a digital camera’s screen size, effectiveness pixels, optical zoom).
+Current recommendation systems are limited in that they are only based on static attribute values (for example, in a digital marketplace, attributes such as a digital camera’s screen size, effectiveness pixels, optical zoom).
 
 One paper, Chen et al\cite{CHEN20194}, proposes a sentiment-integrated critiquing approach, for helping users to formulate and refine their preferences, improving the user's product knowledge, preference certainty, decision confidence, perceived information usefulness, and purchase intention.
 
@@ -56,13 +56,13 @@ This can be integrated into a conversational recommender system, where the user 
 \section{Data scarcity and training cost}
 Data scarcity remains a significant challenge in training effective Conversational Recommender Systems (CRSs). To address this issue, techniques such as model distillation and fine-tuning can be employed to enhance model performance while reducing computational costs.
 
-In the paper by Hsieh et al. \cite{hsieh2023distillingstepbystepoutperforminglarger}, the authors propose a step-by-step distillation approach. This method involves training a smaller model to mimic the behavior of a larger model, followed by fine-tuning the smaller model on the target task. This approach not only outperforms the larger model on the target task but also proves to be more computationally efficient.
+In the paper by Hsieh et al. \cite{hsieh2023distillingstepbystepoutperforminglarger}, the authors propose a step-by-step distillation approach. This method involves training a smaller model to mimic the behaviour of a larger model, followed by fine-tuning the smaller model on the target task. This approach not only outperforms the larger model on the target task but also proves to be more computationally efficient.
 
 Another strategy to mitigate data scarcity is the generation of synthetic data using a larger pre-trained model. 
 This technique leverages the capabilities of a large language model to create additional high quality training examples, 
 which can then be used to train a smaller, more efficient model. 
 By augmenting the training dataset with synthetic data, the performance of the conversational recommender system can be improved without the need for extensive real-world data collection. 
-This method is particularly useful in scenarios where obtaining large amounts of labeled data is challenging or costly. 
+This method is particularly useful in scenarios where obtaining large amounts of labelled data is challenging or costly. 
 For instance, in this project, it is not feasible for to have a large number of users interacting with the system to generate training data.
 
 \section{Explainability}
@@ -105,12 +105,12 @@ Recent research has emphasized the importance of user-centric evaluation metrics
 Additionally, metrics such as dialogue coherence, response relevance, and interaction length are considered to evaluate the quality of the conversational interactions \cite{radlinski2017a}.
 \\\\
 The evaluation of CRSs has also seen the emergence of novel approaches, such as the use of human-in-the-loop evaluations, where human annotators assess the quality of recommendations and interactions. This approach allows for a more nuanced understanding of user preferences and expectations \cite{mehrotra2018towards}.
-Furthermore, the integration of user modeling techniques, such as user profiling and context-aware recommendations, has been explored to enhance the personalization and relevance of recommendations. These techniques aim to capture user preferences, behaviors, and contextual information to provide more tailored recommendations \cite{MateosContext2024, Chen2020ACR}.
+Furthermore, the integration of user modelling techniques, such as user profiling and context-aware recommendations, has been explored to enhance the personalization and relevance of recommendations. These techniques aim to capture user preferences, behaviours, and contextual information to provide more tailored recommendations \cite{MateosContext2024, Chen2020ACR}.
 \\\\
 The use of large language models (LLMs) in CRSs has introduced new challenges and opportunities for evaluation. LLMs can generate human-like responses, but their performance can vary significantly based on the training data and fine-tuning processes. 
 While LLMs have their own evaluation metrics, such as perplexity and BLEU scores\cite{10.1145/3641289}, these metrics do not fully capture the effectiveness of LLMs in the context of CRSs.
 \\
-Moreover, the use of simulation environments and user simulators has gained traction\cite{huang2024conceptevaluationprotocol} as a means to conduct large-scale evaluations without the need for extensive real-world user interactions. These simulators can model user behavior and preferences, providing a controlled setting to test and refine CRSs.
+Moreover, the use of simulation environments and user simulators has gained traction\cite{huang2024conceptevaluationprotocol} as a means to conduct large-scale evaluations without the need for extensive real-world user interactions. These simulators can model user behaviour and preferences, providing a controlled setting to test and refine CRSs.
 Despite these advancements, papers outline that there remains a need for standardized evaluation frameworks that can comprehensively assess the performance of CRSs across different domains and use cases.
 
 
