@@ -61,18 +61,18 @@ scenario2_user_profile = """
 
 # ID - 3,333,333 - Crime Comedy, Action, Drama, Big Budget Films
 scenario3_user_profile = """
-710,golden eye, 4
-1770,Michael Collins, 5
-341013,Atomic Blonde, 3.8
-374720,Dunkirk, 4.7
-339403,Baby Driver, 4.7
-318846,The Big Short, 4.4
-627,Trainspotting, 4.9
-27205,Inception, 3.6
-106646,The Wolf of Wall Street, 4.5
-1893,Star Wars: Episode I - The Phantom Menace, 3.8
-550,Fight Club, 4.2
-98,Gladiator, 4
+    710,Golden eye, 4
+    1770,Michael Collins, 5
+    341013,Atomic Blonde, 3.8
+    374720,Dunkirk, 4.7
+    339403,Baby Driver, 4.7
+    318846,The Big Short, 4.4
+    627,Trainspotting, 4.9
+    27205,Inception, 3.6
+    106646,The Wolf of Wall Street, 4.5
+    1893,Star Wars: Episode I - The Phantom Menace, 3.8
+    550,Fight Club, 4.2
+    98,Gladiator, 4
 """
 
 user_ratings = """
