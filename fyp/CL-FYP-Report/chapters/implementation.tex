@@ -179,21 +179,6 @@ The same process is performed when looking to add a new film to the user profile
 \section{Large Language Model Integration}
 \label{sec:large_language_model_integration}
 
-% I spoke to a former colleague of mine from Genesys, to consult on my planned implementation.
-% He works on a data science team team in Genesys, with a primary focus on Large Language Models.
-
-% On his advice, I decided to pivot the planned implementation to utilise a single large language model, rather than a multi-model approach.
-% The model I chose to use was the Llama3.2 model, specifically the \texttt{llama3.2:3b-instruct-q4\_K\_M} model\cite{grattafiori2024llama3herdmodels}, which is a quantized instruct based model.
-
-% This design decision was made to achieve a goal of the project, being that the system was to be as lightweight as possible, where it could be feasibly deployed on a local machine.
-% \\\\
-% This model has also been trained on
-
-% This would help allow for the system to be more easily deployed and maintained, as well as reduce the complexity of the system.
-
-% Primarily, it reduced the memory needed for the system.
-
-
 Originally, the plan was to use a multi-model approach, where each model would be responsible for a specific task. For example, the conversational agent would be a conversational model, the routing would be done by an instruct model, as would the feedback extraction model.
 \\\\
 However, after consulting with a former colleague from Genesys, the decision was made to pivot to a single large language model (LLM) approach.
@@ -249,7 +234,6 @@ One idea would be to implement a mapping or flag system where specific prefixes 
 This would allow the system to quickly identify the type of item being referenced and parse it accordingly, while importantly reducing the number of tokens in the response.
 
 
-
 \section{Challenges Faced}
 \label{sec:challenges_faced}
 The implementation of the system faced several challenges, particularly in the areas of prompt engineering, user interaction and data management.
@@ -275,8 +259,7 @@ Although the selected model was lightweight and efficient, it initially required
 \\\\
 Through iterative prompt engineering, the response time was significantly reduced, with the average time decreasing to approximately 15 seconds. This was a substantial improvement with a \textbf{reduction of 57\%} in response time.
 
-This improvement was achieved by optimizing the prompt structure, specifically by minimizing the number of tokens in the generated response.
-
+This improvement was achieved by optimizing the prompt structure, specifically by minimizing the number of tokens in the generated response. To read more about the prompt engineering process, see \cref{subsec:prompt_engineering} and \cref{subsec:prompt_engineering_challenges}.
 
 \subsection{Prompt Engineering}
 \label{subsec:prompt_engineering_challenges}
