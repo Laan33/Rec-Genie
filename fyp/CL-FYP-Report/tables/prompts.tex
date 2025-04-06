@@ -1,38 +1,49 @@
 \begin{table}[H]
-\centering
-\begin{tabular}{|p{2cm}|p{12cm}|} % Adjusted column widths
-\hline
-\textbf{Prompt Name} & \textbf{Prompt Description} \\ \hline
-Film Chat Explore Prompt & You're an assistant who's good at talking to users to find out about their film interests and what matters to them in a film. \\ \hline
-Explain Recommendation Prompt & You are talking to the user, briefly explain the recommendation for the given film. These are all attributes based off the user's profile. \newline
-Film Recommendation: \newline
-Title: \{title\} (\{release\_date\}) \newline
-Total Score: \{score\} \newline
-Cast Score: \{cast\_score\} \newline
-Director Score: \{director\_score\} \newline
-Genre Score: \{genre\_score\} \newline
-Collaborative Filtering Score: \{user\_user\_score\} \newline
-Explain why this movie is recommended based on the given scores. \\ \hline
-Glean Feedback Prompt & Extract film preferences, filtering preferences, and sentiment scores from this user message. \newline
-FORMAT THE OUTPUT WITH CATEGORIES AND SCORES LIKE THIS EXAMPLE, BUT ONLY USE ITEMS ACTUALLY MENTIONED OR IMPLIED IN THE USER MESSAGE BELOW: \newline
-RULES: \newline
-1. Each category score shows how important this category is to the user (0.1-1.0). \newline
-2. Each item score shows how much the user likes that specific item (0.1-1.0). \newline
-3. IMPORTANT: IGNORE THE EXAMPLE ITEMS AND ONLY EXTRACT ITEMS FROM THE USER MESSAGE. \newline
-4. Also include implied items by name not directly mentioned but associated with mentioned items: \newline
-   a. For mentioned films, include their directors with a score of 60\% of the film's score. \newline
-   b. For mentioned films, include their main actors with a score of 50\% of the film's score. \newline
-   c. For mentioned films, include their genres with a score of 50\% of the film's score. \newline
-   d. For mentioned directors, include their notable films with a score of 70\% of the director's score. \newline
-   e. For mentioned actors, include their notable films with a score of 60\% of the actor's score. \newline
-5. FORMAT MUST BE EXACTLY: 'Category; score, Item1: score, Item2: score \textbackslash n'. \newline
-6. No explanations or additional text - only the structured data. \newline
-7. Use negative scores (-0.1 to -0.5) for things the user explicitly dislikes or has negative sentiment about. \newline
-8. IF AN ITEM IS MENTIONED BUT NO CLEAR SENTIMENT IS GIVEN, DEFAULT TO 0.3. \newline
-9. ENSURE EVERY ITEM HAS A NUMERIC SCORE. \newline
-10. For implied items, multiply the sentiment score of the source item by the relationship factor. \newline
-11. ENSURE ALL EXPLICITLY MENTIONED FILMS, DIRECTORS, ACTORS AND GENRES ARE INCLUDED, even if sentiment is negative. \\ \hline
-\end{tabular}
-\caption{Prompts for the Language Model}
-\label{tab:llm_prompts}
-\end{table}
+   \centering
+   \begin{tabular}{|p{3cm}|p{11cm}|} % Adjusted column widths
+   \hline
+   \textbf{Prompt Name} & \textbf{Prompt Description} \\ \hline
+   Film Chat Explore Prompt & You're an assistant who's good at talking to users to find out about their film interests and what matters to them in a film. \\ \hline
+   Explain Recommendation Prompt & You are talking to the user, briefly explain the recommendation for the given film. These are all attributes based off the user's profile. \newline
+   Film Recommendation: \newline
+   Title: \{title\} (\{release\_date\}) \newline
+   Total Score: \{score\} \newline
+   Cast Score: \{cast\_score\} \newline
+   Director Score: \{director\_score\} \newline
+   Genre Score: \{genre\_score\} \newline
+   Collaborative Filtering Score: \{user\_user\_score\} \newline
+   Explain why this movie is recommended based on the given scores. \\ \hline
+   \end{tabular}
+   \caption{Film Chat Explore and Explain Recommendation Prompt}
+   \label{tab:llm_prompts_chat_explain}
+   \end{table}
+
+
+\begin{table}[H]
+   \centering
+   \begin{tabular}{|p{3cm}|p{11cm}|} % Adjusted column widths
+   \hline
+   \textbf{Prompt Name} & \textbf{Prompt Description} \\ \hline
+   Glean Feedback Prompt & Extract film preferences, filtering preferences, and sentiment scores from this user message. \newline
+   FORMAT THE OUTPUT WITH CATEGORIES AND SCORES LIKE THIS EXAMPLE, BUT ONLY USE ITEMS ACTUALLY MENTIONED OR IMPLIED IN THE USER MESSAGE BELOW: \newline
+   RULES: \newline
+   1. Each category score shows how important this category is to the user (0.1-1.0). \newline
+   2. Each item score shows how much the user likes that specific item (0.1-1.0). \newline
+   3. IMPORTANT: IGNORE THE EXAMPLE ITEMS AND ONLY EXTRACT ITEMS FROM THE USER MESSAGE. \newline
+   4. Also include implied items by name not directly mentioned but associated with mentioned items: \newline
+      a. For mentioned films, include their directors with a score of 60\% of the film's score. \newline
+      b. For mentioned films, include their main actors with a score of 50\% of the film's score. \newline
+      c. For mentioned films, include their genres with a score of 50\% of the film's score. \newline
+      d. For mentioned directors, include their notable films with a score of 70\% of the director's score. \newline
+      e. For mentioned actors, include their notable films with a score of 60\% of the actor's score. \newline
+   5. FORMAT MUST BE EXACTLY: 'Category; score, Item1: score, Item2: score \textbackslash n'. \newline
+   6. No explanations or additional text - only the structured data. \newline
+   7. Use negative scores (-0.1 to -0.5) for things the user explicitly dislikes or has negative sentiment about. \newline
+   8. IF AN ITEM IS MENTIONED BUT NO CLEAR SENTIMENT IS GIVEN, DEFAULT TO 0.3. \newline
+   9. ENSURE EVERY ITEM HAS A NUMERIC SCORE. \newline
+   10. For implied items, multiply the sentiment score of the source item by the relationship factor. \newline
+   11. ENSURE ALL EXPLICITLY MENTIONED FILMS, DIRECTORS, ACTORS AND GENRES ARE INCLUDED, even if sentiment is negative. \\ \hline
+   \end{tabular}
+   \caption{Glean Feedback Prompt}
+   \label{tab:llm_prompts_glean_feedback}
+   \end{table}
