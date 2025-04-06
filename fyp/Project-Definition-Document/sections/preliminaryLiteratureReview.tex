@@ -47,13 +47,13 @@ and provide more accurate recommendations
 \subsubsection{Data scarcity and training cost}
 Data scarcity remains a significant challenge in training effective Conversational Recommender Systems (CRSs). To address this issue, techniques such as model distillation and fine-tuning can be employed to enhance model performance while reducing computational costs.
 
-In the paper by Hsieh et al. \cite{hsieh2023distillingstepbystepoutperforminglarger}, the authors propose a step-by-step distillation approach. This method involves training a smaller model to mimic the behavior of a larger model, followed by fine-tuning the smaller model on the target task. This approach not only outperforms the larger model on the target task but also proves to be more computationally efficient.
+In the paper by Hsieh et al. \cite{hsieh2023distillingstepbystepoutperforminglarger}, the authors propose a step-by-step distillation approach. This method involves training a smaller model to mimic the behaviour of a larger model, followed by fine-tuning the smaller model on the target task. This approach not only outperforms the larger model on the target task but also proves to be more computationally efficient.
 
 Another strategy to mitigate data scarcity is the generation of synthetic data using a larger pre-trained model. 
 This technique leverages the capabilities of a large language model to create additional high quality training examples, 
 which can then be used to train a smaller, more efficient model. 
 By augmenting the training dataset with synthetic data, the performance of the conversational recommender system can be improved without the need for extensive real-world data collection. 
-This method is particularly useful in scenarios where obtaining large amounts of labeled data is challenging or costly. 
+This method is particularly useful in scenarios where obtaining large amounts of labelled data is challenging or costly. 
 For instance, in this project, it is not feasible for me to have a large number of users interacting with the system to generate training data.
 
 
@@ -62,7 +62,7 @@ The evaluation of conversational recommender systems (CRSs) is a multifaceted ch
 
 Recent research has emphasized the importance of user-centric evaluation metrics, including user satisfaction, engagement, and perceived usefulness. User studies and A/B testing are commonly used to gather qualitative feedback and assess the overall user experience. Additionally, metrics such as dialogue coherence, response relevance, and interaction length are considered to evaluate the quality of the conversational interactions.
 
-Moreover, the use of simulation environments and user simulators has gained traction\cite{huang2024conceptevaluationprotocol} as a means to conduct large-scale evaluations without the need for extensive real-world user interactions. These simulators can model user behavior and preferences, providing a controlled setting to test and refine CRSs.
+Moreover, the use of simulation environments and user simulators has gained traction\cite{huang2024conceptevaluationprotocol} as a means to conduct large-scale evaluations without the need for extensive real-world user interactions. These simulators can model user behaviour and preferences, providing a controlled setting to test and refine CRSs.
 
 Despite these advancements, papers outline that there remains a need for standardized evaluation frameworks that can comprehensively assess the performance of CRSs across different domains and use cases.
 
@@ -76,9 +76,9 @@ Recent advancements in natural language processing have enabled more sophisticat
 
 In this project, I aim to incorporate these explainability techniques to ensure that users feel confident and informed about the recommendations they receive. By leveraging both content-based and collaborative filtering explanations, as well as utilizing NLP for natural language justifications, we can create a conversational recommendation system that not only provides accurate recommendations but also builds trust and engagement with users.
 
-\subsubsection{Critiquing-based reccomendation systems}
+\subsubsection{Critiquing-based recommendation systems}
 My project touches in on critiquing-based recommendation systems, where the user is asked to provide feedback on the recommendations they are given, and the system uses this feedback to refine the recommendations.
-Current reccomendation systems are limited in that they are only based on static attribute values (for example, in a digital marketplace, attributes such as a digital camera’s screen size, effectiveness pixels, optical zoom).
+Current recommendation systems are limited in that they are only based on static attribute values (for example, in a digital marketplace, attributes such as a digital camera’s screen size, effectiveness pixels, optical zoom).
 
 One paper, Chen et al\cite{CHEN20194}, proposes a sentiment-integrated critiquing approach, for helping users to formulate and refine their preferences, improving the user's product knowledge, preference certainty, decision confidence, perceived information usefulness, and purchase intention.
 
