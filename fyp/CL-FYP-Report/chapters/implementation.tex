@@ -2,9 +2,6 @@
 
 % note - writing this in third person, as it is a report
 
-% Technologies and Languages used
-% Issues when implementing; discuss challenges and solutions
-
 
 \begin{comment}
     Key points to cover in the implementation chapter:
@@ -197,14 +194,17 @@ The same process is performed when looking to add a new film to the user profile
 % Primarily, it reduced the memory needed for the system.
 
 
-Originally, the plan was to use a multi-model approach, where each model would be responsible for a specific task.
+Originally, the plan was to use a multi-model approach, where each model would be responsible for a specific task. For example, the conversational agent would be a conversational model, the routing would be done by an instruct model, as would the feedback extraction model.
+\\\\
 However, after consulting with a former colleague from Genesys, the decision was made to pivot to a single large language model (LLM) approach.
 This decision was made to reduce the complexity of the system, and to allow for a more lightweight implementation.
+\\\\
 The LLM used in this project is the \texttt{llama3.2:3b-instruct-q4\_K\_M} model\cite{grattafiori2024llama3herdmodels}, which is a quantized instruct based model.
+As it is a quantized model, it dramatically reduces the memory needed for the system, allowing it to run on local machines with limited resources.
+While this reduces the accuracy of the model, it is still able to perform well on the tasks needed for the project as high accuracy was not a key requirement. 
 
-Due to the LLM being a quantized model, it is able to run on local machines with limited resources.
 This was a key factor in the decision to use this model, as it allows for the system to feasibly be deployed on a local machine.
-
+\\\\
 Ollama was used to run the model, as it is a lightweight and easy to use framework for running LLMs.
 The LLM was used to handle various tasks, such as exploring user preferences, explaining recommendations, and extracting feedback.
 
