@@ -25,6 +25,8 @@
     
 \end{comment}
 
+To see a run through of the system, see \cref{sec:system_run_through}.
+
 \section{Project Methodology}
 \label{sec:project_methodology}
 As mentioned in the recommendation system (\cref{sec:recommendation_system_design}), the project was designed to be a proof of concept, and as such, the recommendation engine implementation was not intended to be the most efficient or effective implementation.
@@ -85,15 +87,15 @@ For the collaborative filtering feature, I used the \texttt{UserUser} algorithm 
 
 \subsection{Datasets}
 \label{sec:datasets}
-The datasets used in the project were the TMDB\cite{tmdb} dataset, downloaded from Kaggle\cite{asaniczka_themoviedb_org_2025}, alongside film ratings from the MovieLens dataset\cite{harper2015movielens}.
+The project utilized two primary datasets: the TMDB dataset\cite{tmdb}, sourced from Kaggle\cite{asaniczka_themoviedb_org_2025}, and the MovieLens dataset\cite{harper2015movielens}. Additionally, an ensemble dataset\cite{banik2017movies} combining TMDB and MovieLens data was used to enrich the film information with cast and director details.
 
-Additionally, the project used an ensemble dataset\cite{banik2017movies} of the TMDB and MovieLens datasets to create a csv with film credits for the crew and cast of the films.
-
-The project used the TMDB dataset for the film data, and the MovieLens dataset for the ratings data, with the ensemble dataset used to create a csv with film credits for the top 3 members of the cast alongside the directors of the films.
+The TMDB dataset provided detailed film information, while the MovieLens dataset was used for user ratings, which were essential for implementing the user-user collaborative filtering component of the recommendation system. The ensemble dataset was used to extract cast and director information to be used in the content-based filtering system.
 
 \subsection{Data Processing}
 \label{sec:data_processing}
+The ensemble dataset was leveraged to create a CSV file containing the top three cast members and directors for each film.
 
+To prepare the data for the recommendation system, the films were stripped of irrelevant metadata, retaining only the essential attributes. The cast and director information from the ensemble dataset was appended to the film data to enhance its utility for content-based filtering. This streamlined dataset was then used to power the recommendation engine, ensuring efficient and accurate recommendations.
 
 
 
@@ -114,8 +116,6 @@ The project used the TMDB dataset for the film data, and the MovieLens dataset f
 
 % Primarily, it reduced the memory needed for the system.
 
-% For this I experimented with De
-
 
 Originally, the plan was to use a multi-model approach, where each model would be responsible for a specific task.
 However, after consulting with a former colleague from Genesys, the decision was made to pivot to a single large language model (LLM) approach.
@@ -128,11 +128,7 @@ This was a key factor in the decision to use this model, as it allows for the sy
 Ollama was used to run the model, as it is a lightweight and easy to use framework for running LLMs.
 The LLM was used to handle various tasks, such as exploring user preferences, explaining recommendations, and extracting feedback.
 
-% \subsection{Prompts}
-% \label{subsec:prompts}
-% The prompts that I used for the LLM were based on the \texttt{llama3.2:3b-instruct-q4\_K\_M} model\cite{grattafiori2024llama3herdmodels} card.
-% The prompts were designed to be as simple as possible, while still being able to provide the necessary information to the model.
-
+The LLM was integrated into the system directly, with the system routing user queries to the appropriate prompt and passing the response back to function calls.
 
 \subsection{Prompts}
 \label{subsec:prompts}
@@ -164,21 +160,45 @@ In the chat interface, the user can talk freely to the system, and the system wi
 
 \subsection{User Profile}
 \label{subsec:user_profile}
-WIP
 The user profile is a key component of the system, as it stores the user's preferences and feedback.
+It holds the weighting scheme for the hybrid recommendation system alongside the content-based filtering system. 
+It also holds the users feature item scores, which are used to provide recommendations based on the user's preferences.
 
+It is represented as a dictionary, with the following structure:
+\begin{verbatim}
+{
+    "user_id": {
+        "userId": user_id,
+        "weightings": {
+            'cast_ft_weight': 0.3, 
+            'genre_ft_weight': 0.4, 
+            ...
+        },
+        "feature_profile": {
+            'Quentin Tarantino': 0.5,
+            'Action': 0.8,
+            4995: 0.7, // film id
+            390012: 0.6, // actor id
+            ...
+        }
+    }
+}
+\end{verbatim}
+
+The user profile is designed to be flexible and extensible, allowing for the addition of new features and attributes as needed.
+If given more time, the user profile would have it's various features in the \texttt{feature\_profile} dictionary separated into their own dictionaries, such as \texttt{cast\_profile}, \texttt{genre\_profile}, etc.
 
 \subsection{User Profile Score Adjustment}
 \label{subsec:user_profile_score_adjustment}
 
 To adjust the user profile scores based on feedback, I used the hyperbolic tangent (\texttt{tanh}) function. 
-This approach was chosen because \texttt{tanh} provides a smooth, non-linear mapping that naturally tapers values between 0 and 3, ensuring that extreme adjustments are avoided while still allowing meaningful changes.
+This approach was chosen because \texttt{tanh} provides a smooth, non-linear mapping that naturally tapers values between 0 and 5, ensuring that extreme adjustments are avoided while still allowing meaningful changes.
 
-The floor of 0 was implemented to ensure that films with a high relevance score, such as 3, do not get punished more than films that are less relevant, such as 0.
+The floor of 0 was implemented to ensure that films with a high relevance score, such as 3.4, do not get punished more than films that are less relevant, such as 0.
 
 The formula used for updating the scores, with a floor of 0, is as follows:
 \[
-S' = \max\left(0, 3 \times \tanh\left(\frac{S + \alpha \cdot \Delta S}{3}\right)\right)
+S' = \max\left(0, 3 \times \tanh\left(\frac{S + \alpha \cdot \Delta S}{5}\right)\right)
 \]
 where:
 \begin{itemize}
@@ -204,6 +224,10 @@ The value of \( \alpha \) can be adjusted to control how strongly feedback affec
 In the actual implementation, a value of \( \alpha = 0.3 \) was used, but this can be fine-tuned based on user testing and feedback if the system were to be changed in the future.
 \\
 This approach provided a robust and intuitive way to manage user profile updates, ensuring stability while still reflecting user preferences effectively.
+
+\paragraph{Searching for items in the user profile} is done using the \texttt{FuzzyWuzzy} library\cite{FuzzyWuzzy}, which uses the Levenshtein distance to match the item title to items in the user profile.
+The same process is performed when looking to add a new film to the user profile, where the system will first run a staight match search on the dataset, and if it is not, it will run a fuzzy search on the items in the dataset. This is to handle any noise in the given input from the LLM, such as syntax errors or typos.
+
 
 
 \section{Challenges Faced}
@@ -244,7 +268,62 @@ The "Glean Feedback Prompt" in \cref{subsec:prompts} was particularly challengin
 Often, the model would
 
 
+\section{System Run Through}
+\label{sec:system_run_through}
+This section provides a brief run through of the system, demonstrating how the system works and how it can be used to provide recommendations based on user preferences, alongside it's feedback and adjustment system.
 
+\subsection{User Profile Starting Template}
+\label{subsec:user_profile_starting_template}
+The system allows users to start with a template profile - e.g. action and crime films, romcoms, etc.
+This is done by providing a set of film ids and their associated ratings.
+
+The system will then use this template to generate a user profile, which can be adjusted based on user feedback and preferences.
+For this example, the user profile is set to a template profile of action and crime films, with a few films added to the profile. See \cref{tab:sample_user_ratings} for the ratings used for this example.
+
+\input{tables/sampleUserRatings.tex}
+
+\subsection{Generated Recommendations}
+\label{subsec:generated_recommendations}
+As soon as the system is started, the user is presented with a set of recommendations based on their profile. You can see the recommendations in the image below \cref{fig:sample_recommendations}.
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.2\textwidth]{Figures/RunThrough/FirstRecommendations.png}}
+    \caption{Sample Recommendations}
+    \label{fig:sample_recommendations}
+\end{figure}
+
+\subsection{User Interaction}
+\label{subsec:user_interaction_run_through}
+The user can then interact with the system, providing feedback on their preferences and the recommendations.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.2\textwidth]{Figures/RunThrough/GodfatherTypething.png}}
+    \caption{Sample User Interaction}
+    \label{fig:sample_user_interaction}
+\end{figure}
+
+\subsection{New Recommendations Based on User Feedback}
+\label{subsec:new_recommendations}
+The user can also then provide feedback on the recommendations, and have the system adjust the recommendations based on their feedback, which you can see the extracted user preferences in the top right of the image.
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.2\textwidth]{Figures/RunThrough/WhenNoLikeBatman.png}}
+    \caption{Sample User Feedback}
+    \label{fig:sample_user_feedback}
+\end{figure}
+
+You can see that the system has adjusted the recommendations based on the user feedback, and Batman is no longer in the recommendations.
+
+\subsection{Recommendation Breakdown}
+\label{subsec:recommendation_breakdown}
+The user can also ask the system to provide a breakdown of a recommendation, which will show the user how the recommendations were generated.
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=1.2\textwidth]{Figures/RunThrough/RecommendationExplanation.png}}
+    \caption{Sample Recommendation Breakdown}
+    \label{fig:sample_recommendation_breakdown}
+\end{figure}
 
 
 
