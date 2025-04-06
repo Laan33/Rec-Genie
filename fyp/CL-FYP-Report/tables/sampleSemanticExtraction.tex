@@ -1,3 +1,34 @@
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|p{2cm}|p{1.5cm}|p{3cm}|p{1cm}|p{3cm}|p{1cm}|}
+    \hline
+    \multicolumn{6}{|p{0.9\textwidth}|}{\textbf{Input:} \textit{I really like Denis Villeneuve films, they're excellent. If I had to pick an actor, I would say Leonardo DiCaprio is my favourite. I prefer my recommendaitons to be based off content filtering.}} \\ \hline
+    \textbf{Category} & \textbf{Category Score} & \textbf{Item 1} & \textbf{Score} & \textbf{Item 2} & \textbf{Score} \\ \hline
+    Films   & 0.9          & Arrival                  & 0.9 & Blade Runner 2049       & 0.8    \\ \hline
+    Directors       & 0.8  & Denis Villeneuve         & 0.9 & &   \\ \hline
+    Actors         & 0.4   & Leonardo DiCaprio        & 0.5 & &   \\ \hline
+    Filtering    &  N/A    & Content Filtering        & 0.3 & &   \\ \hline
+    \end{tabular}
+    \caption{Semantic Breakdown of Inputs}
+    \label{tab:semantic_breakdown1}
+\end{table}
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|p{2cm}|p{1.5cm}|p{3cm}|p{1cm}|p{3cm}|p{1cm}|}
+    \hline
+    \multicolumn{6}{|p{0.9\textwidth}|}{\textbf{Input:} \textit{Also, the films snatch and lock stock and two smoking barrells really have a special place in my heart. They are such great films}} \\ \hline
+    \textbf{Category} & \textbf{Category Score} & \textbf{Item 1} & \textbf{Score} & \textbf{Item 2} & \textbf{Score} \\ \hline
+    Films     &  0.9     & Snatch          & 0.7   & Lock, Stock and Two Smoking Barrels & 0.8\\ \hline
+    Directors    & 0.6     & Guy Ritchie      & 0.55 & &  \\ \hline
+    Actors  &   0.4   & Vinnie Jones    & 0.6 & Jason Flemyng        & 0.5    \\ \hline
+    Genres    & 0.7     & Crime Comedy       & 0.75 & &  \\ \hline
+    \end{tabular}
+    \caption{Semantic Breakdown of Inputs}
+    \label{tab:semantic_breakdown2}
+\end{table}
+
 % Input: I really like Denis Villeneuve films, they're excellent. If I had to pick an actor, I would say Leonardo DiCaprio is my favourite. I prefer my recommendaitons to be based off content filtering.
 
 % Semantic breakdown:
@@ -23,5 +54,4 @@
 % Genres; 0.7, Crime Comedy: 0.75
 % Category sentiment:  {'Films': 0.0, 'Actors': 0.0, 'Genres': 0.0, 'Directors': 0.0, 'Filtering': 0.0}
 % Item sentiment:  {'Films': {'Snatch': 0.7, 'Stock and Two Smoking Barrels': 0.8}, 'Directors': {'Guy Ritchie': 0.55}, 'Actors': {'Vinnie Jones': 0.6, 'Jason Flemyng': 0.5}, 'Genres': {'Crime Comedy': 0.75}}
-
 
