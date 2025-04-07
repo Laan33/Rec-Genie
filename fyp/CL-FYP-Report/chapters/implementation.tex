@@ -22,8 +22,8 @@
     
 \end{comment}
 
-The system architecture design is visualised in \cref{fig:system_architecture}, which provides an overview of the system's components and their interactions.
-To see a run through of the system, see \cref{sec:system_run_through}.
+The system architecture design is visualised in \cref{fig:system_architecture_diagram}, which provides an overview of the system's components and their interactions.
+\textbf{To see a run through of the implemented system, see \cref{sec:system_run_through}.}
 
 \subsection{Technologies and Languages}
 \label{sec:technologies_and_languages}
@@ -46,7 +46,7 @@ It uses a combination of content-based filtering and collaborative filtering to 
 As there's no frameworks or libraries for content-based filtering with the qualities needed for recommendation and feature adjustment, a custom implementation was needed.
 
 Importantly, this implementation is intended to be a \textbf{proof of concept}, and is not intended to be the best implementation.
-With this in mind, the content-based filtering system uses the following features:
+With this in mind, as mentioned in \cref{sec:content_based_filtering_design}, the content-based filtering system uses the following features:
 \begin{itemize}
     \item Genres
     \item Directors
@@ -55,26 +55,17 @@ With this in mind, the content-based filtering system uses the following feature
 More features could be added, such as year, but the listed features are sufficient for a substantial proof of concept.
 Adding anything more would be a stretch goal, and would not be necessary for the proof of concept.
 With this in mind, there is not much reason to evaluate the content-based filtering system in detail.
-\\\\
-The content-based filtering system will fulfill the following requirements:
-\begin{itemize}
-    \item The system is able to provide recommendations based on the features
-    \item The system can provide recommendations based on the features with a user profile
-    \item Feature weights can be adjusted to provide different recommendations
-\end{itemize}
 
 \subsection{Collaborative Filtering}
 \label{sec:collaborative_filtering_implementation}
-For the collaborative filtering component of the the LensKit library to build a collaborative filtering recommendation system.
+The collaborative filtering system is implemented using the \texttt{LensKit} library\cite{lenskit}, which provides a framework for building and evaluating recommender systems.
 It is a user-user collaborative filtering system, which uses the user-item matrix to find similar users and recommend items based on their preferences.
 
 Again, as the recommendation system is only there to provide a working implementation of a recommendation system with key features, the collaborative filtering system is not the main focus of the project.
-As such, the design is not intended to be the most efficient or effective implementation, but rather a 
-it is not intended to be necessarily the best recommendation system, there is little need to evaluate the recommendation system in detail.
+If given more time, it would be great to implement a custom collaborative filtering system, with visibility into the neighbours profiles and the ability to adjust the weights of the neighbours based on their attributes.
 
-
-For the collaborative filtering feature, I used the \texttt{UserUser} algorithm from the \texttt{user\_knn} module that the \texttt{LensKit} library provides.
-The default \texttt{UserUser} parameters of \texttt{user\_knn} with the \texttt{nnbrs=15} and \texttt{min\_nbrs=3} parameters were used, as they provided a good balance between performance and accuracy.
+For the collaborative filtering feature, the project uses the \texttt{UserUser} algorithm from the \texttt{user\_knn} module that the \texttt{LensKit} library provides.
+The default \texttt{UserUser} parameters of \texttt{user\_knn} with the number of nearest neighbours \texttt{nnbrs=15} and minimum neighbours \texttt{min\_nbrs=3} parameters were used, as they provided a good balance between performance and accuracy.
 
 
 \section{Data Processing}
@@ -82,7 +73,7 @@ The default \texttt{UserUser} parameters of \texttt{user\_knn} with the \texttt{
 
 \subsection{Datasets}
 \label{sec:datasets}
-The project utilized two primary datasets: the TMDB dataset\cite{tmdb}, sourced from Kaggle\cite{asaniczka_themoviedb_org_2025}, and the MovieLens dataset\cite{harper2015movielens}. Additionally, an ensemble dataset\cite{banik2017movies} combining TMDB and MovieLens data was used to enrich the film information with cast and director details.
+The project utilized two primary datasets: the TMDB dataset\cite{tmdb}, sourced from Kaggle\cite{asaniczka_themoviedb_org_2025}, and the MovieLens dataset\cite{10.1145/2827872}. Additionally, an ensemble dataset\cite{banik2017movies} combining TMDB and MovieLens data was used to enrich the film information with cast and director details.
 
 The TMDB dataset provided detailed film information, while the MovieLens dataset was used for user ratings, which were essential for implementing the user-user collaborative filtering component of the recommendation system. The ensemble dataset was used to extract cast and director information to be used in the content-based filtering system.
 
@@ -90,7 +81,11 @@ The TMDB dataset provided detailed film information, while the MovieLens dataset
 \label{sec:data_processing}
 The ensemble dataset was leveraged to create a CSV file containing the top three cast members and directors for each film.
 
-To prepare the data for the recommendation system, the films were stripped of irrelevant metadata, retaining only the essential attributes. The cast and director information from the ensemble dataset was appended to the film data to enhance its utility for content-based filtering. This streamlined dataset was then used to power the recommendation engine, ensuring efficient and accurate recommendations.
+To prepare the data for the recommendation system, the films were stripped of irrelevant metadata, retaining only the essential attributes. 
+The cast and director information from the ensemble dataset was appended to the film data to enhance its utility for content-based filtering. 
+Then, the genres were one hot encoded to create a binary representation of the genres, allowing for efficient filtering and matching.
+\\
+This streamlined dataset was then used to power the recommendation engine, ensuring efficient and accurate recommendations.
 
 
 \section{User Interaction}
@@ -143,11 +138,10 @@ The system will then add the relevant features to the user profile, with a score
 To adjust the user profile scores based on feedback, I used the hyperbolic tangent (\texttt{tanh}) function. 
 This approach was chosen because \texttt{tanh} provides a smooth, non-linear mapping that naturally tapers values between 0 and 5, ensuring that extreme adjustments are avoided while still allowing meaningful changes.
 
-The floor of 0 was implemented to ensure that films with a high relevance score, such as 3.4, do not get punished more than films that are less relevant, such as 0.
-
+The floor of 0 was implemented to ensure that films with a high relevance score in a category the user doesn't like, such as 3.4, do not get punished more than films that are less relevant, such as 0.
 The formula used for updating the scores, with a floor of 0, is as follows:
 \[
-S' = \max\left(0, 3 \times \tanh\left(\frac{S + \alpha \cdot \Delta S}{5}\right)\right)
+S' = \max\left(0, 5 \times \tanh\left(\frac{S + \alpha \cdot \Delta S}{5}\right)\right)
 \]
 where:
 \begin{itemize}
@@ -163,19 +157,26 @@ The use of \texttt{tanh} ensures that:
     \item Adjustments have diminishing returns as scores approach their limits, reflecting a natural plateau effect.
 \end{itemize}
 
-For example, if a user expresses strong positive feedback about a film, the corresponding score in their profile is increased, but the adjustment becomes less pronounced as the score nears the upper limit of 3. 
-Similarly, negative feedback reduces the score, but it is bounded by 0, ensuring that a film cannot be penalized below this threshold.
-\\\\
-This design choice was made to ensure that the system remains stable and does not produce erratic behaviour in response to user feedback.
+For example, if a user expresses strong positive feedback about a film, the corresponding score in their profile is increased, but the adjustment becomes less pronounced as the score nears the upper limit of 5. 
+Similarly, negative feedback reduces the score, but it is bounded by 0, ensuring that a film cannot be penalized below this threshold, for having relevance in a category the user does not like.
 \\
+This design choice was made to ensure that the system remains stable and does not produce erratic behaviour in response to user feedback.
+\\\\
 The scaling factor \( \alpha \) was chosen based on the desired sensitivity of the feedback.
 The value of \( \alpha \) can be adjusted to control how strongly feedback affects the profile. 
 In the actual implementation, a value of \( \alpha = 0.3 \) was used, but this can be fine-tuned based on user testing and feedback if the system were to be changed in the future.
 \\
-This approach provided a robust and intuitive way to manage user profile updates, ensuring stability while still reflecting user preferences effectively.
+This approach provided a robust and intuitive way to manage user profile updates, \textbf{ensuring stability while still reflecting user preferences effectively.}
 
-\paragraph{Searching for items in the user profile} is done using the \texttt{FuzzyWuzzy} library\cite{FuzzyWuzzy}, which uses the Levenshtein distance to match the item title to items in the user profile.
-The same process is performed when looking to add a new film to the user profile, where the system will first run a staight match search on the dataset, and if it is not, it will run a fuzzy search on the items in the dataset. This is to handle any noise in the given input from the LLM, such as syntax errors or typos.
+\subsubsection{Matching Items in the User Profile}
+\label{subsubsec:matching_items_in_user_profile}
+To ensure robust and accurate matching of items in the user profile, the system leverages the \texttt{FuzzyWuzzy} library\cite{FuzzyWuzzy}, which employs the Levenshtein distance algorithm to calculate the similarity between strings. This approach allows the system to handle variations in input, such as typos, syntax errors, or slight differences in naming conventions, ensuring a seamless user experience.
+
+The matching process is designed to prioritize efficiency and accuracy. Initially, the system performs a direct match search on the dataset to locate the item. If the item is not found, the system then performs a fuzzy search using \texttt{FuzzyWuzzy} to identify potential matches based on string similarity. This two-step approach minimizes computational overhead while maintaining high accuracy in matching.
+
+This functionality is particularly critical in scenarios where user input may deviate from the exact titles or names stored in the dataset. For example, if a user mentions \texttt{"The Godfather"} but the dataset stores it as \texttt{"Godfather, The,"} the fuzzy matching algorithm ensures that the correct item is identified and processed.
+
+By incorporating fuzzy matching, the system enhances its ability to adapt to user input dynamically, improving the overall reliability and robustness of the recommendation process. This design choice reflects the project's emphasis on creating a user-friendly and resilient recommendation system capable of handling real-world variability in user interactions.
 
 \section{Large Language Model Integration}
 \label{sec:large_language_model_integration}
@@ -217,17 +218,43 @@ The prompts directly influence the quality of the interactions and recommendatio
 The prompt engineering process proved to be challenging, as it required careful consideration of the language and structure used in the prompts.
 The model is quite liable to deviate from the given instructions. 
 
-\paragraph{Prompt Structure} Another challenge was ensuring that the LLM understood its instructions, but would not let the example responses influence the model's output.
+\subsubsection{Secondary Information Extraction}
+The model was also used to extract secondary information from the user input, such as the user's supposed preferences and sentiment.
+For example, if a user expresses a preference for the film \textit{Fantastic Mr. Fox}, the system can infer a potential interest in other works by the same director, Wes Anderson, or films with a similar style or genre. 
+This inference is achieved by having the model leverage its knowledge of features associated with the film, such as its director, cast, and genre, and adjusting the user's profile accordingly.
+
+This \textbf{significantly expands the systems knowledge of the user}, and allows the system to provide more personalized and relevant recommendations, even when explicit preferences are not directly stated by the user.
+This is particularly useful in cases where the user may not be aware of their own preferences or may not have explicitly stated them.
+See \cref{fig:llm_secondary_information_extraction} for an example of this, where the user only mentions \textit{The Big Short}, but the model infers that they probably like \textit{Adam McKay} the director of the film, alongside \textit{Christian Bale}, \textit{Steve Carell}, and \textit{Ryan Gosling} who are actors in the film.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/externalPeeps.png}
+    \caption{Example of secondary information extraction}
+    \label{fig:llm_secondary_information_extraction}
+\end{figure}
+
+
+\subsubsection{Prompt Structure}
+\label{subsec:prompt_structure}
+Another challenge was ensuring that the LLM understood its instructions, but would not let the example responses influence the model's output.
 The "Glean Feedback Prompt" was particularly challenging, as it required the model to extract user preferences and sentiment from feedback messages, while also extracting related films and actors.
 
 At times, if the user input was short, and did not contain much information, the model would sometimes included the example responses in the output, or hallucinate information that was not present in the user input.
-For example, it tended to include \texttt{Shawshank Redemption} in the output, even if it was not mentioned in the user input, as it is one of the most well known films.
+For example, it tended to include \textit{Shawshank Redemption}, and the films director, \textit{Frank Darabont} in the output, even if it was not mentioned in the user input, as it is one of the most well known films worldwide.
+See \cref{fig:llm_output_hallucination} for an example of this.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/hallucination.png}
+    \caption{Example of LLM hallucination}
+    \label{fig:llm_output_hallucination}
+\end{figure}
 
-
-\paragraph{Inference Latency}
+\subsubsection{Inference Latency}
 The inference latency of the LLM was a significant consideration, as it directly impacts the user experience.
 The initial response time for the LLM when generating sentiment analysis from a user message was around 35 seconds, which was too slow for the conversational system, even with the user taking time to read the agent response and to respond.
-Through iterative prompt engineering, the response time was significantly reduced to approximately 15 seconds, which is a substantial improvement with a \textbf{reduction of 57\%} in response time.
+A lot of this was due to the prompt structure being large and bulky, which caused the model to take longer to process the input and generate a response. 
+
+\paragraph{Solution}Through iterative prompt engineering, the response time was significantly reduced to approximately 15 seconds, which is a substantial improvement with a \textbf{reduction of 57\%} in response time.
 This improvement was achieved by optimizing the prompt structure, specifically by minimizing the number of tokens in the generated response.
 
 There is more work to be done in this area, as the model is still quite slow at times, and the response time can vary significantly depending on the prompt.
@@ -238,14 +265,14 @@ This would allow the system to quickly identify the type of item being reference
 \section{Challenges Faced}
 \label{sec:challenges_faced}
 The implementation of the system faced several challenges, particularly in the areas of prompt engineering, user interaction and data management.
-Another challenge was 
+These challenges were addressed through a combination of iterative design, testing, and optimization, leading to a more robust and efficient system.
 
 \subsection{User Interaction}
 \label{subsec:user_interaction_challenges}
 Maintaining a natural and engaging flow for the user in both conversation and generating recommendations was a significant challenge.
 For this, the system was designed to route the users queries to the appropriate prompts, ensuring there was a clear and consistent flow of information.
 \\\\
-Initially, the routing was done using the LLM, where the model would determine which prompt to use based on the user's input.4
+Initially, the routing was done using the LLM, where the model would determine which prompt to use based on the user's input.
 However, this approach was slow and inefficient, as it required the model to process each query and determine the appropriate prompt.
 Additionally, the model would sometimes misinterpret the user's intent, leading to incorrect prompt selection.
 \\\\
@@ -260,7 +287,8 @@ Although the selected model was lightweight and efficient, it initially required
 \\\\
 Through iterative prompt engineering, the response time was significantly reduced, with the average time decreasing to approximately 15 seconds. This was a substantial improvement with a \textbf{reduction of 57\%} in response time.
 
-This improvement was achieved by optimizing the prompt structure, specifically by minimizing the number of tokens in the generated response. To read more about the prompt engineering process, see \cref{subsec:prompt_engineering} and \cref{subsec:prompt_engineering_challenges}.
+A large part of this improvement was achieved by optimizing the prompt structure, specifically by minimizing the number of tokens in the generated response. To read more about the prompt engineering process, see \cref{subsec:prompt_engineering} and \cref{subsec:prompt_engineering_challenges}.
+Additionally, the switch from the standard version of llama3.2 to the quantized version of llama3.2:3b-instruct-q4\_K\_M also contributed to the improved performance, as it reduced the memory needed, allowing it run faster with less memory pressure.
 
 \subsection{Prompt Engineering}
 \label{subsec:prompt_engineering_challenges}
@@ -269,7 +297,7 @@ The model was sensitive to the smallest changes in the prompts, which could lead
 
 One key challenge was ensuring that the LLM understood it's instructions, but would not let the example responses influence the model's output.
 The "Glean Feedback Prompt" in \cref{subsec:prompts} was particularly challenging, as it required the model to extract user preferences and sentiment from feedback messages, additionally extracting related films and actors from the user input.
-At times, if the user input was short, and did not contain much information, the model would sometimes include the example responses in the output, or hallucinate information that was not present in the user input.
+At times, if the user input was short, and did not contain much information, the model would sometimes include the example responses in the output, or hallucinate information that was not present in the user input. See \cref{subsec:prompt_structure} for more details on this.
 
 There is still a lot of work to be done in this area. There is still a lot of noise at times in the LLM outputs, and the model would sometimes forget or ignore the formatting instructions, which then impacted the performance of the system as it was not able to parse the output correctly.
 \paragraph{Solution} To mitigate this, fine-tuning the model on domain-specific data could improve the quality of interactions and reduce issues such as hallucinations or non-conforming outputs.
@@ -279,10 +307,10 @@ This would be costly and time-consuming, but the use of a smaller model to gener
 
 \subsection{Limited Data}
 \label{subsec:limited_data}
-The system was limited by the data available in the datasets used. The TMDB dataset provided a wealth of information, which was up to date, but the user ratings from the MovieLens dataset were limited up to October 2023. Even at that, a lot of the ratings were for films over 20 years old, which limited the relevance of the recommendations for users looking for more recent films.
+The system was limited by the data available in the datasets used. The TMDB dataset provided a wealth of information, which was up to date, but the user ratings from the MovieLens dataset were limited up to October 2023. Even at that, a large proportion of the ratings were for films over 20 years old, which limited the relevance of the recommendations for users looking for more recent films.
 As such, when the user user collaborative filtering was used, the applicable films decreased from over 100,000 down to just over 28,000 films.
 
-\paragraph{Solution} To mitigate this, whenever the collaborative filtering failed to proivde a score for a film, the system would take the average IMBD rating for the film, and multiply it by 0.4, as not to over penalise the film for not having other ratings.
+\paragraph{Solution} To mitigate this, whenever the collaborative filtering failed to provide a score for a film, the system would take the average IMBD rating for the film, and multiply it by 0.4, as not to over penalise the film for not having other ratings.
 This was a simple solution, but allowing films that were not in the user ratings dataset to still be recommended to the user.
 However, this is certainly not a great solution.
 
@@ -293,7 +321,7 @@ Unfortunately, due to time constraints, there was no time to implement a solutio
 
 \section{Current Limitations}
 \label{sec:current_limitations}
-The current implementation of the system has several limitations that need to be addressed in future work. These limitations include:
+The current implementation of the system has several limitations that need to be addressed in future work and research. These limitations include:
 \begin{itemize}
     \item \textbf{Lack of Data:} The system is limited by the data available in the datasets used. This caused the recommendation system to be less effective. See \cref{subsec:limited_data} for more details.
     \item \textbf{Noise in Recommendations:} The LLM extracts data that was not mentioned by the user. This can lead to noise in the recommendations, as the system may recommend films that are not relevant to the user.
@@ -305,13 +333,11 @@ The current implementation of the system has several limitations that need to be
     \item \textbf{User Profile Management:} The user profile management system is currently basic and could benefit from more advanced techniques for managing user preferences and feedback.
 \end{itemize}
 
-% \item \textbf{Limited User-User Similarity Explanations:} The system does not provide detailed explanations for user-user similarity in collaborative filtering. This limits the transparency of the recommendations and may reduce user trust in the system.
-
 \begin{comment}
 
 in demo - you want sufficient features to show algorithmically
 
-Evalutation = features to fulfill tasks
+Evaluation = features to fulfil tasks
 
 REFLECT important - 
 
@@ -329,7 +355,7 @@ Domain if people know the stuff (conor likes both), jose IR, James LLM
 
 instead of typing = use voice
 
-Evalutation
+Evaluation
 - how do you feel about this type of rec
 - novelty?
 - tasks will be on quality of recs, interactions, (frustrating, too cumbersome, - too much convo is effort, tasks for users, you're a fan of thrillers and you 
