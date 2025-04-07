@@ -53,11 +53,12 @@ The user can also then provide feedback on the recommendations, and have the sys
     \label{fig:sample_user_feedback}
 \end{figure}
 
-You can see that the system has adjusted the recommendations based on the user feedback, and Batman is no longer in the recommendations.
+After the user provides their feedback detailing their dislike for the film "Batman Begins", the system adjusts the user profile and generates new recommendations based on the updated profile.
+You can then see that the system has adjusted the recommendations based on the user feedback, and Batman is no longer in the top five recommendations.
 
 \subsection{Recommendation Breakdown}
 \label{subsec:recommendation_breakdown}
-The user can also ask the system to provide a breakdown of a recommendation, which will show the user how the recommendations were generated.
+The user can also ask the system to provide a breakdown of a recommendation, which will show the user how the recommendations were generated. Here, the user asks the system to explain why it recommended "Batman Begins" to them, and the system is able to provide a detailed explanation of the recommendation.
 \begin{figure}[H]
     \centering
     \makebox[\textwidth]{\includegraphics[width=1.2\textwidth]{Figures/RunThrough/RecommendationExplanation.png}}
@@ -65,11 +66,13 @@ The user can also ask the system to provide a breakdown of a recommendation, whi
     \label{fig:sample_recommendation_breakdown}
 \end{figure}
 
+\paragraph{Summary}
+\label{sec:system_run_through_summary}
+The system demonstrates great performance in the subsections above, effectively \textbf{meeting all its goals as outlined in \cref{chapter:evaluation_methodology}}. 
+It provides accurate, relevant, and explainable recommendations, adapts seamlessly to user preferences, and offers an intuitive and responsive conversational interface.
 
-\section{Recommendation System Evaluation}
-\label{sec:recommendation_system_evaluation_results}
-The recommendation system fulfils its purpose of providing a proof of concept for a recommendation system that is adjustable and explainable.
-
+The system also demonstrates the ability to \textbf{provide relevant recommendations based on user preferences}, and is able to adjust the recommendations based on user feedback. 
+Additionally, the integration of the large language model allows for it to employ immediate suggestions and thought provoking questions to the user, helping them explore their preferences alongside \textbf{greatly reducing the cold start problem.}
 
 \section{Large Language Model Evaluation}
 \label{sec:large_language_model_evaluation_results}
@@ -81,6 +84,7 @@ The system is able to provide a breakdown of the recommendations and explain why
 \label{sec:conversational_interface}
 The system is able to provide a conversational interface that allows the user to explore their preferences and provide feedback.
 It is easily able to provide detailed responses to user queries, explore user preferences and keep the user engaged in the conversation.
+Additionally, as mentioned in \cref{sec:system_run_through}, the knowledge of the large language model allows it to employ immediate suggestions and thought provoking questions to the user, helping them explore their preferences alongside alleviating the cold start problem.
 
 For example, in the following conversation, the system engages with the user and is able to talk about the directors style and asks the user about their opinions on other directors and genres.
 \input{tables/results/chattyChitChat.tex}
@@ -104,9 +108,9 @@ A screenshot of the recommendation breakdown is shown in \cref{fig:explainBatman
 \label{sec:responsiveness}
 The system was able to respond in a timely manner and was able to handle out of scope conversations and redirect the conversation back to the task at hand.
 
-On average, the system was able to start responding to user prompts in under 7 to 10 seconds, even with long prompts full of user preferences and associated comments.
+On average, the system was able to start responding to user prompts in under 7 to 10 seconds, even with long prompts full of user preferences and associated comments when the user was providing feedback.
 
-For explanations, the system was able to provide a detailed explanation of the recommendation in under 10 seconds.
+In the case of recommendation explanations, the system was able to provide a detailed explanation of the recommendation in under 10 seconds.
 
 
 
@@ -122,15 +126,15 @@ The survey results were overwhelmingly positive, with users highlighting the sys
 Users rated the system highly in terms of usefulness, with three users giving it a score of 5 and one user giving it a 4. Comments emphasized the system's intuitive nature and its ability to provide reasoned and relevant recommendations. For example, one user stated, \textbf{"The system is a lot more intuitive than Netflix is."} Another user noted the system's ability to remove a disliked film from recommendations after expressing their distaste for its director and genre.
 
 \paragraph{Ease of Use:}  
-The system was rated as easy to use, with scores ranging from 1 (not at all cumbersome) to 2. Users appreciated the conversational interface and the simplicity of the prompts. One user remarked, \textbf{"Very easy to use because of the conversational interface with the system."} Another user highlighted the straightforward nature of the prompts, making the system accessible even for first-time users.
+The system was rated as easy to use, with scores ranging from 1 (not at all cumbersome) to 5 (very easy to use). Users appreciated the conversational interface and the simplicity of the prompts. One user remarked, \textbf{"It's very easy to use because of the conversational interface with the system."} Another user highlighted the straightforward nature of the prompts, making the system accessible even for first-time users.
 
 \paragraph{Understanding User Preferences:}  
 The system demonstrated a strong ability to understand and adapt to user preferences, with three users rating it a 5 and one user rating it a 4. Users praised the system's responsiveness and its ability to incorporate their preferences into recommendations. For instance, one user commented, \textbf{"It really understood my interests and took them into account while recommending."} Another user noted that while some noise was present in the recommendations, the system was highly responsive when relevant filters were applied.
 
 \paragraph{Recommendation Explanations:}  
-The system's ability to explain its recommendations was well-received, with scores of 4 and 5 across the board. Users found the explanations clear and concise, though one user suggested adding more detail about user-user similarity, such as a summary of the profiles of similar users. This feedback highlights an opportunity to enhance the transparency of the collaborative filtering process.
+The system's ability to explain its recommendations was well-received, with scores of 4 and 5 across the board. Users found the explanations clear and concise, though one user suggested adding more detail about user-user similarity, such as a summary of the profiles of similar users. As mentioned in \cref{sec:collaborative_filtering_design}, this feedback highlights an opportunity to enhance the transparency of the collaborative filtering process.
 
-\paragraph{Adaptability to Changing Preferences:}  
+\paragraph{Adaptability to Changing Preferences:}
 All users confirmed that the system successfully reflected their changing preferences in its recommendations. For example, one user noted, \textbf{"The system refreshed its recommendations after each preference,"} while another highlighted how the system removed a disliked film from the recommendations after feedback.
 
 \paragraph{Overall Potential:}  
