@@ -440,7 +440,12 @@ def save_user_profile(user_profile, profiles_dir):
 """
 Sample inputs for parse_semantic_breakdown function
  Films; 1.0, Blade Runner 2049: 0.95 \nDirectors; 0.4, Ridley Scott: -0.2 \nActors; 0.8, Ryan Gosling: 0.7
- 
+
+Semantic breakdown:
+ Films; 0.9, The Shawshank Redemption: 0.8 
+Directors; 0.8, The Shawshank Redemption (Frank Darabont): 0.6 
+Actors; 0.5
+Genres; 0.4
 """
 
 def parse_semantic_breakdown(text):
@@ -461,7 +466,7 @@ def parse_semantic_breakdown(text):
     # Define category mapping for singular/plural forms
     category_map = {
         "film": "Films", "films": "Films",
-        "actor": "Actors", "actors": "Actors",
+        "actor": "Actors", "actors": "Actors", "cast": "Actors", "Cast": "Actors",
         "genre": "Genres", "genres": "Genres",
         "director": "Directors", "directors": "Directors",
         "filtering": "Filtering", "filter": "Filtering"
@@ -477,21 +482,22 @@ def parse_semantic_breakdown(text):
         # Check for a new category
         found_category = False
         for cat_variant, std_cat in category_map.items():
-            # Match at start of line or after punctuation, case insensitive
+            # Match at the start of line or after punctuation, case-insensitive
             pattern = rf'(^|\s|[,;])({cat_variant})\s*[;:]?\s*([-\d.]+)?'
             match = re.search(pattern, line.lower())
 
             if match:
+                print(f"Match found: {match.groups()}")  # Debugging: Print the matched groups
                 current_category = std_cat
                 found_category = True
-
-                # Extract category score if available
                 if match.group(3):
                     try:
                         score = float(match.group(3))
                         categories[current_category] = score
+                        print(f"Category: {current_category}, Score: {score}")  # Debugging: Print the extracted score
                     except ValueError:
-                        pass
+                        print(f"Invalid score for category: {current_category}")  # Debugging: Handle invalid scores
+
 
                 # Process items after the category declaration
                 item_section = line[match.end():].strip()
@@ -501,6 +507,8 @@ def parse_semantic_breakdown(text):
                 # Extract items with scores
                 extract_items(item_section, current_category, items_data)
                 break
+            else:
+                print(f"No match found for line: {line}")  # Debugging: Print lines that don't match
 
         # If no category found, this line contains items for the current category
         if not found_category and current_category:
@@ -541,8 +549,5 @@ def extract_items(text, category, items_data):
                         items_data[category][item] = 0.0
                 else:
                     items_data[category][item] = 0.0
-
-
-
 
 # I really like the film the godfather tbh. The directing in it is great, so is the cast. I don't usually like the genres with it, so it's a surprising like of mine
