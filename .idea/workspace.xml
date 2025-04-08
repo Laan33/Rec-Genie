@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="WOW it actually adjusts the params (and recs adjusted!!!) - need to stop negative weightings">
-      <change beforePath="$PROJECT_DIR$/fyp/CL-FYP-Report/chapters/results.tex" beforeDir="false" afterPath="$PROJECT_DIR$/fyp/CL-FYP-Report/chapters/results.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fyp/CL-FYP-Report/tables/sampleSemanticExtraction.tex" beforeDir="false" afterPath="$PROJECT_DIR$/fyp/CL-FYP-Report/tables/sampleSemanticExtraction.tex" afterDir="false" />
+    <list default="true" id="95f3c083-d3da-4438-ac09-1adcfe081ce7" name="Changes" comment="Added user question to explain">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec-Genie/sqlite.db" beforeDir="false" afterPath="$PROJECT_DIR$/Rec-Genie/sqlite.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -318,94 +318,10 @@
       <workItem from="1742914361883" duration="1323000" />
       <workItem from="1743088075971" duration="7099000" />
       <workItem from="1743516777624" duration="2722000" />
-    </task>
-    <task id="LOCAL-00055" summary="Arght">
-      <option name="closed" value="true" />
-      <created>1742657005994</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1742657005994</updated>
-    </task>
-    <task id="LOCAL-00056" summary="Chat is working">
-      <option name="closed" value="true" />
-      <created>1742657517156</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1742657517156</updated>
-    </task>
-    <task id="LOCAL-00057" summary="Added history">
-      <option name="closed" value="true" />
-      <created>1742659197363</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1742659197366</updated>
-    </task>
-    <task id="LOCAL-00058" summary="New chatbot">
-      <option name="closed" value="true" />
-      <created>1742661300675</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1742661300676</updated>
-    </task>
-    <task id="LOCAL-00059" summary="Chatting about films">
-      <option name="closed" value="true" />
-      <created>1742662953437</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1742662953437</updated>
-    </task>
-    <task id="LOCAL-00060" summary="Rand sessions">
-      <option name="closed" value="true" />
-      <created>1742667213599</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1742667213600</updated>
-    </task>
-    <task id="LOCAL-00061" summary="Rand sessions">
-      <option name="closed" value="true" />
-      <created>1742667235792</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1742667235792</updated>
-    </task>
-    <task id="LOCAL-00062" summary="Starting routing on gradio">
-      <option name="closed" value="true" />
-      <created>1742674351603</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1742674351604</updated>
-    </task>
-    <task id="LOCAL-00063" summary="Starting routing on gradio">
-      <option name="closed" value="true" />
-      <created>1742676397830</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1742676397830</updated>
-    </task>
-    <task id="LOCAL-00064" summary="Getting nowhere is a banger">
-      <option name="closed" value="true" />
-      <created>1742732816624</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1742732816624</updated>
-    </task>
-    <task id="LOCAL-00065" summary="trying to format the page">
-      <option name="closed" value="true" />
-      <created>1742735473961</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1742735473961</updated>
+      <workItem from="1743948783973" duration="6292000" />
+      <workItem from="1743969055748" duration="5191000" />
+      <workItem from="1743985904934" duration="1292000" />
+      <workItem from="1744145885421" duration="8101000" />
     </task>
     <task id="LOCAL-00066" summary="not working but fixed that langchain warning">
       <option name="closed" value="true" />
@@ -711,7 +627,95 @@
       <option name="project" value="LOCAL" />
       <updated>1743518823789</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="More results and main work">
+      <option name="closed" value="true" />
+      <created>1743947326343</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1743947326343</updated>
+    </task>
+    <task id="LOCAL-00105" summary="Quite the annoyance of a systme">
+      <option name="closed" value="true" />
+      <created>1743947392706</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1743947392706</updated>
+    </task>
+    <task id="LOCAL-00106" summary="Quite the annoyance of a systme">
+      <option name="closed" value="true" />
+      <created>1743947400370</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1743947400370</updated>
+    </task>
+    <task id="LOCAL-00107" summary="Quite the annoyance of a systme">
+      <option name="closed" value="true" />
+      <created>1743947407095</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1743947407095</updated>
+    </task>
+    <task id="LOCAL-00108" summary="Userprofiles">
+      <option name="closed" value="true" />
+      <created>1743962324930</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1743962324930</updated>
+    </task>
+    <task id="LOCAL-00109" summary="proportionings are good">
+      <option name="closed" value="true" />
+      <created>1744148674362</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1744148674362</updated>
+    </task>
+    <task id="LOCAL-00110" summary="name correction - sorry Greg">
+      <option name="closed" value="true" />
+      <created>1744148692544</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1744148692544</updated>
+    </task>
+    <task id="LOCAL-00111" summary="typos">
+      <option name="closed" value="true" />
+      <created>1744148800199</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1744148800199</updated>
+    </task>
+    <task id="LOCAL-00112" summary="added cast as actor">
+      <option name="closed" value="true" />
+      <created>1744149467329</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1744149467329</updated>
+    </task>
+    <task id="LOCAL-00113" summary="refine scoring thresholds and improve regex patterns for semantic parsing">
+      <option name="closed" value="true" />
+      <created>1744151010096</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1744151010096</updated>
+    </task>
+    <task id="LOCAL-00114" summary="Added user question to explain">
+      <option name="closed" value="true" />
+      <created>1744151453910</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1744151453910</updated>
+    </task>
+    <option name="localTasksCounter" value="115" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -781,15 +785,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="too many changes before a commit, I know it's not fully ported over, bad git practices bla bla bla." />
-    <MESSAGE value="We're getting there!!!!" />
-    <MESSAGE value="wutwututuwut" />
-    <MESSAGE value="ADHUAIBUDABISDBHIAS IT&quot;S NEARLY" />
-    <MESSAGE value="IT&quot;S ALVIE AISJDNAOISDNASDNANOSI" />
-    <MESSAGE value="Agh we have recs!!!" />
-    <MESSAGE value="rounding rec scores?" />
-    <MESSAGE value="Using Scores Breakdown rather than just Recs" />
-    <MESSAGE value="More documentaiton, and now coding bits for breakdown and films" />
     <MESSAGE value="Mid using csvs, and also made recs simpler to output in md" />
     <MESSAGE value="Switcharoo towards a new thinking - just be basic" />
     <MESSAGE value="Routering" />
@@ -806,7 +801,16 @@
     <MESSAGE value="This is knarly promptings" />
     <MESSAGE value="Adding in somewhat handling proper scores and then filtering collab / content" />
     <MESSAGE value="WOW it actually adjusts the params (and recs adjusted!!!) - need to stop negative weightings" />
-    <option name="LAST_COMMIT_MESSAGE" value="WOW it actually adjusts the params (and recs adjusted!!!) - need to stop negative weightings" />
+    <MESSAGE value="More results and main work" />
+    <MESSAGE value="Quite the annoyance of a systme" />
+    <MESSAGE value="Userprofiles" />
+    <MESSAGE value="proportionings are good" />
+    <MESSAGE value="name correction - sorry Greg" />
+    <MESSAGE value="typos" />
+    <MESSAGE value="added cast as actor" />
+    <MESSAGE value="refine scoring thresholds and improve regex patterns for semantic parsing" />
+    <MESSAGE value="Added user question to explain" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added user question to explain" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -846,8 +850,8 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Rec_Genie$simpleRec.coverage" NAME="simpleRec Coverage Results" MODIFIED="1731520402730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Rec_Genie$Gradio_Trial_2.coverage" NAME="Gradio-Trial-2 Coverage Results" MODIFIED="1743936986225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
     <SUITE FILE_PATH="coverage/Rec_Genie$prompts.coverage" NAME="prompts Coverage Results" MODIFIED="1743184725920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie/chatbot" />
+    <SUITE FILE_PATH="coverage/Rec_Genie$Gradio_Trial_2.coverage" NAME="Gradio-Trial-2 Coverage Results" MODIFIED="1744151447870" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Rec-Genie" />
     <SUITE FILE_PATH="coverage/Rec_Genie$main.coverage" NAME="main Coverage Results" MODIFIED="1742407746749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rec-sys" />
     <SUITE FILE_PATH="coverage/Rec_Genie$user_eval_csv_to_tex.coverage" NAME="user_eval_csv_to_tex Coverage Results" MODIFIED="1743943826495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/preliminary-code" />
     <SUITE FILE_PATH="coverage/Rec_Genie$gradio_trial.coverage" NAME="gradio-trial Coverage Results" MODIFIED="1742427286732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pocs" />
