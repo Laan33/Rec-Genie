@@ -84,18 +84,9 @@ def score_breakdown(films_df, recommended_movies):
                   2) for movie_id in filtered_films['id']]
     )
 
-
-    print("Scored films type: ", type(scored_films))
-    print("Scored films columns: ", scored_films.columns)
-
-
     # Get a basic list with just the film name and it's score
     basic_list = scored_films[['title', 'release_date', 'score']]
 
-    # print("Scored films:", scored_films.shape)
-    # print("Scored films columns:", scored_films.columns)
-    # print("Scored films type: ", type(scored_films))
-    # print("Scored films head:", scored_films.head())
     # Sort the DataFrame by the final_score in descending order
     return scored_films.sort_values(by='score', ascending=False), basic_list.sort_values(by='score', ascending=False)
 
