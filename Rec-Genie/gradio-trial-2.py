@@ -31,6 +31,8 @@ def complex_json_to_markdown(recommendations_list):
     """Converts a JSON object to a markdown list."""
     convert_json_to_markdown = "\n".join([
         f"{i + 1}. **{rec['title']}** (Released: {int(rec['release_date'])}) - Score: {rec['score']:.2f}, "
+        f"Cast Score: {rec['cast_score']}, Director Score: {rec['director_score']}, "
+        f"Genre Score: {rec['genre_score']}, User-User Score: {rec['user_user_score']}, "
         f"Cast Proportion: {rec['cast_proportion']}, "
         f"Director Proportion: {rec['director_proportion']}, Genre Proportion: {rec['genre_proportion']}, "
         f"User-User Proportion: {rec['user_user_proportion']}"
@@ -74,11 +76,15 @@ class GradioFilmRec:
 
     def recommend_films(self):
         """Generates film recommendations based on user history."""
+        print("Reloading user profile...")
+        self.rec_interface.reload_user_profile()
+
+
         print("Generating recommendations...")
         recs = self.rec_interface.recommend(num_recommendations=5)
         scores, _ = self.rec_interface.score_breakdown(recs)
 
-        self.scores_df = scores[['title', 'score', 'cast_proportion', 'director_proportion', 'genre_proportion', 'user_user_proportion']]
+        self.scores_df = scores[['title', 'release_date', 'score', 'cast_proportion', 'director_proportion', 'genre_proportion', 'user_user_proportion']]
 
         # # Convert DataFrame to list of dictionaries for easy JSON rendering
         recommendations_list = scores.to_dict('records')
@@ -88,6 +94,7 @@ class GradioFilmRec:
         self.complex_recommendations = recs_complex
         print("Full recommendations breakdown:\n", recs_complex)
         print("----------\n")
+        print("Recommendations list:\n", recommendations_list)
         self.scores = recommendations_list
 
         # Add on the line: "\n you can ask in chat for an explanation of these recommendations"
@@ -178,17 +185,21 @@ class GradioFilmRec:
         # You might want to expand this to explain all recommendations
         if breakdown and len(breakdown) > 0:
             item = breakdown[0]
+            print("Item columns:", item.keys())
+            print("Item to explain:", item)
 
+            # Item columns: dict_keys(['id', 'title', 'release_date', 'vote_average', 'vote_count', 'score', 'cast_score', 'director_score', 'genre_score', 'user_user_score', 'cast_proportion', 'director_proportion', 'genre_proportion', 'user_user_proportion'])
             # Extract the relevant fields from the breakdown
             explanation_input = {
                 "title": item.get('title', 'Unknown film'),
                 "release_date": item.get('year', 'Unknown year'),
                 "score": item.get('score', 0),
-                "cast_score": item.get('actor_score', 0),
-                "director_score": item.get('director_score', 0),
-                "genre_score": item.get('genre_score', 0),
-                "user_user_score": item.get('collab_score', 0)
+                "cast_proportion": item.get('cast_proportion', 0),
+                "director_proportion": item.get('director_proportion', 0),
+                "genre_proportion": item.get('genre_proportion', 0),
+                "user_user_proportion": item.get('user_user_proportion', 0),
             }
+            print("Explanation input:", explanation_input)
 
             # Get the explanation
             response_gen = explain_chain.stream(
@@ -218,10 +229,10 @@ class GradioFilmRec:
 film_rec_bot = GradioFilmRec()
 
 # --- 🎨 Gradio UI ---
-with gr.Blocks(theme="Soft") as demo:
-    gr.Markdown("# 🎬 Film Recommendation Chatbot - Llama 3.2")
+with gr.Blocks(fill_height=True, fill_width=True, theme="Soft") as demo:
+    gr.Markdown("# RecGenie: Your Film Recommendation Genie")
 
-    with gr.Row():
+    with gr.Row(scale=0):
         with gr.Column(scale=1):
             gr.Markdown("### Session ID")
             session_id_num = gr.Number(
@@ -236,8 +247,8 @@ with gr.Blocks(theme="Soft") as demo:
             )
             gr.Markdown("### Generate Recommendations")
             generate_recommendations = gr.Button(value="Generate Recommendations")
-            gr.Markdown("### Re-Generate User Profile")
-            regenerate_user_profile = gr.Button(value="Regenerate User Profile")
+            # gr.Markdown("### Re-Generate User Profile")
+            # regenerate_user_profile = gr.Button(value="Regenerate User Profile")
 
         with gr.Column(scale=3):
             gr.Markdown("### Recommendations")
@@ -256,6 +267,9 @@ with gr.Blocks(theme="Soft") as demo:
         with gr.Column(scale=1):
             gr.Markdown("### Message Semantics")
             message_semantics = gr.Text(label="Extracted Message Semantics", placeholder="No message semantics yet")
+
+    # with gr.Row(scale=2):
+    gr.Markdown("### Chatbot")
 
     # Chat Interface
     chatbot_interface = gr.ChatInterface(
@@ -280,12 +294,12 @@ with gr.Blocks(theme="Soft") as demo:
         outputs=[recommendations, recommendations_complex]
     )
 
-    # Link button to regenerate user profile
-    regenerate_user_profile.click(
-        fn=film_rec_bot.rec_interface.reload_user_profile,
-        inputs=[],
-        outputs=[]
-    )
+    # # Link button to regenerate user profile
+    # regenerate_user_profile.click(
+    #     fn=film_rec_bot.rec_interface.reload_user_profile,
+    #     inputs=[],
+    #     outputs=[]
+    # )
 
 # Launch app
 demo.launch()

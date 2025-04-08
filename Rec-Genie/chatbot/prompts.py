@@ -12,15 +12,15 @@ film_chat_explore_chain = ChatPromptTemplate.from_messages([
 explain_rec_chain = PromptTemplate(
     input_variables=["title", "release_date", "score", "cast_score", "director_score", "genre_score", "user_user_score"],
     template=(
-        "You are talking to the user, briefly explain the recommendation for the given film. These are all attributes based off the users profile.\n\n"
-        "Film Recommendation:\n"
-        "Title: {title} ({release_date})\n"
-        "Total Score: {score}\n"
-        "Cast Score: {cast_score}\n"
-        "Director Score: {director_score}\n"
-        "Genre Score: {genre_score}\n"
-        "Collaborative Filtering Score: {user_user_score}\n\n"
-        "Explain why this movie is recommended based on the given scores."
+    "You are talking to the user, briefly explain the recommendation given to the user for the given film. These are all attributes based off the users profile.\n\n"
+    "Film Recommendation:\n"
+    "Title: {title} ({release_date})\n"
+    "Total Score: {score}\n"
+    "Cast Proportion: {cast_proportion}\n"
+    "Director Proportion: {director_proportion}\n"
+    "Genre Proportion: {genre_proportion}\n"
+    "Collaborative Filtering Proportion: {user_user_proportion}\n\n"
+    "Explain why this movie is recommended based on the given scores."
     )
 )
 

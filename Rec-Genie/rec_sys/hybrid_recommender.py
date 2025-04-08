@@ -18,6 +18,7 @@ num_recs = 400 # Number of recommendations to return
 
 def hybrid_recommend(user_profile, films_df, credits_df, ratings_df, genre_list_mlb):
     weights = user_profile['weights']
+
     content_scores = content_based.compute_content_scores(user_profile['id'], user_profile['feature_profile'], films_df, credits_df, ratings_df, weights, genre_list_mlb)
     user_user_ratings = ratings_df.copy()
     user_user_ratings = remove_non_applicable_films(films_df, user_user_ratings)
@@ -60,18 +61,32 @@ def score_breakdown(films_df, recommended_movies):
     # Ensure that filtered_films and recommended_movies have the same number of entries
     recommended_movies_dict = dict(recommended_movies)  # Convert list of tuples to a dictionary
 
+
     # Assign the scores to the filtered dataframe
     scored_films = filtered_films.assign(
         score=[round(recommended_movies_dict[movie_id]['final_score'], 3) for movie_id in filtered_films['id']],
         cast_score=[recommended_movies_dict[movie_id]['cast_score'] for movie_id in filtered_films['id']],
         director_score=[recommended_movies_dict[movie_id]['director_score'] for movie_id in filtered_films['id']],
         genre_score=[recommended_movies_dict[movie_id]['genre_score'] for movie_id in filtered_films['id']],
-        user_user_score=[round(recommended_movies_dict[movie_id]['collab_score'], 3) for movie_id in filtered_films['id']],
-        cast_proportion=[round(float(recommended_movies_dict[movie_id]['cast_score'] / recommended_movies_dict[movie_id]['final_score']),2) for movie_id in filtered_films['id']],
-        director_proportion=[round(recommended_movies_dict[movie_id]['director_score'] / recommended_movies_dict[movie_id]['final_score'],2) for movie_id in filtered_films['id']],
-        genre_proportion=[round(recommended_movies_dict[movie_id]['genre_score'] / recommended_movies_dict[movie_id]['final_score'],2) for movie_id in filtered_films['id']],
-        user_user_proportion=[round(recommended_movies_dict[movie_id]['collab_score'] / recommended_movies_dict[movie_id]['final_score'],2) for movie_id in filtered_films['id']]
+        user_user_score=[round(recommended_movies_dict[movie_id]['collab_score'], 3) for movie_id in
+                         filtered_films['id']],
+        cast_proportion=[
+            round(recommended_movies_dict[movie_id]['cast_score'] / recommended_movies_dict[movie_id]['final_score'], 2)
+            for movie_id in filtered_films['id']],
+        director_proportion=[round(
+            recommended_movies_dict[movie_id]['director_score'] / recommended_movies_dict[movie_id]['final_score'], 2)
+                             for movie_id in filtered_films['id']],
+        genre_proportion=[
+            round(recommended_movies_dict[movie_id]['genre_score'] / recommended_movies_dict[movie_id]['final_score'],
+                  2) for movie_id in filtered_films['id']],
+        user_user_proportion=[
+            round(recommended_movies_dict[movie_id]['collab_score'] / recommended_movies_dict[movie_id]['final_score'],
+                  2) for movie_id in filtered_films['id']]
     )
+
+    # Identify rows where the proportions exceed 1.0
+    invalid_proportions = scored_films[scored_films['proportion_sum'] > 1.0]
+    print("Invalid proportions:\n", invalid_proportions)
     
     print("Scored films type: ", type(scored_films))
     print("Scored films columns: ", scored_films.columns)

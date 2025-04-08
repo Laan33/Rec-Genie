@@ -11,7 +11,7 @@ Scenario 2: ID:2,222,222 - children's films
 Scenario 3: ID:3,333,333 - action and thriller
 """
 # IMPORTANT - Choose scenario here
-SCENARIO_CHOICE = 1
+SCENARIO_CHOICE = 20
 
 # Configuration
 RUNNING_ON_COLAB = False
@@ -86,7 +86,6 @@ class RecInterface:
             # Convert from a string
             self.user_profile = user_pf.load_or_create_user_profile(self.user_id, self.films_df, self.user_ratings_df, self.genre_list_mlb)
 
-
             self.ratings_df = pd.concat([self.ratings_df, self.user_ratings_df], ignore_index=True)
             self.ratings_df = self.ratings_df.drop_duplicates(subset=['userId', 'movieId'])
 
@@ -132,4 +131,4 @@ class RecInterface:
             print("\nWARNING: No user profile path found. Please update the user profile first.\n")
 
 
-# I'm realling vibing with tarantino recently, he's a great director, and I'm loving all his films. I also like the Cornetto Triology Films, but I don't like the John Wick series
+# I'm really vibing with tarantino recently, he's a great director, and I'm loving all his films. I also like the Cornetto Triology Films, but I don't like the John Wick series
