@@ -7,7 +7,7 @@ TODO - If certain functions aren't working well (probably film id by title), mig
 """
 
 
-def get_film_id_by_title(title, films_df, score_cutoff=0.85):
+def get_film_id_by_title(title, films_df, score_cutoff=0.95):
     """Returns the film ID for a given title."""
     film_id = films_df.loc[films_df['title'] == title, 'id'].values
     if len(film_id) == 0:
@@ -25,7 +25,7 @@ def get_film_id_by_title(title, films_df, score_cutoff=0.85):
         print("No film ID found for title:", title)
     return film_id
 
-def get_actor_id_by_name(name, actors_series, score_cutoff=0.95):
+def get_actor_id_by_name(name, actors_series, score_cutoff=0.98):
     """Returns the actor ID for a given actor name."""
     print("Actor name:", name)
 
@@ -66,7 +66,7 @@ def get_films_with_director(director, credits_df):
     """Returns the film IDs for a given director."""
     return credits_df[credits_df['director_info'].apply(lambda x: x[0] == director)]['id']
 
-def fuzzy_search_user_profile(user_profile, search_term, score_cutoff=0.5):
+def fuzzy_search_user_profile(user_profile, search_term, score_cutoff=0.95):
     """Returns the best match for a given search term in the user profile."""
     best_match = process.extractOne(search_term, user_profile.keys(), score_cutoff=score_cutoff)
     if best_match:

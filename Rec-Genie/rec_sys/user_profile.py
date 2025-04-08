@@ -448,6 +448,7 @@ Actors; 0.5
 Genres; 0.4
 """
 
+
 def parse_semantic_breakdown(text):
     """Parses a semantic breakdown and extracts categories, items, and scores separately.
     Designed to be robust against various LLM output formats.
@@ -458,7 +459,6 @@ def parse_semantic_breakdown(text):
 
     # Clean and normalise input
     text = re.sub(r'\\n', '\n', text)
-    print("Semantic breakdown:\n", text)
 
     # Extract category blocks from the text
     lines = text.strip().split('\n')
@@ -482,22 +482,20 @@ def parse_semantic_breakdown(text):
         # Check for a new category
         found_category = False
         for cat_variant, std_cat in category_map.items():
-            # Match at the start of line or after punctuation, case-insensitive
-            pattern = rf'(^|\s|[,;])({cat_variant})\s*[;:]?\s*([-\d.]+)?'
+            # Improved pattern to match category and score
+            pattern = rf'(^|\s|[,;])({cat_variant})[;:]\s*([-+]?\d*\.?\d+)'
             match = re.search(pattern, line.lower())
 
             if match:
-                print(f"Match found: {match.groups()}")  # Debugging: Print the matched groups
                 current_category = std_cat
                 found_category = True
-                if match.group(3):
-                    try:
-                        score = float(match.group(3))
-                        categories[current_category] = score
-                        print(f"Category: {current_category}, Score: {score}")  # Debugging: Print the extracted score
-                    except ValueError:
-                        print(f"Invalid score for category: {current_category}")  # Debugging: Handle invalid scores
 
+                # Extract the score from the match
+                try:
+                    score = float(match.group(3))
+                    categories[current_category] = score
+                except ValueError:
+                    pass
 
                 # Process items after the category declaration
                 item_section = line[match.end():].strip()
@@ -507,8 +505,6 @@ def parse_semantic_breakdown(text):
                 # Extract items with scores
                 extract_items(item_section, current_category, items_data)
                 break
-            else:
-                print(f"No match found for line: {line}")  # Debugging: Print lines that don't match
 
         # If no category found, this line contains items for the current category
         if not found_category and current_category:
@@ -516,13 +512,16 @@ def parse_semantic_breakdown(text):
 
     return categories, dict(items_data)
 
+
 def extract_items(text, category, items_data):
     """Extract items and their scores from text"""
+    import re
+
     if not text or not category:
         return
 
-    # Match "Item: score" pattern
-    item_score_pairs = re.findall(r'([^:,]+):\s*([-\d.]+)', text)
+    # Match "Item: score" pattern - improved to handle various formats
+    item_score_pairs = re.findall(r'([^:,]+):\s*([-+]?\d*\.?\d+)', text)
 
     if item_score_pairs:
         for item, score in item_score_pairs:
@@ -537,9 +536,9 @@ def extract_items(text, category, items_data):
         items = re.split(r',\s*', text)
         for item in items:
             item = item.strip()
-            if item and not re.match(r'^[-\d.]+$', item):  # Make sure it's not just a number
+            if item and not re.match(r'^[-+]?\d*\.?\d+$', item):  # Make sure it's not just a number
                 # Look for embedded scores like "Science Fiction 0.7"
-                score_match = re.search(r'(.*)\s+([-\d.]+)$', item)
+                score_match = re.search(r'(.*)\s+([-+]?\d*\.?\d+)$', item)
                 if score_match:
                     try:
                         item_name = score_match.group(1).strip()

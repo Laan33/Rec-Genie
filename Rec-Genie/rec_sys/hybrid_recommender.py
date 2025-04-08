@@ -84,10 +84,7 @@ def score_breakdown(films_df, recommended_movies):
                   2) for movie_id in filtered_films['id']]
     )
 
-    # Identify rows where the proportions exceed 1.0
-    invalid_proportions = scored_films[scored_films['proportion_sum'] > 1.0]
-    print("Invalid proportions:\n", invalid_proportions)
-    
+
     print("Scored films type: ", type(scored_films))
     print("Scored films columns: ", scored_films.columns)
 
