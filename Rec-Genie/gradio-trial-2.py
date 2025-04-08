@@ -134,7 +134,7 @@ class GradioFilmRec:
         if "EXPLAIN" in route_category:
             # If we have current recommendations to explain
             if has_recommendations:
-                for response in self.score_explainer(self.scores):
+                for response in self.score_explainer(self.scores, input_value):
                     # Each yield becomes a return from the router function
                     yield response
             else:
@@ -176,10 +176,13 @@ class GradioFilmRec:
 
         yield full_response, self.current_recommendations, self.semantic_full_response
 
-    def score_explainer(self, breakdown):
+    def score_explainer(self, breakdown, user_input):
         """Explains why a recommendation was made."""
         # Update the chain with the correct prompt template
         explain_chain = self.update_chain(explain_rec_chain)
+
+        # TODO - add in fuzzy search for which film the user is asking about
+
 
         # Process the first recommendation in the list as an example
         # You might want to expand this to explain all recommendations
@@ -198,8 +201,8 @@ class GradioFilmRec:
                 "director_proportion": item.get('director_proportion', 0),
                 "genre_proportion": item.get('genre_proportion', 0),
                 "user_user_proportion": item.get('user_user_proportion', 0),
+                "user_question": user_input
             }
-            print("Explanation input:", explanation_input)
 
             # Get the explanation
             response_gen = explain_chain.stream(
