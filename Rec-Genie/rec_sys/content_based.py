@@ -3,7 +3,14 @@
 def compute_content_scores(user_id, user_profile, films, credits_df, ratings_df, weights, genre_list_mlb):
     recommendations = []
 
-    for _, movie_row in films.iterrows():
+    print("films shape: ", films.shape) # User rated films are ending up in the recommendations
+    print("Num user rated films: ", len(ratings_df[ratings_df['userId'] == user_id]))
+    user_rated_movies = set(ratings_df[ratings_df['userId'] == user_id]['movieId'])
+    unrated_movies = films[~films['id'].isin(user_rated_movies)]
+
+    print("Unrated movies shape: ", unrated_movies.shape)
+
+    for _, movie_row in unrated_movies.iterrows():
         film_id = movie_row['id']
         score, cast_score, director_score, genre_score = 0, 0, 0, 0
 
