@@ -283,10 +283,10 @@ with gr.Blocks(fill_height=True, fill_width=True, theme="Soft") as demo:
         additional_inputs=[session_id_num],
         additional_outputs=[recommendations, message_semantics],
         examples=[
-            ["I love the Barbie film, I'm just Ken in a Barbie world"],
+            ["I think the director is really important in making or breaking a film. For example, Steven Spielberg is a great director, but I don't like his films."],
             ["I really like Ryan Gosling in Blade Runner 2049, really, it's my favourite film"],
-            ["I think the director is really important in making or breaking a film"],
-            ["I liked the cast in the last film I saw, but they the casting didn't make the film for me"],
+            ["I liked the cast in the film Bullet Train, but it wasn't the cast that made it good, it was the director and his directing."],
+            ["I love the Barbie film, I'm just Ken in a Barbie world"],
         ]
     )
 
@@ -297,30 +297,5 @@ with gr.Blocks(fill_height=True, fill_width=True, theme="Soft") as demo:
         outputs=[recommendations, recommendations_complex]
     )
 
-    # # Link button to regenerate user profile
-    # regenerate_user_profile.click(
-    #     fn=film_rec_bot.rec_interface.reload_user_profile,
-    #     inputs=[],
-    #     outputs=[]
-    # )
-
 # Launch app
 demo.launch()
-
-
-
-# TODO - add in 3 sample profiles. E.g. One for a kid (Disney), one for someone into action films, and one for someone into romcoms.
-
-# I liked harrison Ford, Ryan Gosling and Ana de armas in blade runner 2049. it was a great film. Denis Villeneuve is a great director too.
-# I think the cast is really important in making or breaking a film. For example, I think Vin Diesel ruined the Fast and Furious franchise.
-# Yeah Heath Ledger was great. I think Vin Diesel is just a bad actor in general, he is good in the Fast and Furious movies, (Which I like none of them, 1, 2, etc.) but I don't like him as an actor.
-#
-
-# Films; 1.0, Shrek: 0.9, Donkey: 0.9
-# Directors;
-# Actors; 0.2
-# Genres;
-
-# Directors; 0.9, Denis Villeneuve: 0.9
-# Films; 1.0, Blade Runner 2049: 0.8
-# Actors; 1.0, Harrison Ford: 0.9, Ryan Gosling: 0.7, Ana de Armas: 0.8
