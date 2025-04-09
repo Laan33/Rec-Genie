@@ -1,9 +1,7 @@
 import time
 
 import gradio as gr
-from random import randint
 from langchain_ollama import ChatOllama
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.output_parsers import StrOutputParser
 from langchain_community.chat_message_histories import SQLChatMessageHistory
@@ -85,6 +83,9 @@ class GradioFilmRec:
         scores, _ = self.rec_interface.score_breakdown(recs)
 
         self.scores_df = scores[['title', 'release_date', 'score', 'cast_proportion', 'director_proportion', 'genre_proportion', 'user_user_proportion']]
+
+        # Rename release_date to year
+        self.scores_df.rename(columns={'release_date': 'year'}, inplace=True)
 
         # # Convert DataFrame to list of dictionaries for easy JSON rendering
         recommendations_list = scores.to_dict('records')
@@ -250,8 +251,6 @@ with gr.Blocks(fill_height=True, fill_width=True, theme="Soft") as demo:
             )
             gr.Markdown("### Generate Recommendations")
             generate_recommendations = gr.Button(value="Generate Recommendations")
-            # gr.Markdown("### Re-Generate User Profile")
-            # regenerate_user_profile = gr.Button(value="Regenerate User Profile")
 
         with gr.Column(scale=3):
             gr.Markdown("### Recommendations")
