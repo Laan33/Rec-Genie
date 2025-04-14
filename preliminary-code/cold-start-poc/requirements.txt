@@ -1,7 +1,0 @@
-numpy
-lenskit
-pandas
-spacy
-kagglehub
-os
-shutil
