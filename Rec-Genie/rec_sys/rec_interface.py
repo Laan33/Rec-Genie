@@ -11,7 +11,7 @@ Scenario 2: ID:2,222,222 - children's films
 Scenario 3: ID:3,333,333 - action and thriller
 """
 # IMPORTANT - Choose scenario here
-SCENARIO_CHOICE = 20
+SCENARIO_CHOICE = 1
 
 # Configuration
 RUNNING_ON_COLAB = False
