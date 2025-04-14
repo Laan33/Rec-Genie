@@ -1,5 +1,4 @@
 
-
 def compute_content_scores(user_id, user_profile, films, credits_df, ratings_df, weights, genre_list_mlb):
     recommendations = []
 

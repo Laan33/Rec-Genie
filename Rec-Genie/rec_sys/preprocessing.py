@@ -1,7 +1,5 @@
 import ast
-
 import pandas as pd
-import json
 from sklearn.preprocessing import MultiLabelBinarizer
 
 genres_to_drop = [7759, 7760, 7761, 11602, 11176, 33751, 29812, 2883, 17161, 18012, 18013, 23822] # Remove low quality entries
@@ -33,12 +31,6 @@ def one_hot_encode_genres(film_df):
     # Concatenate the one-hot encoded genres to the original DataFrame
     ohe_film_df = pd.concat([film_df, genre_ohe], axis=1)
     return ohe_film_df.drop(columns=['genres', 'genre_list']), genre_list_mlb
-
-
-# def clean_credits(credits_df):
-#     credits_df['cast'] = credits_df['cast'].apply(lambda x: json.loads(x)[:3] if isinstance(x, str) else [])
-#     credits_df['directors'] = credits_df['crew'].apply(lambda x: [p['name'] for p in json.loads(x) if p['job'] == 'Director'] if isinstance(x, str) else [])
-#     return credits_df
 
 def condense_credits(credits_df):
     top_3_credits_df = pd.concat([get_first_3_cast(credits_df['cast']), get_directors_from_crew(credits_df), credits_df['id']], axis=1)
@@ -105,7 +97,6 @@ def data_tidying(ohe_films_df, top_3_credits_df):
     # # Merge the two DataFrames on the 'id' column
     ohe_films_df = ohe_films_df.merge(top_3_credits_df, on='id', how='inner')
 
-    # Format looks like this: id, title, release_date, popularity, vote_average, vote_count, genre1, genre2, ..., genreN, cast_info, director_info
     return ohe_films_df
 
 

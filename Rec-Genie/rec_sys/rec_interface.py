@@ -13,14 +13,11 @@ Scenario 3: ID:3,333,333 - action and thriller
 # IMPORTANT - Choose scenario here
 SCENARIO_CHOICE = 1
 
-# Configuration
-RUNNING_ON_COLAB = False
+# If you want to load and process the original CSV files, set this to True
 load_original_credits = False
 
 
 def load_data(num_lines=None):
-    if RUNNING_ON_COLAB:
-        data_loader.mount_drive()
     if num_lines is not None:
         data_loader.set_num_lines(num_lines)
     films_df = data_loader.load_movies()
@@ -48,7 +45,6 @@ class RecInterface:
     def __init__(self, session_id):
         self.session_id = session_id
 
-        # IMPORTANT - Choose scenario here
         self.user_id = get_user_id_from_scenario(SCENARIO_CHOICE)
 
         self.current_profile_path = None
@@ -129,6 +125,3 @@ class RecInterface:
 
         else:
             print("\nWARNING: No user profile path found. Please update the user profile first.\n")
-
-
-# I'm really vibing with tarantino recently, he's a great director, and I'm loving all his films. I also like the Cornetto Triology Films, but I don't like the John Wick series

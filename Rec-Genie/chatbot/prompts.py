@@ -1,7 +1,6 @@
 from langchain_core.prompts import PromptTemplate
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-
 film_chat_explore_chain = ChatPromptTemplate.from_messages([
     ("system",
      "You're an assistant who's good at talking to users to find out about their film interests and what matters to them in a film"),
@@ -59,19 +58,3 @@ glean_feed_back_chain = PromptTemplate(
         "USER MESSAGE: {input_text}"
     )
 )
-
-
-# Create a routing LLM with context about existing recommendations
-# router_prompt = ChatPromptTemplate.from_messages([
-#     ("system",
-#      "You are a router that determines what the user is asking for. "
-#      f"IMPORTANT: {'Recommendations HAVE already been generated and are available to explain.' if has_recommendations else 'No recommendations have been generated yet.'} "
-#      "Respond ONLY with one of these exact categories: "
-#      "- RECOMMEND: If the user is asking for new film recommendations "
-#      "- EXPLAIN: If the user is asking for an explanation of the existing recommendation scores "
-#      "- FEEDBACK: If the user is providing feedback or having a general conversation about films "
-#      "- OTHER: If the query doesn't fit into any of the above categories"
-#      ),
-#     ("human", "{question}")
-# ])
-

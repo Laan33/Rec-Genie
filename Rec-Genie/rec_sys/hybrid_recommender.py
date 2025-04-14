@@ -1,18 +1,5 @@
 from . import collaborative
 from . import content_based
-# from collaborative import get_user_user_recs
-# from content_based import compute_content_scores
-
-# Constants
-# weights = {
-#     'cast_ft_weight': 0.3,
-#     'director_ft_weight': 0.4,
-#     'genre_ft_weight': 0.4,
-#     'content_weight': 0.7,
-#     'collab_weight': 1,
-#     'genre_normalisation': 0.12,
-#     'average_rating_weight': 0.3
-# }
 
 num_recs = 400 # Number of recommendations to return
 

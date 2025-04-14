@@ -110,17 +110,12 @@ class GradioFilmRec:
     def router(self, input_value, history, session_id):
         """
         Routes the input to the appropriate function based on user query content.
-        - If the user is asking for recommendations: call the recommend_films function
         - If the user is asking for an explanation: call the score_explainer function
         - If the user is giving feedback or chatting: call the custom_chatbot function
         - If none of the above: provide a default response
         """
         self.session_id = session_id
         print("Router session ID:", self.session_id)
-
-        # # Check if the input is empty
-        # if not input_value:
-        #     return "Please enter a message."
 
         # Check if recommendations exist
         has_recommendations = self.scores is not None
@@ -184,15 +179,13 @@ class GradioFilmRec:
 
         # TODO - add in fuzzy search for which film the user is asking about
 
-
         # Process the first recommendation in the list as an example
-        # You might want to expand this to explain all recommendations
+        # TODO - can have this explain multiple recommendations or a specific one the user is asking about
         if breakdown and len(breakdown) > 0:
             item = breakdown[0]
             print("Item columns:", item.keys())
             print("Item to explain:", item)
 
-            # Item columns: dict_keys(['id', 'title', 'release_date', 'vote_average', 'vote_count', 'score', 'cast_score', 'director_score', 'genre_score', 'user_user_score', 'cast_proportion', 'director_proportion', 'genre_proportion', 'user_user_proportion'])
             # Extract the relevant fields from the breakdown
             explanation_input = {
                 "title": item.get('title', 'Unknown film'),
@@ -220,15 +213,6 @@ class GradioFilmRec:
         else:
             yield "No recommendations to explain.", self.current_recommendations, self.semantic_full_response
 
-    def semantics_scraper(self, input_value, history):
-        """Extracts sentiment & features from user messages."""
-        feedback_chain = self.update_chain(glean_feed_back_chain)
-        response = feedback_chain.stream(
-            {"input_text": input_value},
-            config={"configurable": {"session_id": str(self.session_id)}},
-        )
-        print("Semantic Analysis:", ''.join(response))
-
 # Instantiate the chatbot system
 film_rec_bot = GradioFilmRec()
 
@@ -240,7 +224,6 @@ with gr.Blocks(fill_height=True, fill_width=True, theme="Soft") as demo:
         with gr.Column(scale=1):
             gr.Markdown("### Session ID")
             session_id_num = gr.Number(
-                # value=film_rec_bot.session_id,
                 value=999999,
                 label="Session ID",
                 interactive=True,
@@ -264,7 +247,6 @@ with gr.Blocks(fill_height=True, fill_width=True, theme="Soft") as demo:
                 show_copy_button=True,
                 visible=True
             )
-            # recommendations_complex = gr.Markdown(label="recommendations_complex", value=film_rec_bot.complex_recommendations)
 
         with gr.Column(scale=1):
             gr.Markdown("### Message Semantics")

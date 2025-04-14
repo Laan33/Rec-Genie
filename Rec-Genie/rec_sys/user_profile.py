@@ -2,28 +2,10 @@ import ast
 import os
 import re
 from collections import defaultdict
-from pprint import pprint
-
 from .search_info import get_film_id_by_title, fuzzy_search_user_profile, get_actor_id_by_name
 import numpy as np
-
 import pandas as pd
 from io import StringIO
-# # TODO - burn once tested
-# def load_data(num_lines=None):
-#     if num_lines is not None:
-#         data_loader.set_num_lines(num_lines)
-#     films_df = data_loader.load_movies()
-#     ratings_df = data_loader.load_ratings()
-#     credits_df = data_loader.load_credits(True)
-#
-#     print("Data dimensions:")
-#     print("films_df:", films_df.shape)
-#     print("ratings_df:", ratings_df.shape)
-#     print("credits_df:", credits_df.shape)
-#
-#     return films_df, ratings_df, credits_df
-
 
 # ID - 1,111,111 - comedy and romcom
 scenario1_user_profile = """
@@ -233,7 +215,6 @@ def user_feature_profile(user_id, films_df, usr_ratings, genre_list_mlb, feature
         if add_id_flag:
             features_profile['user_id'] = user_id
 
-
         # Round all scores to 3 decimal places
         features_profile = {k: round(v, 3) if isinstance(v, (int, float)) and v is not None else v for k, v in features_profile.items()}
 
@@ -243,7 +224,6 @@ def empty_user_profile(user_id):
     """Creates an empty user profile."""
     return {'id': user_id, 'weights': standard_weights, 'feature_profile': {'user_id': user_id}}
 
-# TODO - fix this problem child, turned features into a string
 def load_or_create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
     """Loads the user profile from a CSV file or creates it if it doesn't exist."""
     profiles_dir = os.path.join(os.path.dirname(__file__), '..', 'userProfiles')
@@ -276,8 +256,6 @@ def create_user_profile(user_id, films_df, usr_ratings, genre_list_mlb):
     profile_df = pd.DataFrame([profile])
     profile_df.to_csv(os.path.join(profiles_dir, f'user_profile_{user_id}.csv'), index=False)
 
-
-    # print("features_profile type (after3): ", type(profile_df['feature_profile'])) # this was a series?
     return profile
 
 def load_user_profile(user_id, profiles_dir):
@@ -291,10 +269,6 @@ def load_user_profile(user_id, profiles_dir):
     user_profile = profile_df.to_dict(orient='records')[0]
     print("User_profile loaded: ", user_profile)
     return user_profile
-
-"""
-I think the user user score (collaborative filtering) is more important for me in a recommendation system than a content based one. Keep your response short
-"""
 
 def adjust_user_profile(user_profile, sentiment_response, films_df, credits_df, alpha=0.3):
     """Adjusts the user profile based on sentiment feedback while ensuring stability, by using tanh."""
@@ -412,9 +386,6 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, credits_df, 
                         print(f"Item '{item}' in category '{category}' not found in user profile, adding it with a default score.")
                         user_profile["feature_profile"][item] = update_score(1.0, sentiment)
 
-    # print("User profile after adjustment: ")
-    # pprint(user_profile)
-
     # Save the updated user profile
     profiles_dir = os.path.join(os.path.dirname(__file__), '..', 'userProfiles', 'adjustedProfiles')
     os.makedirs(profiles_dir, exist_ok=True)
@@ -432,21 +403,9 @@ def adjust_user_profile(user_profile, sentiment_response, films_df, credits_df, 
 def save_user_profile(user_profile, profiles_dir):
     # Save the user profile to a CSV file
     profile_df = pd.DataFrame([user_profile])
-    # profile_df.to_csv(f'/userProfiles/user_profile_{user_profile["id"]}.csv', index=False)
     profile_df.to_csv(os.path.join(profiles_dir, f'user_profile_{user_profile["id"]}.csv'), index=False)
-
     return user_profile
 
-"""
-Sample inputs for parse_semantic_breakdown function
- Films; 1.0, Blade Runner 2049: 0.95 \nDirectors; 0.4, Ridley Scott: -0.2 \nActors; 0.8, Ryan Gosling: 0.7
-
-Semantic breakdown:
- Films; 0.9, The Shawshank Redemption: 0.8 
-Directors; 0.8, The Shawshank Redemption (Frank Darabont): 0.6 
-Actors; 0.5
-Genres; 0.4
-"""
 
 
 def parse_semantic_breakdown(text):
@@ -548,5 +507,3 @@ def extract_items(text, category, items_data):
                         items_data[category][item] = 0.0
                 else:
                     items_data[category][item] = 0.0
-
-# I really like the film the godfather tbh. The directing in it is great, so is the cast. I don't usually like the genres with it, so it's a surprising like of mine

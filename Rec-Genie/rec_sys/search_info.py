@@ -2,10 +2,7 @@ from fuzzywuzzy import process
 
 """
 Python file to search for information in the dataset - e.g. film id for a given title or vice versa.
-
-TODO - If certain functions aren't working well (probably film id by title), might use fuzzy matching to find the closest match.
 """
-
 
 def get_film_id_by_title(title, films_df, score_cutoff=0.95):
     """Returns the film ID for a given title."""
